@@ -41,10 +41,10 @@ const employeeBase = z.object({
   firstName: requiredString("First name"),
   lastName: requiredString("Last name"),
   phone: phoneValidator,
-  email: emailValidator.optional(),
+  email: emailValidator,
   department: z.enum(['Sale', 'Engineer', 'Staff', 'Employee']).optional(),
   salary: optionalNumberString.optional(),
-  address: optionalString.optional(),
+  address: optionalString,
   imageUrl: urlValidator
 });
 

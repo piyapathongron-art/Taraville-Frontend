@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import {updateEmployeeSchema } from '../validations/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast, ToastContainer } from 'react-toastify'
-import { editEmployeeApi } from '../api/CreateApi'
+import { deleteEmployeeApi, editEmployeeApi } from '../api/CreateApi'
 import useDataStore from '../stores/dataStore'
 import { useEffect } from 'react'
 
@@ -36,8 +36,22 @@ function EditEmployeeModal(props) {
     reset()
   }
 
+  const onDelete = async () => {
+    try {
+      const resp = await deleteEmployeeApi(employeeId)
+      toast.success(resp.data.message)
+      getEmployeeData()
+      document.getElementById(modalId).close()
+    } catch (error) {
+      console.dir(error)
+      const errMsg = error.response?.data.error || error.message
+      toast.error(errMsg, { containerId: 'editEmployee' })
+    }
+  }
+
   const onSubmit = async (data) => {
     try {
+      confirm("ยืนยันการลบพนักงาน!");
       // console.log(data)
       const resp = await editEmployeeApi(data,employeeId)
       // console.log(resp)
@@ -135,7 +149,8 @@ function EditEmployeeModal(props) {
             <p className="text-sm text-error">{errors.address?.message}</p>
           </div>
 
-          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>Sign up</button>
+          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>สร้างบัญชีพนักงาน</button>
+          <button className='btn bg-red-500 text-xl text-white' onClick={()=>onDelete()} disabled={isSubmitting} type='button'>ลบพนักงาน</button>
 
         </fieldset>
 
