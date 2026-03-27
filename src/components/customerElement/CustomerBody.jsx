@@ -32,15 +32,16 @@ export default function CustomerBody() {
       const phone = customer.phone || '';
       const matchSearch = fullName.includes(searchTerm.toLowerCase()) || phone.includes(searchTerm);
       
-      // กรองจาก Dropdowns (จำลองการกรอง)
-      const matchType = typeFilter === '' || customer.type === typeFilter;
-      const matchHouse = houseFilter === '' || customer.interestedHouse === houseFilter;
-      const matchBudget = budgetFilter === '' || customer.budget === budgetFilter;
+      // กรองจาก Dropdowns (แก้ไขการอ้างอิงให้ชี้เข้าไปใน projectSurveys)
+      const surveyInfo = customer.projectSurveys || {};
+      
+      const matchType = typeFilter === '' || surveyInfo.surveyType === typeFilter;
+      const matchHouse = houseFilter === '' || surveyInfo.interestedPropertyType === houseFilter;
+      const matchBudget = budgetFilter === '' || surveyInfo.expectedBudget === budgetFilter;
       
       return matchSearch && matchType && matchHouse && matchBudget;
     });
   }, [searchTerm, typeFilter, houseFilter, budgetFilter, customers]);
-console.log(filteredCustomers)
   // ตรรกะ Pagination
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -93,8 +94,8 @@ console.log(filteredCustomers)
             onChange={(e) => { setTypeFilter(e.target.value); setCurrentPage(1); }}
           >
             <option value="">type</option>
-            <option value="online">online</option>
-            <option value="walk-in">walk-in</option>
+            <option value="Online">Online</option>
+            <option value="Walkin">Walk-in</option>
           </select>
 
           {/* Dropdown 2: บ้านที่สนใจ */}

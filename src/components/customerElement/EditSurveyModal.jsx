@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast, ToastContainer } from 'react-toastify';
@@ -16,7 +16,6 @@ function EditSurveyModal(props) {
   const surveyId = survey?.surveyId;
   
   const getSurveyData = useDataStore(state => state.getSurveyData);
-  
 
   const { register, reset, formState, handleSubmit } = useForm({
     resolver: zodResolver(updateSurveySchema), 
@@ -40,6 +39,7 @@ function EditSurveyModal(props) {
         installmentCapacity: survey.installmentCapacity || "",
         otherNewsChannel: survey.otherNewsChannel || "",
         remark: survey.remark || "",
+        surveyType: survey.surveyType || "Online", 
       });
     }
   }, [survey, customerId, reset]);
@@ -58,13 +58,12 @@ function EditSurveyModal(props) {
       const resp = await deleteSurveyApi(surveyId);
 
       Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-      
-            });
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success",
+      });
             
-      toast.success(resp.data?.message || "ลบแบบสอบถามสำเร็จ", { containerId: modalId });
+      toast.success(resp.data?.message || "ลบแบบสอบถามสำเร็จ", { containerId: "CustomerBody" });
 
       if (getSurveyData) getSurveyData();
       document.getElementById(modalId).close();
@@ -83,7 +82,7 @@ function EditSurveyModal(props) {
 
     try {
       const resp = await editSurveyApi(data, surveyId);
-      toast.success(resp.data?.message || "อัปเดตแบบสอบถามสำเร็จ", { containerId: modalId });
+      toast.success(resp.data?.message || "อัปเดตแบบสอบถามสำเร็จ", { containerId: "CustomerBody" });
 
       if (getSurveyData) getSurveyData();
       document.getElementById(modalId).close();
@@ -115,15 +114,23 @@ function EditSurveyModal(props) {
 
         <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
-          {/* แถว 1: วันที่เข้าชม - พนักงานที่ดูแล */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* แถว 1: ประเภทติดต่อ - วันที่เข้าชม - พนักงานที่ดูแล */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="form-control w-full">
-              <label className='label'><span className="label-text font-medium">วันที่เข้าชม (Visit Date)</span></label>
+              <label className='label'><span className="label-text font-medium">ประเภทการติดต่อ</span></label>
+              <select className={`select select-bordered w-full ${errors.surveyType ? 'select-error' : ''}`} {...register('surveyType')}>
+                <option value="Online">Online</option>
+                <option value="Walkin">Walk-in</option>
+              </select>
+              {errors.surveyType && <span className="text-sm text-error mt-1">{errors.surveyType.message}</span>}
+            </div>
+            <div className="form-control w-full">
+              <label className='label'><span className="label-text font-medium">วันที่เข้าชม </span></label>
               <input type="date" className={`input input-bordered w-full ${errors.visitDate ? 'input-error' : ''}`} {...register('visitDate')} />
               {errors.visitDate && <span className="text-sm text-error mt-1">{errors.visitDate.message}</span>}
             </div>
             <div className="form-control w-full">
-              <label className='label'><span className="label-text font-medium">พนักงานที่ดูแล (User ID)</span></label>
+              <label className='label'><span className="label-text font-medium">พนักงานที่ดูแล </span></label>
               <input type="text" placeholder='รหัสพนักงาน' className={`input input-bordered w-full ${errors.userId ? 'input-error' : ''}`} {...register('userId')} />
               {errors.userId && <span className="text-sm text-error mt-1">{errors.userId.message}</span>}
             </div>
@@ -212,7 +219,7 @@ function EditSurveyModal(props) {
           <div className="flex gap-4 mt-4">
             <button
               className='btn bg-red-500 hover:bg-red-600 text-white flex-1'
-              onClick={()=>swal01(onDeleteSurvey,modalId)}
+              onClick={() => swal01(onDeleteSurvey, modalId)}
               disabled={isSubmitting || !surveyId}
               type='button'
             >

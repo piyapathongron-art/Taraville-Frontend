@@ -1,5 +1,4 @@
-import { Edit, FileText, User } from "lucide-react";
-import EditCustomer from "./EditCustomerModal";
+import { FileText, User } from "lucide-react";
 import EditCustomerModal from "./EditCustomerModal";
 import EditSurveyModal from "./EditSurveyModal";
 
