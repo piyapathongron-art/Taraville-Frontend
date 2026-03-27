@@ -4,7 +4,6 @@ import AssignmentTable from '../components/AssignmentTable'
 import Footer from '../components/Footer'
 
 function AssignmentPage() {
-    const user = useUserStore(state=>state.user)
     const getAssignment = useUserStore(state=>state.getAssignment)
 
     useEffect(()=>{

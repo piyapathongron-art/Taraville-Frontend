@@ -18,6 +18,7 @@ const SurveyContactPage = lazy(()=>import("../pages/SurveyContact"))
 const EmployeePage = lazy(()=>import("../pages/EmployeesPage"))
 const HousePage = lazy(()=>import("../pages/HousePage"))
 const AssignmentAdminPage = lazy(()=>import("../pages/AssignmentAdminPage"))
+const CustomerPage = lazy(()=>import("../pages/CustomerPage"))
 
 
 const publicPages = [
@@ -67,7 +68,8 @@ const adminRouter = createBrowserRouter([
             { path: "/assignment", Component: AssignmentPage },
             { path: "/employee", Component: EmployeePage},
             { path: "/house", Component: HousePage},
-            { path: "/allAssignment", Component: AssignmentAdminPage}
+            { path: "/allAssignment", Component: AssignmentAdminPage},
+            { path: "/customer", Component: CustomerPage}
         ]
     },
     //check random url

@@ -74,6 +74,10 @@ const useDataStore = create((set, get) => ({
             set({ isLoading: false });
         }
     },
+    getAllCustomersData: async () => {
+        const resp = await getAllCustomers()
+        set({customers: resp.data.result})
+    }
 }));
 
 export default useDataStore
