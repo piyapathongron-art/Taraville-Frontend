@@ -44,3 +44,23 @@ export async function editAssignmentApi(body,id){
 export async function deleteAssignmentApi(id){
     return await mainApi.delete(`/assignments/${id}`)
 }
+
+export async function getSurveyByIdApi(id){
+    return await mainApi.get(`/surveys/${id}`)
+}
+
+export async function editSurveyApi(body,id){
+    return await mainApi.put(`/surveys/${id}`,body)
+}
+
+export async function deleteSurveyApi(id){
+    return await mainApi.delete(`/surveys/${id}`)
+}
+
+export async function deleteCustomer(id){
+    return await mainApi.delete(`/customers/${id}`)
+}
+
+export async function editCustomerApi(body,id){
+    return await mainApi.put(`/customers/${id}`,body)
+}

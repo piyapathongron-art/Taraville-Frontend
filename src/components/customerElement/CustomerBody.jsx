@@ -1,37 +1,18 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Search, ChevronDown, Edit, Plus } from 'lucide-react';
 import CustomerRow from './CustomerRow';
+import useDataStore from '../../stores/dataStore';
+import { ToastContainer } from 'react-toastify';
 
-// ==========================================
-// 1. Mocking Store (สำหรับรันพรีวิวใน Canvas)
-// ==========================================
-const useDataStore = (selector) => {
-  const mockState = {
-    getAllCustomersData: () => console.log("Fetching customers..."),
-    // จำลองข้อมูลตามโครงสร้างจริง + ฟิลด์สมมติสำหรับ UI
-    customers: [
-      { customerId: 1, firstName: 'นายสมชาย', lastName: 'ใจดี', phone: '081-111-1111', type: 'online', interestedHouse: 'บ้านเดี่ยว', budget: '500,000-1,000,000' },
-      { customerId: 2, firstName: 'test2', lastName: 'test2', phone: '1234567892', lineId: null, type: 'walk-in', interestedHouse: 'ทาวน์โฮม', budget: '1,000,000-2,000,000' },
-      { customerId: 18, firstName: 'test5', lastName: 'test2', phone: '2234464152', lineId: '', type: 'online', interestedHouse: 'บ้านแฝด', budget: '2,000,000-3,000,000' },
-      { customerId: 19, firstName: 'Piyapat', lastName: 'Hongron', phone: '0938533333', lineId: '', type: 'online', interestedHouse: 'บ้านเดี่ยว', budget: '500,000-1,000,000' },
-      // ข้อมูลจำลองเพิ่มเพื่อให้ Pagination ทำงาน
-      { customerId: 20, firstName: 'Alice', lastName: 'Wonder', phone: '0999999991', type: 'walk-in', interestedHouse: 'บ้านเดี่ยว', budget: '3,000,000+' },
-      { customerId: 21, firstName: 'Bob', lastName: 'Builder', phone: '0999999992', type: 'online', interestedHouse: 'ทาวน์โฮม', budget: '500,000-1,000,000' },
-    ]
-  };
-  return selector(mockState);
-};
 
-// ==========================================
-// 3. Main Component (CustomerBody)
-// ==========================================
 export default function CustomerBody() {
   const customers = useDataStore(state => state.customers);
-  const getAllCustomersData = useDataStore(state => state.getAllCustomersData);
+  const getSurveyData = useDataStore(state => state.getSurveyData);
   
   useEffect(() => {
-    getAllCustomersData();
+    getSurveyData();
   }, []);
+
   
   // States สำหรับค้นหาและตัวกรอง
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,7 +40,7 @@ export default function CustomerBody() {
       return matchSearch && matchType && matchHouse && matchBudget;
     });
   }, [searchTerm, typeFilter, houseFilter, budgetFilter, customers]);
-
+console.log(filteredCustomers)
   // ตรรกะ Pagination
   const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -83,8 +64,8 @@ export default function CustomerBody() {
 
   return (
     <div className="w-full h-[calc(92vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative font-sans">
-      
-      {/* 1. Toolbar (ตรงกับแถบสีเทาด้านบนของรูป) */}
+      <ToastContainer containerId="CustomerBody"/>
+      {/* 1. Toolbar */}
       <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed">
         
         {/* ช่องค้นหา */}
@@ -107,7 +88,7 @@ export default function CustomerBody() {
           
           {/* Dropdown 1: Type */}
           <select 
-            className="select select-bordered w-[140px] bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
+            className="select select-bordered px-5 w-[140px] bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={typeFilter}
             onChange={(e) => { setTypeFilter(e.target.value); setCurrentPage(1); }}
           >
@@ -118,7 +99,7 @@ export default function CustomerBody() {
 
           {/* Dropdown 2: บ้านที่สนใจ */}
           <select 
-            className="select select-bordered w-[160px] bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
+            className="select select-bordered w-[160px] px-5 bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={houseFilter}
             onChange={(e) => { setHouseFilter(e.target.value); setCurrentPage(1); }}
           >
@@ -130,7 +111,7 @@ export default function CustomerBody() {
 
           {/* Dropdown 3: งบ */}
           <select 
-            className="select select-bordered w-[160px] bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
+            className="select select-bordered w-[160px] px-5 bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={budgetFilter}
             onChange={(e) => { setBudgetFilter(e.target.value); setCurrentPage(1); }}
           >
@@ -141,19 +122,19 @@ export default function CustomerBody() {
             <option value="3,000,000+">3,000,000+</option>
           </select>
 
-          {/* ปุ่มเพิ่ม (สีส้ม) */}
+          {/* ปุ่มเพิ่ม (สีส้ม)
           <button 
             className="bg-[#D98A2C] hover:bg-[#c27a26] text-white px-8 py-2.5 h-11 rounded-full font-medium shadow-sm transition-colors whitespace-nowrap"
             type="button" 
             onClick={()=> document.getElementById("createCustomerModal")?.showModal()}
           >
             เพิ่ม
-          </button>
+          </button> */}
         </div>
       </div>
 
       {/* 2. พื้นที่แสดงข้อมูลตาราง */}
-      <div className="flex-1 w-full max-w-6xl mx-auto p-6 flex flex-col mt-20">
+      <div className="flex-1 w-full max-w-7xl mx-auto p-6 flex flex-col mt-20">
 
         {/* Header ของตาราง (อ้างอิง Grid จาก Row) */}
         <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 mb-4 text-gray-800 font-bold text-base md:text-lg">
@@ -163,7 +144,7 @@ export default function CustomerBody() {
           <div className="text-center">บ้านที่สนใจ</div>
           <div className="text-center">งบที่มี</div>
           <div className="text-center">เบอร์ติดต่อ</div>
-          <div className="w-8"></div> {/* พื้นที่เผื่อปุ่ม Edit */}
+          <div className="w-22"></div>
         </div>
 
         {/* รายการลูกค้า */}
@@ -203,7 +184,7 @@ export default function CustomerBody() {
       </div>
 
       {/* Modal เพิ่มลูกค้า */}
-      <dialog id="createCustomerModal" className="modal">
+      {/* <dialog id="createCustomerModal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">เพิ่มข้อมูลลูกค้า</h3>
           <p className="py-4">ฟอร์มสำหรับเพิ่มลูกค้า...</p>
@@ -213,7 +194,7 @@ export default function CustomerBody() {
             </form>
           </div>
         </div>
-      </dialog>
+      </dialog> */}
 
     </div>
   );

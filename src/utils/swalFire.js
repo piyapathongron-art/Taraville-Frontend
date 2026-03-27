@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 
-export function swal01(handleDelete){
+export function swal01(handleDelete,modalId){
+  document.getElementById(modalId).close()
     Swal.fire({
   title: "Are you sure?",
   text: "You won't be able to revert this!",

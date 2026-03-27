@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getAllAssignment, getAllCustomers, getAllEmployee, getAllHouses, getAllSurvey } from "../api/getAllDataApi";
+import { getSurveyByIdApi } from "../api/CreateApi";
 
 const useDataStore = create((set, get) => ({
 
@@ -77,6 +78,22 @@ const useDataStore = create((set, get) => ({
     getAllCustomersData: async () => {
         const resp = await getAllCustomers()
         set({customers: resp.data.result})
+    },
+    getSurveyData: async (id) => {
+        try {
+             const [customersResp, surveysResp] = await Promise.all([
+                getAllCustomers(),
+                getAllSurvey(),
+            ]);
+             set({
+                customers: customersResp.data.result || [],
+                surveys: surveysResp.data.result || [],
+            });
+
+        } catch (error) {
+            console.error("Error fetching dashboard data:", error);
+            set({ isLoading: false });
+        }
     }
 }));
 

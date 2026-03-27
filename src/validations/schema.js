@@ -132,18 +132,13 @@ const surveyBase = z.object({
   informationSource: optionalString,
   installmentCapacity: optionalString,
   remark:optionalString,
-  otherNewsChannel:optionalString
+  otherNewsChannel:optionalString,
+  surveyType: z.enum(['Online', 'Walkin']).optional().default("Online")
+  
 });
 
 //create
 export const createSurveySchema = surveyBase
 
 //update
-export const updateSurveySchema = surveyBase.partial().transform(data => ({
-  ...data,
-  customerId: data.customerId ? Number(data.customerId) : undefined,
-  userId: data.userId ? Number(data.userId) : undefined,
-  visitDate: data.visitDate ? new Date(data.visitDate) : undefined,
-  preferredBedroom: data.preferredBedroom ? Number(data.preferredBedroom) : undefined,
-  preferredBathroom: data.preferredBathroom ? Number(data.preferredBathroom) : undefined,
-}));
+export const updateSurveySchema = surveyBase.partial()
