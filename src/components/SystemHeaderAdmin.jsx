@@ -22,7 +22,7 @@ function SystemHeaderAdmin() {
             <div className="flex  justify-center gap-10 max-md:*:w-16 max-md:justify-start items-center">
                 <NavLink to="/dashboard" className="text-white text-2xl">แดชรบอร์ด</NavLink>
                 <NavLink to="/employee" className="text-white text-2xl">พนักงาน</NavLink>
-                <NavLink to="/dashboard" className="text-white text-2xl">บ้าน</NavLink>
+                <NavLink to="/house" className="text-white text-2xl">บ้าน</NavLink>
                 <NavLink to="/dashboard" className="text-white text-2xl">งาน</NavLink>
                 <NavLink to="/dashboard" className="text-white text-2xl">ลูกค้า</NavLink>
             </div>

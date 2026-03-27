@@ -42,6 +42,10 @@ const useDataStore = create((set, get) => ({
     getEmployeeData: async () => {
         const resp = await getAllEmployee()
         set({employee: resp.data.result})
+    },
+    getHouseData: async () => {
+        const resp = await getAllHouses()
+        set({houses: resp.data.result})
     }
 }));
 

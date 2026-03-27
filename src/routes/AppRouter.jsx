@@ -16,6 +16,7 @@ const SystemLayoutAdmin = lazy(()=>import("../layouts/SystemLayoutAdmin"))
 const DashboardAI = lazy(()=>import("../pages/DashboardAI"))
 const SurveyContactPage = lazy(()=>import("../pages/SurveyContact"))
 const EmployeePage = lazy(()=>import("../pages/EmployeesPage"))
+const HousePage = lazy(()=>import("../pages/HousePage"))
 
 
 const publicPages = [
@@ -63,7 +64,8 @@ const adminRouter = createBrowserRouter([
         children: [
             { path: "/dashboard", Component: DashboardAI },
             { path: "/assignment", Component: AssignmentPage },
-            { path: "/employee", Component: EmployeePage}
+            { path: "/employee", Component: EmployeePage},
+            { path: "/house", Component: HousePage}
         ]
     },
     //check random url

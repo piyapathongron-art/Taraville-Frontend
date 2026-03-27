@@ -62,20 +62,14 @@ const houseBase = z.object({
   houseType: optionalString,
   price: optionalNumberString,
   status: z.enum(['Available', 'Book', 'Sold', 'Repair', 'Building']).optional(),
-  details: optionalString
+  details: optionalString,
+  ownerPhone : phoneValidator.optional()
 });
 
 // create
-export const createHouseSchema = houseBase.transform(data => ({
-  ...data,
-  price: data.price ? Number(data.price) : undefined
-}));
-
+export const createHouseSchema = houseBase
 //update
-export const updateHouseSchema = houseBase.partial().transform(data => ({
-  ...data,
-  price: data.price ? Number(data.price) : undefined
-}));
+export const updateHouseSchema = houseBase.partial()
 
 export const houseImageSchema = z.object({
   imageUrl: urlValidator,

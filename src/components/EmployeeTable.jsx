@@ -67,10 +67,10 @@ export default function EmployeeTable() {
 
   return (
     <> 
-    <div className=" w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col">
+    <div className=" w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col relative">
 
       {/* Toolbar สีเทาด้านบน */}
-      <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
+      <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed">
 
         {/* ช่องค้นหา */}
         <div className="relative w-100 ml-10">
@@ -147,10 +147,10 @@ export default function EmployeeTable() {
       </div>
 
       {/* ส่วนของรายการพนักงาน */}
-      <div className="flex-1 w-full max-w-6xl mx-auto p-6 flex flex-col ">
+      <div className="flex-1 w-full max-w-6xl mx-auto p-6 flex flex-col mt-20">
 
         {/* Header ของตาราง */}
-        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-6">
+        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-2 mb-6">
           <div className="w-[20%] text-center leading-tight">
             <span className="font-bold text-gray-800 text-lg">รหัสพนักงาน</span><br />
             <span className="text-gray-600 font-medium">ไอดี</span>

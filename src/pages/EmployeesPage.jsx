@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react'
-import useUserStore from '../stores/userStore'
 import FooterSystem from '../components/FooterSystem'
 import EmployeeTable from '../components/EmployeeTable'
 
 function EmployeePage() {
     
-    const getAssignment = useUserStore(state=>state.getAssignment)
-
-    useEffect(()=>{
-      getAssignment()
-    },[])
 
 
   return (

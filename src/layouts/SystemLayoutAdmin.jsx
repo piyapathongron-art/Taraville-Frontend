@@ -6,7 +6,7 @@ function SystemLayoutAdmin() {
         <>
             <div className="min-h-screen max-h-screen">
                 <SystemHeaderAdmin />
-                <div className="relative flex gap-4 border pt-14 ">
+                <div className="relative flex gap-4  pt-14 ">
                     <Outlet />
                 </div>
             </div>
