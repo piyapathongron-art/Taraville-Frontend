@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search,  ChevronDown } from 'lucide-react';
+import { Search,  ChevronDown, ArrowUpDown } from 'lucide-react';
 import AssignmentRow from './AssignmentRow';
 import useDataStore from '../stores/dataStore';
 import { ToastContainer } from 'react-toastify';
@@ -22,14 +22,15 @@ export default function AssignmentElement() {
   // State สำหรับค้นหาและกรอง
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [sortOrder, setSortOrder] = useState('desc');
 
-  // State สำหรับ Pagination
-  const [currentPage, setCurrentPage] = useState(1);
+   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
-  // คำนวณข้อมูลที่จะแสดง (กรองค้นหา -> แบ่งหน้า)
+  // 2. คำนวณข้อมูลที่จะแสดง (กรองค้นหา -> เรียงลำดับ)
   const filteredAssignments = useMemo(() => {
-    return assignment.filter(task => {
+    // 2.1 กรองข้อมูลก่อน
+    const filtered = (assignment || []).filter(task => {
       // ค้นหาจากชื่องาน (taskTitle)
       const safeTitle = task.taskTitle || '';
       const matchTitle = safeTitle.toLowerCase().includes(searchTerm.toLowerCase());
@@ -39,7 +40,25 @@ export default function AssignmentElement() {
       
       return matchTitle && matchStatus;
     });
-  }, [searchTerm, statusFilter, assignment]);
+
+    // 2.2 นำข้อมูลที่กรองแล้วมาจัดเรียง (Sort)
+    return filtered.sort((a, b) => {
+      // ถ้าไม่มีวันที่ ให้เอาไปไว้ท้ายสุดเสมอ
+      if (!a.assignedDate) return 1;
+      if (!b.assignedDate) return -1;
+
+      // แปลงวันที่เป็นตัวเลข (มิลลิวินาที) เพื่อให้คำนวณบวกลบกันได้
+      const timeA = new Date(a.assignedDate).getTime();
+      const timeB = new Date(b.assignedDate).getTime();
+
+      // สลับตามทิศทางการเรียง
+      if (sortOrder === 'asc') {
+        return timeA - timeB; // เก่าไปใหม่
+      } else {
+        return timeB - timeA; // ใหม่ไปเก่า
+      }
+    });
+  }, [searchTerm, statusFilter, assignment, sortOrder]);
 
   // คำนวณ Pagination
   const totalPages = Math.ceil(filteredAssignments.length / itemsPerPage);
@@ -69,6 +88,10 @@ export default function AssignmentElement() {
         if (document.activeElement) {
             document.activeElement.blur();
         }
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
   };
 
   return (
@@ -132,7 +155,14 @@ export default function AssignmentElement() {
           <div className="w-[15%] text-center font-bold text-gray-800 text-lg">รหัสงาน</div>
           <div className="w-[35%] text-left pl-4 font-bold text-gray-800 text-lg">หัวข้องาน</div>
           <div className="w-[20%] text-center font-bold text-gray-800 text-lg">มอบหมาย</div>
-          <div className="w-[40%] text-center font-bold text-gray-800 text-lg">กำหนดการ</div>
+          <div 
+            className="w-[40%] flex justify-center items-center gap-2 font-bold text-gray-800 text-lg cursor-pointer hover:bg-gray-50 py-1 rounded-lg transition-colors select-none"
+            onClick={toggleSortOrder}
+            title={sortOrder === 'desc' ? "กำลังเรียง: ใหม่ไปเก่า (คลิกเพื่อสลับ)" : "กำลังเรียง: เก่าไปใหม่ (คลิกเพื่อสลับ)"}
+          >
+            กำหนดการ 
+            <ArrowUpDown size={16} className={`transition-transform ${sortOrder === 'asc' ? 'rotate-180 text-[#D98A2C]' : 'text-gray-400'}`} />
+          </div>
           <div className="w-[10%]"></div> {/* พื้นที่ว่างสำหรับปุ่มแก้ไข */}
         </div>
 

@@ -1,12 +1,14 @@
 import { Edit } from "lucide-react";
 import EditAssignmentModal from "./EditAssignmentModal";
 import formattedDate from "../utils/dayjs";
+import AssignmentInfo from "./AssignmentInfo";
 
 
 const AssignmentRow = (props) => {
 const {assignment} = props
 // console.log(assignment)
-const modalId = `editEmployee-${assignment.assignmentId}`
+const modalId = `editAssignment-${assignment.assignmentId}`
+const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
 
     // color status
     const getStatusBadge = (status) => {
@@ -24,7 +26,8 @@ const modalId = `editEmployee-${assignment.assignmentId}`
 
     return (
         <>
-        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-4 mb-3 transition-all hover:shadow-md">
+        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-4 mb-3 transition-all hover:shadow-md"
+        onClick={() => document.getElementById(modalIdinfo).showModal()}>
             {/* รหัสงาน */}
             <div className="w-[15%] text-center flex flex-col justify-center">
                 <span className="text-xl font-bold text-gray-800">{assignment.assignmentId}</span>
@@ -62,6 +65,13 @@ const modalId = `editEmployee-${assignment.assignmentId}`
         <div className="modal-box">
           
           <EditAssignmentModal assignment={assignment} assignmentId={assignment.assignmentId} modalId={modalId} />
+        </div>
+      </dialog>
+
+      <dialog id={modalIdinfo} className="modal">
+        <div className="modal-box">
+          
+          <AssignmentInfo assignment={assignment} assignmentId={assignment.assignmentId} modalIdinfo={modalIdinfo} />
         </div>
       </dialog>
 
