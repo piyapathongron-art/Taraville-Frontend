@@ -23,7 +23,7 @@ function SystemHeaderAdmin() {
                 <NavLink to="/dashboard" className="text-white text-2xl">แดชรบอร์ด</NavLink>
                 <NavLink to="/employee" className="text-white text-2xl">พนักงาน</NavLink>
                 <NavLink to="/house" className="text-white text-2xl">บ้าน</NavLink>
-                <NavLink to="/dashboard" className="text-white text-2xl">งาน</NavLink>
+                <NavLink to="/allAssignment" className="text-white text-2xl">งาน</NavLink>
                 <NavLink to="/dashboard" className="text-white text-2xl">ลูกค้า</NavLink>
             </div>
 

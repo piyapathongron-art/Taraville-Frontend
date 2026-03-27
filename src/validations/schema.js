@@ -81,8 +81,8 @@ export const houseImageSchema = z.object({
 
 //Assignment Schemas ==========================================
 const assignmentBase = z.object({
-  houseId: requiredString("houseId"),
-  empId: requiredString("empId"),
+  houseId: requiredNumber("houseId"),
+  empId: requiredNumber("empId"),
   taskTitle: requiredString("Task title"),
   taskDescription: optionalString,
   dutyRole: optionalString,
@@ -91,21 +91,10 @@ const assignmentBase = z.object({
 });
 
 //create
-export const createAssignmentSchema = assignmentBase.transform(data => ({
-  ...data,
-  houseId: Number(data.houseId),
-  empId: Number(data.empId),
-  assignedDate: data.assignedDate ? new Date(data.assignedDate) : undefined
-}));
+export const createAssignmentSchema = assignmentBase
 
 //update
-export const updateAssignmentSchema = assignmentBase.partial().transform(data => ({
-  ...data,
-  houseId: data.houseId ? Number(data.houseId) : undefined,
-  empId: data.empId ? Number(data.empId) : undefined,
-  assignedDate: data.assignedDate ? new Date(data.assignedDate) : undefined
-}));
-
+export const updateAssignmentSchema = assignmentBase.partial()
 //Customer ==========================================
 const customerBase = z.object({
   firstName: requiredString("First name"),

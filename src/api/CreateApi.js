@@ -32,3 +32,15 @@ export async function uploadHouseImageApi(body,id) {
 export async function deleteHouseImageApi(id,imageId) {
     return await mainApi.post(`/houses/${id}/images/${imageId}`)
 }
+
+export async function createAssignmentApi(body){
+    return await mainApi.post("/assignments",body)
+}
+
+export async function editAssignmentApi(body,id){
+    return await mainApi.put(`/assignments/${id}`,body)
+}
+
+export async function deleteAssignmentApi(id){
+    return await mainApi.delete(`/assignments/${id}`)
+}

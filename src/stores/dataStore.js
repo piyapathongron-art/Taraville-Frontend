@@ -32,7 +32,7 @@ const useDataStore = create((set, get) => ({
                 isLoading: false
             });
 
-            console.log(employeeResp)
+            // console.log(assignmentsResp)
 
         } catch (error) {
             console.error("Error fetching dashboard data:", error);
@@ -46,7 +46,34 @@ const useDataStore = create((set, get) => ({
     getHouseData: async () => {
         const resp = await getAllHouses()
         set({houses: resp.data.result})
-    }
+    },
+    getAssignmentData: async () => {
+        set({ isLoading: true });
+        try {
+
+            const [housesResp, assignmentsResp, employeeResp] = await Promise.all([
+                getAllHouses(),
+                getAllAssignment(),
+                getAllEmployee()
+            ]);
+
+
+            set({
+                houses: housesResp.data.result || [],
+                assignments: assignmentsResp.data.result || [],
+                employee: employeeResp.data.result || [],
+                isLoading: false
+            });
+
+            // console.log(assignmentsResp)
+            // console.log(housesResp)
+            // console.log(employeeResp)
+
+        } catch (error) {
+            console.error("Error fetching dashboard data:", error);
+            set({ isLoading: false });
+        }
+    },
 }));
 
 export default useDataStore
