@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { emailValidator, optionalDateString, optionalNumberString, optionalString, passwordValidator, phoneValidator, requiredNumber, requiredString, urlValidator } from './zodValidator.js';
+import { emailValidator, optionalDateString, optionalNumberString, optionalString, OwnerPhoneValidator, passwordValidator, phoneValidator, requiredNumber, requiredString, urlValidator } from './zodValidator.js';
 
 
 //Auth Schemas ==========================================
@@ -63,7 +63,7 @@ const houseBase = z.object({
   price: optionalNumberString,
   status: z.enum(['Available', 'Book', 'Sold', 'Repair', 'Building']).optional(),
   details: optionalString,
-  ownerPhone : phoneValidator.optional()
+  ownerPhone : OwnerPhoneValidator
 });
 
 // create

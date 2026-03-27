@@ -3,8 +3,7 @@ import { Search, ChevronDown,  Image as ImageIcon } from 'lucide-react';
 
 import HouseCard from './HouseCard';
 import useDataStore from '../stores/dataStore';
-import FooterSystem from './FooterSystem';
-
+import CreateHouseModal from './CreateHouseModal';
 
 function HouseElement() {
     // สมมติการดึงข้อมูลจาก Zustand
@@ -44,6 +43,7 @@ function HouseElement() {
     };
 
     return (
+        <>
         <div className=" w-full h-screen bg-gray-50 flex flex-col relative">
 
             {/* Toolbar สีเทาด้านบน */}
@@ -101,7 +101,8 @@ function HouseElement() {
                     </div>
 
                     {/* ปุ่มเพิ่ม */}
-                    <button className="bg-[#D98A2C] hover:bg-[#c27a26] text-white px-10 py-2.5 rounded-xl font-medium shadow-sm transition-colors whitespace-nowrap h-11">
+                    <button className="bg-[#D98A2C] hover:bg-[#c27a26] text-white px-10 py-2.5 rounded-xl font-medium shadow-sm transition-colors whitespace-nowrap h-11"
+                    type="button" onClick={()=> document.getElementById("createHouse").showModal()}>
                         เพิ่ม
                     </button>
                 </div>
@@ -128,7 +129,19 @@ function HouseElement() {
           
 
         </div>
-    );
+        <dialog id="createHouse" className="modal">
+                <div className="modal-box">
+
+                    <CreateHouseModal />
+                </div>
+            </dialog>
+
+            <dialog id="loading-login" className="modal">
+                <div className=" justify-center flex">
+                    <span className="loading loading-spinner loading-xl size-50"></span>
+                </div>
+            </dialog>
+    </>);
 }
 
 export default HouseElement
