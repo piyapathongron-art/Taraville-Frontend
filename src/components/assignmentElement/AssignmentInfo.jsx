@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Trash2 } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form'; 
-import useDataStore from '../stores/dataStore';
-import { updateAssignmentSchema } from '../validations/schema';
-import { deleteAssignmentApi, editAssignmentApi } from '../api/CreateApi';
+import useDataStore from '../../stores/dataStore';
+import { updateAssignmentSchema } from '../../validations/schema';
+import { deleteAssignmentApi, editAssignmentApi } from '../../api/CreateApi';
 import { toast, ToastContainer } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SearchableDropdown from './SearchableDropdown';
+import SearchableDropdown from '../SearchableDropdown';
 
 
-export default function EditAssignmentModal(props) {
-  const { assignmentId, assignment, modalId } = props;
+export default function AssignmentInfo(props) {
+  const { assignmentId, assignment, modalIdinfo } = props;
   
   // ดึง state จาก Store
   const houses = useDataStore(state => state.houses);
@@ -59,46 +59,15 @@ export default function EditAssignmentModal(props) {
   
 
   const Xbtn = () => {
-    document.getElementById(modalId).close();
+    document.getElementById(modalIdinfo).close();
     reset();
   };
 
-  const onDelete = async () => {
-    if (window.confirm("ยืนยันการลบงานนี้?")) {
-        try {
-            // console.log("Deleting Assignment ID:", assignmentId);
-            const resp = await deleteAssignmentApi(assignmentId);
-            console.log(resp)
-            toast.success("ลบงานสำเร็จ");
-            getAssignmentData();
-            document.getElementById(modalId).close()
 
-        } catch (error) {
-            console.dir(error);
-            toast.error("เกิดข้อผิดพลาดในการลบงาน", { containerId: modalId });
-        }
-    }
-  };
-
-  const onSubmit = async (data) => {
-    try {
-      // console.log("Updating Assignment Data:", data);
-      const resp = await editAssignmentApi(data, assignmentId);
-      console.log(resp)
-      toast.success("แก้ไขงานสำเร็จ",{containerId:"assignmentPage"});
-      getAssignmentData();
-      document.getElementById(modalId).close()
-
-    } catch (error) {
-      console.dir(error);
-      toast.error("เกิดข้อผิดพลาดในการอัปเดต", { containerId: modalId });
-    }
-  };
 
   return (
     <div className="p-4 bg-white rounded-lg  relative max-w-2xl mx-auto w-full">
-      <ToastContainer containerId={modalId}/>
-      <form method="dialog">
+      <form method="dialog" >
         <button type='button' onClick={Xbtn} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
 
@@ -108,8 +77,8 @@ export default function EditAssignmentModal(props) {
       </div>
       <div className="divider opacity-60 my-2"></div>
       
-      <form onSubmit={handleSubmit(onSubmit)} >
-        <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
+      <form >
+        <fieldset disabled={true} className='flex flex-col gap-4 p-2'>
 
           {/* แถว 1: ชื่องาน */}
           <div className="w-full">
@@ -195,16 +164,7 @@ export default function EditAssignmentModal(props) {
           </div>
 
           <div className="divider my-1"></div>
-
-          {/* ปุ่ม Action */}
-          <div className="flex gap-4 w-full">
-            <button className='btn bg-red-500 hover:bg-red-600 text-white flex-1' onClick={onDelete} disabled={isSubmitting} type='button'>
-              <Trash2 size={20} /> ลบงานนี้
-            </button>
-            <button className='btn bg-[#D98A2C] hover:bg-[#c27a26] text-white flex-1' disabled={isSubmitting} type="submit">
-              บันทึกการแก้ไข
-            </button>
-          </div>
+        
 
         </fieldset>
       </form>

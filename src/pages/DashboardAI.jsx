@@ -1,7 +1,7 @@
 import { Home, Archive, User,Loader2} from 'lucide-react'; 
 
-import DashboardCard from '../components/DashBoardCard';
-import DashboardCardHouse from '../components/DashBoardCardHouse';
+import DashboardCard from '../components/dashboardElement/DashBoardCard';
+import DashboardCardHouse from '../components/dashboardElement/DashBoardCardHouse';
 import { useEffect, useMemo } from 'react';
 import useDataStore from '../stores/dataStore';
 import { isLastMonth, isThisMonth } from '../utils/dateConverter';

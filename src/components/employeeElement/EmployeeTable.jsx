@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Edit, ChevronLeft, ChevronRight, MoreHorizontal, ChevronDown } from 'lucide-react';
-import useDataStore from '../stores/dataStore';
+import { useState, useMemo, useEffect } from 'react';
+import { Search, ChevronDown } from 'lucide-react';
+import useDataStore from '../../stores/dataStore';
 import EmployeeList from './EmployeeList';
 import CreateEmployeeModal from './CreateEmployeeModal';
 

@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Trash2 } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form'; 
-import useDataStore from '../stores/dataStore';
-import { updateAssignmentSchema } from '../validations/schema';
-import { deleteAssignmentApi, editAssignmentApi } from '../api/CreateApi';
+import {  useState } from 'react';
+import { useForm } from 'react-hook-form'; 
+import { createAssignmentSchema} from '../../validations/schema';
+import { createAssignmentApi} from '../../api/CreateApi';
 import { toast, ToastContainer } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SearchableDropdown from './SearchableDropdown';
+import SearchableDropdown from '../SearchableDropdown';
+import useDataStore from '../../stores/dataStore';
 
 
-export default function AssignmentInfo(props) {
-  const { assignmentId, assignment, modalIdinfo } = props;
+export default function CreateAssignmentModal(props) {
+  const { assignmentId, assignment, modalId } = props;
   
   // ดึง state จาก Store
   const houses = useDataStore(state => state.houses);
@@ -31,7 +30,7 @@ export default function AssignmentInfo(props) {
 
   // เพิ่ม setValue มาใช้กับ dropdownสร้างเอง
   const { register, reset, formState, handleSubmit,setValue } = useForm({
-    resolver: zodResolver(updateAssignmentSchema),
+    resolver: zodResolver(createAssignmentSchema),
     mode: "onSubmit",
   });
   const { errors, isSubmitting } = formState;
@@ -39,46 +38,44 @@ export default function AssignmentInfo(props) {
  const [selectedHouseId, setSelectedHouseId] = useState("");
   const [selectedEmpId, setSelectedEmpId] = useState("");
 
-  useEffect(() => {
-    if (assignment) {
-      reset({
-          taskTitle: assignment.taskTitle || "",
-          taskDescription: assignment.taskDescription || "",
-          houseId: assignment.houseId || "",
-          empId: assignment.empId || "",
-          dutyRole: assignment.dutyRole || "",
-          assignedDate: assignment.assignedDate ? assignment.assignedDate.split('T')[0] : "",
-          status: assignment.status || "Pending",
-      });
-    }
-    //setvalue ไว้ใช้ใน searchable dropdown
-    setSelectedHouseId(assignment.houseId || "");
-    setSelectedEmpId(assignment.empId || "");
-  }, [assignment, reset]);
-
   
 
   const Xbtn = () => {
-    document.getElementById(modalIdinfo).close();
+    document.getElementById("createAssignment").close();
     reset();
   };
 
 
+  const onSubmit = async (data) => {
+    try {
+      // console.log("Updating Assignment Data:", data);
+      const resp = await createAssignmentApi(data);
+      console.log(resp)
+      toast.success("แก้ไขงานสำเร็จ",{containerId:"assignmentPage"});
+      getAssignmentData();
+      document.getElementById("createAssignment").close()
+
+    } catch (error) {
+      console.dir(error);
+      toast.error("เกิดข้อผิดพลาดในการอัปเดต", { containerId: "createAssignment" });
+    }
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg  relative max-w-2xl mx-auto w-full">
-      <form method="dialog" >
+      <ToastContainer containerId={"createAssignment"}/>
+      <form method="dialog">
         <button type='button' onClick={Xbtn} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
 
       <div className="text-2xl font-bold text-center text-gray-800 mb-2">
         {isSubmitting && <span className="loading loading-spinner loading-md mx-2"></span>}
-        แก้ไขข้อมูลงาน
+        มอบหมายงาน
       </div>
       <div className="divider opacity-60 my-2"></div>
       
-      <form >
-        <fieldset disabled={true} className='flex flex-col gap-4 p-2'>
+      <form onSubmit={handleSubmit(onSubmit)} >
+        <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
           {/* แถว 1: ชื่องาน */}
           <div className="w-full">
@@ -164,7 +161,13 @@ export default function AssignmentInfo(props) {
           </div>
 
           <div className="divider my-1"></div>
-        
+
+          {/* ปุ่ม Action */}
+          <div className="flex gap-4 w-full">
+            <button className='btn bg-[#D98A2C] hover:bg-[#c27a26] text-white flex-1' disabled={isSubmitting} type="submit">
+              มอบหมาย
+            </button>
+          </div>
 
         </fieldset>
       </form>

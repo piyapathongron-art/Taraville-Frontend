@@ -1,6 +1,6 @@
 import { Edit } from "lucide-react";
 import EditAssignmentModal from "./EditAssignmentModal";
-import formattedDate from "../utils/dayjs";
+import formattedDate from "../../utils/dayjs";
 import AssignmentInfo from "./AssignmentInfo";
 
 
@@ -55,7 +55,8 @@ const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
                 <button 
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-gray-600"
                     type="button" 
-                onClick={() => document.getElementById(modalId).showModal()}>
+                onClick={(e) => { e.stopPropagation()
+                    document.getElementById(modalId).showModal()}}>
                     <Edit size={24} />
                 </button>
             </div>

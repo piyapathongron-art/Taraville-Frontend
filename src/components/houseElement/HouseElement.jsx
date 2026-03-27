@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Search, ChevronDown,  Image as ImageIcon } from 'lucide-react';
 
 import HouseCard from './HouseCard';
-import useDataStore from '../stores/dataStore';
+import useDataStore from '../../stores/dataStore';
 import CreateHouseModal from './CreateHouseModal';
 
 function HouseElement() {

@@ -1,5 +1,6 @@
+import EmployeeTable from '../components/employeeElement/EmployeeTable'
 import FooterSystem from '../components/FooterSystem'
-import EmployeeTable from '../components/EmployeeTable'
+
 
 function EmployeePage() {
     

@@ -1,45 +1,74 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { createEmployeeSchema, registerSchema } from '../validations/schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { apiRegisterUser } from '../api/MainApi'
-import { toast, ToastContainer } from 'react-toastify'
-import { createEmployeeApi } from '../api/CreateApi'
-import useDataStore from '../stores/dataStore'
 
-function CreateEmployeeModal() {
+import { useForm } from 'react-hook-form'
+import {updateEmployeeSchema } from '../../validations/schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { toast, ToastContainer } from 'react-toastify'
+import { deleteEmployeeApi, editEmployeeApi } from '../../api/CreateApi'
+import useDataStore from '../../stores/dataStore'
+import { useEffect } from 'react'
+
+function EditEmployeeModal(props) {
+  const {employeeId,employee,modalId} = props
   const getEmployeeData = useDataStore(state=>state.getEmployeeData)
   const { register, reset, formState, handleSubmit } = useForm({
-    resolver: zodResolver(createEmployeeSchema),
+    resolver: zodResolver(updateEmployeeSchema),
     mode: "onSubmit",
     defaultValues: { firstName:"",lastName:"",email:"",phone:"",salary:"",address:"" }
   })
   const { errors, isSubmitting, isValid } = formState
+  // console.log(employee)
+
+  useEffect(()=> {
+    if(employee) {
+      reset({
+          firstName:employee.firstName || "",
+          lastName:employee.lastName || "",
+          email:employee.email || "",
+          phone:employee.phone || "",
+          salary:employee.salary || "",
+          address:employee.address || ""
+      })
+    }
+  }, [employee])
 
   const Xbtn = () => {
-    document.querySelector("#createEmployee").close()
+    document.getElementById(modalId).close()
     reset()
+  }
+
+  const onDelete = async () => {
+    try {
+      const resp = await deleteEmployeeApi(employeeId)
+      toast.success(resp.data.message)
+      getEmployeeData()
+      document.getElementById(modalId).close()
+    } catch (error) {
+      console.dir(error)
+      const errMsg = error.response?.data.error || error.message
+      toast.error(errMsg, { containerId: 'editEmployee' })
+    }
   }
 
   const onSubmit = async (data) => {
     try {
+      confirm("ยืนยันการลบพนักงาน!");
       // console.log(data)
-      const resp = await createEmployeeApi(data)
+      const resp = await editEmployeeApi(data,employeeId)
       // console.log(resp)
       toast.success(resp.data.message)
       getEmployeeData()
-      document.querySelector("#createEmployee").close()
+      document.getElementById(modalId).close()
 
     } catch (error) {
       console.dir(error)
       const errMsg = error.response?.data.error || error.message
-      toast.error(errMsg, { containerId: 'createEmployee' })
+      toast.error(errMsg, { containerId: 'editEmployee' })
     }
   }
 
   return (
     <>
-      <ToastContainer containerId="createEmployee" />
+      <ToastContainer containerId="editEmployee" />
       <form method="dialog">
         <button type='button' onClick={Xbtn} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
@@ -120,7 +149,8 @@ function CreateEmployeeModal() {
             <p className="text-sm text-error">{errors.address?.message}</p>
           </div>
 
-          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>Sign up</button>
+          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>สร้างบัญชีพนักงาน</button>
+          <button className='btn bg-red-500 text-xl text-white' onClick={()=>onDelete()} disabled={isSubmitting} type='button'>ลบพนักงาน</button>
 
         </fieldset>
 
@@ -129,4 +159,4 @@ function CreateEmployeeModal() {
   )
 }
 
-export default CreateEmployeeModal
+export default EditEmployeeModal

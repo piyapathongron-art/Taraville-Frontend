@@ -1,6 +1,6 @@
 import React from 'react'
-import useUserStore from '../stores/userStore'
-import TaskList from './taskList'
+import useUserStore from '../../stores/userStore'
+import TaskList from '../taskList'
 
 function AssignmentTable() {
     const assignment = useUserStore(state=>state.assignment)

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { UploadCloud, X, Home } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createHouseSchema, updateHouseSchema } from '../validations/schema';
-import axios from 'axios';
+import { createHouseSchema } from '../../validations/schema';
 import { toast, ToastContainer } from 'react-toastify';
-import { createHouseApi, editHouseApi, uploadHouseImageApi } from '../api/CreateApi';
-import useDataStore from '../stores/dataStore';
-import uploadCloudinary from '../utils/uploadcloud';
+import { createHouseApi,uploadHouseImageApi } from '../../api/CreateApi';
+import useDataStore from '../../stores/dataStore';
+import uploadCloudinary from '../../utils/uploadcloud';
 
 
 function CreateHouseModal() {

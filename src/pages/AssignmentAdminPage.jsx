@@ -1,5 +1,4 @@
-import { ToastContainer } from 'react-toastify'
-import AssignmentElement from '../components/AssignmentElement'
+import AssignmentElement from '../components/assignmentElement/AssignmentElement'
 import FooterSystem from '../components/FooterSystem'
 
 function AssignmentAdminPage() {

@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import FooterSystem from '../components/FooterSystem'
-import HouseElement from '../components/HouseElement'
+import HouseElement from '../components/houseElement/HouseElement'
+
 
 function HousePage() {
   return (

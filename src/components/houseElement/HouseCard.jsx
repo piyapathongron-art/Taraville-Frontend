@@ -1,10 +1,10 @@
 import { ImageIcon, MoreHorizontal } from "lucide-react";
 import EditHouseModal from "./EditHouseModal";
-import { deleteHouseApi } from "../api/CreateApi";
+import { deleteHouseApi } from "../../api/CreateApi";
 import { toast } from "react-toastify";
-import useDataStore from "../stores/dataStore";
+import useDataStore from "../../stores/dataStore";
 import Swal from "sweetalert2";
-import { swal01 } from "../utils/swalFire";
+import { swal01 } from "../../utils/swalFire";
 
 const HouseCard = ({ house }) => {
     const modalId = `editHouse-${house.houseId}`;

@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import {Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import {TrendingUp, TrendingDown, Minus } from 'lucide-react'
 
 const TrendIndicator = ({ current, previous, unit }) => {
