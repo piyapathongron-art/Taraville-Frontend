@@ -6,7 +6,7 @@ function SurveyContact() {
   return (
     <div className='min-w-full'>
 
-      <div className="w-full">
+      <div className="w-full animate-fade-up">
         <div className="flex flex-col my-15 px-12 items-center">
           <h1 className='text-4xl font-medium text-navy'>ติดต่อเรา</h1>
           <p className='font-light text-2xl'>เราพร้อมให้บริการและตอบคำถามของคุณ</p>

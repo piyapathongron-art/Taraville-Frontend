@@ -1,4 +1,5 @@
-import React from 'react'
+import formattedDate from '../utils/dayjs'
+import getStatusBadge from './GetStatusBadge'
 
 function TaskList(props) {
     // console.log(props)
@@ -10,9 +11,9 @@ function TaskList(props) {
         <th>{index+1}</th>
         <td>{taskTitle}</td>
         <td>{`${house.projectName} ${house.houseCode}`}</td>
-        <td>{assignedDate}10-02-2002</td>
-        <td>{status}</td>
-        <td>{house.ownerPhone}999-9999-999</td>
+        <td>{formattedDate(assignedDate)}</td>
+        <td>{getStatusBadge(status)}</td>
+        <td>{house.ownerPhone}</td>
       </tr>
     </tbody>
   )

@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 function SurveyForm() {
     const customerInfo = useCustomerStore(state => state.customerInfo)
     const submitSurvey = useCustomerStore(state => state.submitSurvey)
-    const customerId = useCustomerStore(state => state.customerId)
+    const customerId = useCustomerStore(state => state.customerId) || null
 
-const customerIdString = customerId.toString() || null
+const customerIdString = customerId?.toString() || null
 
     const { register, reset, handleSubmit, formState } = useForm({
         resolver: zodResolver(createSurveySchema),
@@ -41,7 +41,7 @@ const customerIdString = customerId.toString() || null
     }
     // console.log(typeof customerId)
     return (
-        <div className='w-full  overflow-hidden bg-white h-fit' >
+        <div className='w-full  overflow-hidden bg-white h-fit animate-fade-up' >
 
             <div className="flex justify-center" >
                 {isSubmitting && <span className="loading loading-spinner loading-xl absolute z-5 text-brand brightness-100 w-25 bottom-150"></span>}
@@ -175,7 +175,7 @@ const customerIdString = customerId.toString() || null
                                 <fieldset className="fieldset w-full">
                                     <legend className="fieldset-legend text-sm font-medium w-full">ค่างวดที่สะดวกในการผ่อนชำระต่อเดือน</legend>
                                     <input type="text" className="input w-full" placeholder="ค่างวดที่สะดวกในการผ่อนชำระต่อเดือน"
-                                        {...register("province")} />
+                                        {...register("installmentCapacity")} />
                                     {/* error */}
                                 </fieldset>
 

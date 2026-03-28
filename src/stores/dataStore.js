@@ -41,12 +41,16 @@ const useDataStore = create((set, get) => ({
         }
     },
     getEmployeeData: async () => {
+        set({ isLoading: true });
         const resp = await getAllEmployee()
         set({employee: resp.data.result})
+        set({ isLoading: false });
     },
     getHouseData: async () => {
+        set({ isLoading: true });
         const resp = await getAllHouses()
         set({houses: resp.data.result})
+        set({ isLoading: false });
     },
     getAssignmentData: async () => {
         set({ isLoading: true });
@@ -76,10 +80,13 @@ const useDataStore = create((set, get) => ({
         }
     },
     getAllCustomersData: async () => {
+        set({ isLoading: true });
         const resp = await getAllCustomers()
         set({customers: resp.data.result})
+        set({ isLoading: false });
     },
-    getSurveyData: async (id) => {
+    getSurveyData: async () => {
+        set({ isLoading: true });
         try {
              const [customersResp, surveysResp] = await Promise.all([
                 getAllCustomers(),
@@ -89,6 +96,8 @@ const useDataStore = create((set, get) => ({
                 customers: customersResp.data.result || [],
                 surveys: surveysResp.data.result || [],
             });
+
+            set({ isLoading: false });
 
         } catch (error) {
             console.error("Error fetching dashboard data:", error);

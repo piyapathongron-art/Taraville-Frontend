@@ -1,18 +1,34 @@
-import React from 'react'
-import { HomeIcon } from '../icon'
 import taravilleImg from '../assets/taravilleImg.jpg'
 import OurProject from '../components/OurProject'
 import ProjectLocation from '../components/ProjectLocation'
-import RealEstateMap from '../components/ProjectLocationTest'
 import FormCustomer from '../components/FormCustomer'
 import BuildYourOwnDream from '../components/BuildYourOwnDream'
 import Footer from '../components/Footer'
+import useDataStore from '../stores/dataStore'
+import { useEffect } from 'react'
+import { Loader2 } from 'lucide-react'
 
 
 function LandingPage() {
+    const getHouseData = useDataStore(state => state.getHouseData)
+    const houses = useDataStore(state => state.houses)
+    const isLoading = useDataStore(state => state.isLoading)
+    useEffect(() => {
+        getHouseData()
+    }, [])
+
+    if (isLoading) {
+        return (
+            <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={48} />
+                <p className="text-lg text-base-content/60 font-medium">กำลังโหลดข้อมูล</p>
+            </div>
+        );
+    }
+
     return (
         <>
-            <div className='min-w-full'>
+            <div className='min-w-full  animate-fade-up'>
 
                 <div className="w-full h-100">
 
@@ -36,12 +52,12 @@ function LandingPage() {
                     </div>
 
                 </div>
-                <OurProject/>
-                <ProjectLocation/>
+                <OurProject houses={houses}/>
+                <ProjectLocation />
                 <div id='customerform'></div>
                 <FormCustomer />
-                <BuildYourOwnDream/>
-                <Footer/>
+                <BuildYourOwnDream />
+                <Footer />
             </div>
         </>
     )

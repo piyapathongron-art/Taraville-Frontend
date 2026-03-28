@@ -6,6 +6,8 @@ import { toast, ToastContainer } from 'react-toastify'
 import { deleteEmployeeApi, editEmployeeApi } from '../../api/CreateApi'
 import useDataStore from '../../stores/dataStore'
 import { useEffect } from 'react'
+import Swal from 'sweetalert2'
+import { swal01 } from '../../utils/swalFire'
 
 function EditEmployeeModal(props) {
   const {employeeId,employee,modalId} = props
@@ -39,9 +41,13 @@ function EditEmployeeModal(props) {
   const onDelete = async () => {
     try {
       const resp = await deleteEmployeeApi(employeeId)
-      toast.success(resp.data.message)
+      Swal.fire({
+                      title: "Deleted!",
+                      text: "Your file has been deleted.",
+                      icon: "success",
+      
+                  });
       getEmployeeData()
-      document.getElementById(modalId).close()
     } catch (error) {
       console.dir(error)
       const errMsg = error.response?.data.error || error.message
@@ -150,7 +156,7 @@ function EditEmployeeModal(props) {
           </div>
 
           <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>สร้างบัญชีพนักงาน</button>
-          <button className='btn bg-red-500 text-xl text-white' onClick={()=>onDelete()} disabled={isSubmitting} type='button'>ลบพนักงาน</button>
+          <button className='btn bg-red-500 text-xl text-white' onClick={()=>swal01(onDelete,modalId)} disabled={isSubmitting} type='button'>ลบพนักงาน</button>
 
         </fieldset>
 

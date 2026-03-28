@@ -115,11 +115,11 @@ export default function DashboardAI() {
 
     return (
         
-        <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col bg-base-200/40 ">
+        <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col bg-base-200/40  ">
             <div className="flex-1 w-full max-w-full mx-auto p-4 gap-5 justify-center flex flex-wrap     ">
                 
                 {/* Houses */}
-                <div className="flex-1 shadow-main rounded-4xl">
+                <div className="flex-1 shadow-main rounded-4xl animate-fade-up ">
                     <DashboardCardHouse 
                         icon={Home}
                         title="ภาพรวมบ้านทั้งหมด"
@@ -128,7 +128,7 @@ export default function DashboardAI() {
                     />
                 </div>
 
-                <div className="flex-1 min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6">
+                <div className="flex-1 min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
                 {/* Task */}
                 <div className="flex-1 shadow-main rounded-4xl ">
                     <DashboardCard 
@@ -140,7 +140,7 @@ export default function DashboardAI() {
                 </div>
 
                 {/* Customer / Survey */}
-                <div className="flex-1 shadow-main rounded-4xl">
+                <div className="flex-1 shadow-main rounded-4xl animate-fade-up">
                     <DashboardCard 
                         icon={User}
                         title="ข้อมูลลูกค้า"

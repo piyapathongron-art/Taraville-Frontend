@@ -2,6 +2,7 @@ import { Component, lazy, Suspense } from "react";
 
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import useUserStore from '../stores/userStore';
+import { Loader2 } from "lucide-react";
 
 
 const MainLayout = lazy(() => import("../layouts/MainLayout"));
@@ -100,14 +101,13 @@ const userRouter = createBrowserRouter([
 
 function AppRouter() {
     const user = useUserStore(state => state.user);
-
-
-
-
     const finalRouter = user?.role === "User" ? userRouter : user?.role === "Admin" ? adminRouter :guestRouter ;
 // console.log(user)
     return (
-        <Suspense fallback={<div>Loading....</div>}>
+        <Suspense fallback={<div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={68} />
+                <p className="text-xl text-base-content/60 font-medium">กำลังโหลดข้อมูล</p>
+            </div>}>
             <RouterProvider key={user?.userId || "guest"} router={finalRouter} />
         </Suspense>
     );

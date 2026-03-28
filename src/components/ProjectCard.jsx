@@ -1,4 +1,3 @@
-import React from 'react'
 import taraville2 from "../assets/taraville2.jpg";
 import { HomeIcon, StarIcon } from '../icon';
 

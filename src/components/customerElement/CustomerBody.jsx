@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, ChevronDown, Edit, Plus } from 'lucide-react';
+import { Search, ChevronDown, Edit, Plus, Loader2 } from 'lucide-react';
 import CustomerRow from './CustomerRow';
 import useDataStore from '../../stores/dataStore';
 import { ToastContainer } from 'react-toastify';
@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 export default function CustomerBody() {
   const customers = useDataStore(state => state.customers);
   const getSurveyData = useDataStore(state => state.getSurveyData);
+  const isLoading = useDataStore(state=>state.isLoading)
   
   useEffect(() => {
     getSurveyData();
@@ -63,8 +64,18 @@ export default function CustomerBody() {
     return pages;
   };
 
+      //loading
+     if (isLoading) {
+        return (
+            <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={48} />
+                <p className="text-lg text-base-content/60 font-medium">กำลังโหลดข้อมูลพนักงาน...</p>
+            </div>
+        );
+    }
+
   return (
-    <div className="w-full h-[calc(92vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative font-sans">
+    <div className="w-full h-[calc(92vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative">
       <ToastContainer containerId="CustomerBody"/>
       {/* 1. Toolbar */}
       <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed">
@@ -139,7 +150,7 @@ export default function CustomerBody() {
 
         {/* Header ของตาราง (อ้างอิง Grid จาก Row) */}
         <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 mb-4 text-gray-800 font-bold text-base md:text-lg">
-          <div className="text-center">surwayID</div>
+          <div className="text-center">ID</div>
           <div className="text-center">type</div>
           <div className="text-center">ชื่อ</div>
           <div className="text-center">บ้านที่สนใจ</div>
@@ -149,7 +160,7 @@ export default function CustomerBody() {
         </div>
 
         {/* รายการลูกค้า */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2  animate-fade-up">
           {currentItems.length > 0 ? (
             currentItems.map((customer) => (
               <CustomerRow key={customer.customerId} customer={customer} />

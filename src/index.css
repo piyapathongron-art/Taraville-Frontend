@@ -1,6 +1,4 @@
 @import "tailwindcss";
-
-
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
 
 html {
@@ -8,7 +6,7 @@ html {
 }
 
 @plugin "daisyui" {
-  themes: light --default, dark ;
+  themes: light --default, dark;
 }
 
 @theme {
@@ -20,6 +18,19 @@ html {
 
 
   --font-primary: 'Prompt', sans-serif;
+
+ --animate-fade-up: fade-up 1s ease-out forwards;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @layer base {
@@ -29,47 +40,47 @@ html {
   }
 }
 
-  .image-custom {
-    @layer daisyui.l1.l2 {
-      display: grid;
-
-      >* {
-        grid-column-start: 1;
-        grid-row-start: 1;
-      }
-
-      >.card-body {
-        position: relative;
-        color: var(--color-neutral-content)
-          /* var(--color-neutral-content) */
-        ;
-      }
-
-      :where(figure) {
-        overflow: hidden;
-        border-radius: inherit;
-      }
-
-      >figure img {
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(90%);
-        z-index: 1;
-      }
-    }
-  }
-
-
- .image-test {
+.image-custom {
   @layer daisyui.l1.l2 {
     display: grid;
 
-    > * {
+    >* {
       grid-column-start: 1;
       grid-row-start: 1;
     }
 
-    > .card-body {
+    >.card-body {
+      position: relative;
+      color: var(--color-neutral-content)
+        /* var(--color-neutral-content) */
+      ;
+    }
+
+    :where(figure) {
+      overflow: hidden;
+      border-radius: inherit;
+    }
+
+    >figure img {
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(90%);
+      z-index: 1;
+    }
+  }
+}
+
+
+.image-test {
+  @layer daisyui.l1.l2 {
+    display: grid;
+
+    >* {
+      grid-column-start: 1;
+      grid-row-start: 1;
+    }
+
+    >.card-body {
       position: relative;
       opacity: 0;
       color: var(--color-neutral-content);
@@ -78,45 +89,50 @@ html {
     :where(figure) {
       overflow: hidden;
       border-radius: inherit;
-      transition: 0.5s ease; 
+      transition: 0.5s ease;
     }
 
-    > figure img {
+    >figure img {
       height: 100%;
       object-fit: cover;
       filter: brightness(90%);
       z-index: 1;
       /* เพิ่ม transition เพื่อให้ตอน hover ภาพค่อยๆ เปลี่ยน ไม่กระตุก */
-      transition: 0.5s ease; 
+      transition: 0.5s ease;
     }
 
 
-    &:hover > figure img {
+    &:hover>figure img {
 
-      filter: brightness(30%); 
+      filter: brightness(30%);
       scale: 1.2;
-      z-index: 0; 
-      transition: 0.5s ease; 
+      z-index: 0;
+      transition: 0.5s ease;
     }
 
-    &:hover > .card-body {
+    &:hover>.card-body {
       z-index: 1;
       opacity: 100;
-      transition: 0.5s ease-in-out; 
+      transition: 0.5s ease-in-out;
     }
   }
 }
 
 @layer utilities {
   @keyframes showcase-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
   }
-  
+
   .animate-showcase {
     /* ปรับความเร็วตรง 20s ได้ตามต้องการ (ยิ่งตัวเลขเยอะยิ่งช้า) */
-    animation: showcase-scroll 50s linear infinite;
+    animation: showcase-scroll 30s linear infinite;
     /* บังคับให้ความกว้างยืดตามเนื้อหาด้านใน ไม่หดตามหน้าจอ */
-    width: max-content; 
+    width: max-content;
   }
 }

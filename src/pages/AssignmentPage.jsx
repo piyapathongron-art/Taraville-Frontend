@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import useUserStore from '../stores/userStore'
-import AssignmentTable from '../components/AssignmentTable'
 import Footer from '../components/Footer'
+import AssignmentTable from '../components/assignmentElement/AssignmentTable'
 
 function AssignmentPage() {
     const getAssignment = useUserStore(state=>state.getAssignment)

@@ -2,6 +2,7 @@ import { Edit } from "lucide-react";
 import EditAssignmentModal from "./EditAssignmentModal";
 import formattedDate from "../../utils/dayjs";
 import AssignmentInfo from "./AssignmentInfo";
+import getAssignmentStatusBadge from "../GetStatusBadge";
 
 
 const AssignmentRow = (props) => {
@@ -9,20 +10,6 @@ const {assignment} = props
 // console.log(assignment)
 const modalId = `editAssignment-${assignment.assignmentId}`
 const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
-
-    // color status
-    const getStatusBadge = (status) => {
-        switch (status) {
-            case 'Pending':
-                return <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium">รอดำเนินการ</span>;
-            case 'In Progress':
-                return <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">กำลังทำ</span>;
-            case 'Completed':
-                return <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">เสร็จสิ้น</span>;
-            default:
-                return <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">{status || 'ไม่มีสถานะ'}</span>;
-        }
-    };
 
     return (
         <>
@@ -46,7 +33,7 @@ const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
 
             {/* สถานะ */}
             <div className="w-[40%] text-center flex flex-col justify-center items-center">
-                {getStatusBadge(assignment.status)}
+                {getAssignmentStatusBadge(assignment.status)}
                 <p>{formattedDate(assignment?.assignedDate)}</p>
             </div>
 

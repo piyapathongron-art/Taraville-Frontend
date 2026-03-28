@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Search, ChevronDown,  Image as ImageIcon } from 'lucide-react';
+import { Search, ChevronDown,  Image as ImageIcon, Loader2 } from 'lucide-react';
 
 import HouseCard from './HouseCard';
 import useDataStore from '../../stores/dataStore';
@@ -9,6 +9,7 @@ function HouseElement() {
     // สมมติการดึงข้อมูลจาก Zustand
     const houses = useDataStore(state => state.houses) || [];
     const getHouseData = useDataStore(state=>state.getHouseData)
+    const isLoading = useDataStore(state=>state.isLoading)
 
     useEffect(()=>{
         getHouseData()
@@ -21,8 +22,8 @@ function HouseElement() {
     // กรองข้อมูล
     const filteredHouses = useMemo(() => {
         return houses.filter(h => {
-            // แก้ไขปัญหา Cannot read properties of null
-            // โดยการใส่ fallback เป็น string ว่าง (|| '') ก่อนใช้งาน
+            
+            
             const safeHouseCode = h.houseCode || '';
             const safeProjectName = h.projectName || '';
 
@@ -41,6 +42,16 @@ function HouseElement() {
             document.activeElement.blur();
         }
     };
+
+        //loading
+     if (isLoading) {
+        return (
+            <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={48} />
+                <p className="text-lg text-base-content/60 font-medium">กำลังโหลดข้อมูลบ้าน...</p>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -63,7 +74,7 @@ function HouseElement() {
 
                 <div className="flex w-full sm:w-auto gap-4">
 
-                    {/* ตัวกรองสถานะ แบบ DaisyUI Dropdown */}
+                    {/*Dropdown */}
                     <div className="dropdown dropdown-bottom sm:dropdown-end w-full sm:w-48">
                         <div
                             tabIndex={0}
@@ -109,7 +120,7 @@ function HouseElement() {
             </div>
 
             {/* house card*/}
-            <div className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8 mt-15">
+            <div className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8 mt-15 overflow-scroll  animate-fade-up">
 
                 {filteredHouses.length > 0 ? (
                     <div className="flex flex-wrap -mx-3">

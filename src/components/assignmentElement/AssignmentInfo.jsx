@@ -1,62 +1,34 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Trash2 } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form'; 
-import useDataStore from '../../stores/dataStore';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { updateAssignmentSchema } from '../../validations/schema';
-import { deleteAssignmentApi, editAssignmentApi } from '../../api/CreateApi';
-import { toast, ToastContainer } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SearchableDropdown from '../SearchableDropdown';
 
 
 export default function AssignmentInfo(props) {
   const { assignmentId, assignment, modalIdinfo } = props;
-  
-  // ดึง state จาก Store
-  const houses = useDataStore(state => state.houses);
-  const employee = useDataStore(state => state.employee);
-  const getAssignmentData = useDataStore(state => state.getAssignmentData)
 
-  // ดึง state มา map เพ่ือ ใส่ option
-  const houseOptions = houses?.map(h => ({
-    value: h.houseId,
-    label: `${h.houseId} - ${h.houseCode}`
-  })) || [];
-
-
-  const employeeOptions = employee?.map(emp => ({
-    value: emp.employeeId,
-    label: `${emp.firstName} ${emp.lastName}`
-  })) || [];
-
-  // เพิ่ม setValue มาใช้กับ dropdownสร้างเอง
-  const { register, reset, formState, handleSubmit,setValue } = useForm({
+  const { register, reset, formState } = useForm({
     resolver: zodResolver(updateAssignmentSchema),
     mode: "onSubmit",
   });
-  const { errors, isSubmitting } = formState;
-
- const [selectedHouseId, setSelectedHouseId] = useState("");
-  const [selectedEmpId, setSelectedEmpId] = useState("");
+  const { errors } = formState;
 
   useEffect(() => {
     if (assignment) {
       reset({
-          taskTitle: assignment.taskTitle || "",
-          taskDescription: assignment.taskDescription || "",
-          houseId: assignment.houseId || "",
-          empId: assignment.empId || "",
-          dutyRole: assignment.dutyRole || "",
-          assignedDate: assignment.assignedDate ? assignment.assignedDate.split('T')[0] : "",
-          status: assignment.status || "Pending",
+        taskTitle: assignment.taskTitle || "",
+        taskDescription: assignment.taskDescription || "",
+        houseId: `${assignment.houseId}.${assignment.house.houseCode}` || "",
+        empId: `${assignment.empId}.${assignment.employee.firstName}` || "",
+        dutyRole: assignment.dutyRole || "",
+        assignedDate: assignment.assignedDate ? assignment.assignedDate.split('T')[0] : "",
+        status: assignment.status || "Pending",
       });
     }
-    //setvalue ไว้ใช้ใน searchable dropdown
-    setSelectedHouseId(assignment.houseId || "");
-    setSelectedEmpId(assignment.empId || "");
+
   }, [assignment, reset]);
 
-  
+
 
   const Xbtn = () => {
     document.getElementById(modalIdinfo).close();
@@ -72,11 +44,10 @@ export default function AssignmentInfo(props) {
       </form>
 
       <div className="text-2xl font-bold text-center text-gray-800 mb-2">
-        {isSubmitting && <span className="loading loading-spinner loading-md mx-2"></span>}
-        แก้ไขข้อมูลงาน
+        ข้อมูลงาน
       </div>
       <div className="divider opacity-60 my-2"></div>
-      
+
       <form >
         <fieldset disabled={true} className='flex flex-col gap-4 p-2'>
 
@@ -92,28 +63,21 @@ export default function AssignmentInfo(props) {
           </div>
 
           {/* แถว 2: บ้าน / พนักงาน (Searchable Dropdown) */}
-         <div className="w-full flex gap-4">
+          <div className="w-full flex gap-4">
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>บ้าน (House)</label>
-              <input type='hidden' {...register("houseId")}/>
-              <SearchableDropdown 
-                options={houseOptions}
-                value={selectedHouseId}
-                onChange={(val) => {setSelectedHouseId(val); setValue('houseId', val);}} 
-                placeholder="-- ค้นหาและเลือกบ้าน --"
+              <input type='text'
+                {...register("houseId")}
+                className='input input-bordered w-full mt-1'
               />
               <p className="text-sm text-error">{errors.houseId?.message}</p>
             </div>
-            
+
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>ผู้รับผิดชอบ (Employee)</label>
-              <input type='hidden' {...register("empId")}/>
-              <SearchableDropdown 
-                options={employeeOptions}
-                value={selectedEmpId}
+              <input type='text'
+                className='input input-bordered w-full mt-1'
                 {...register("empId")}
-                onChange={(val) => {setSelectedEmpId(val), setValue("empId",val)}} 
-                placeholder="-- ค้นหาและเลือกพนักงาน --"
               />
               <p className="text-sm text-error">{errors.empId?.message}</p>
             </div>
@@ -164,7 +128,7 @@ export default function AssignmentInfo(props) {
           </div>
 
           <div className="divider my-1"></div>
-        
+
 
         </fieldset>
       </form>

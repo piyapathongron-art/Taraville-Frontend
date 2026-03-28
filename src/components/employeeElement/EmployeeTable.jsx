@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Search, ChevronDown } from 'lucide-react';
+import { Search, ChevronDown, Loader2 } from 'lucide-react';
 import useDataStore from '../../stores/dataStore';
 import EmployeeList from './EmployeeList';
 import CreateEmployeeModal from './CreateEmployeeModal';
@@ -7,6 +7,9 @@ import CreateEmployeeModal from './CreateEmployeeModal';
 export default function EmployeeTable() {
 
   const getEmployeeData = useDataStore(state=>state.getEmployeeData)
+  const isLoading = useDataStore(state=>state.isLoading)
+    
+ 
   
   useEffect(()=>{
     getEmployeeData()
@@ -65,6 +68,16 @@ export default function EmployeeTable() {
         }
     };
 
+    //loading
+     if (isLoading) {
+        return (
+            <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={48} />
+                <p className="text-lg text-base-content/60 font-medium">กำลังโหลดข้อมูลพนักงาน...</p>
+            </div>
+        );
+    }
+
   return (
     <> 
     <div className=" w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col relative">
@@ -88,20 +101,20 @@ export default function EmployeeTable() {
         </div>
 
         <div className="flex w-full sm:w-auto gap-4">
+
           {/* ตัวกรองแผนก */}
-          {/* ตัวกรองแผนก แบบ DaisyUI Dropdown */}
           <div className="dropdown dropdown-bottom sm:dropdown-end w-full sm:w-48">
             <div
               tabIndex={0}
               role="button"
-              className="btn w-full bg-white hover:bg-gray-50 border-none shadow-sm text-gray-700 font-normal justify-between px-4 h-11 min-h-[44px] rounded-lg focus:ring-2 focus:ring-[#D98A2C]"
+              className="btn w-full bg-white hover:bg-gray-50 border-none shadow-sm text-gray-700 font-normal justify-between px-4 h-11 min-h-11 rounded-lg focus:ring-2 focus:ring-[#D98A2C]"
             >
               {departmentFilter === '' ? 'แผนกทั้งหมด' : departmentFilter}
               <ChevronDown size={16} className="text-gray-400" />
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-100 rounded-box z-[1] w-full p-2 shadow-lg mt-1 border border-base-200"
+              className="dropdown-content menu bg-base-100 rounded-box z-1 w-full p-2 shadow-lg mt-1 border border-base-200"
             >
               <li>
                 <a
@@ -162,7 +175,7 @@ export default function EmployeeTable() {
         </div>
 
         {/* รายการแถว (List of Rows) */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 animate-fade-up">
           {currentItems.length > 0 ? (
             currentItems.map((emp,index) => (
               <EmployeeList key={emp.employeeId} employee={emp} />

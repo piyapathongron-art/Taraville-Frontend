@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import useDataStore from "../../stores/dataStore";
 import Swal from "sweetalert2";
 import { swal01 } from "../../utils/swalFire";
+import { getHouseStatusBadge } from "../GetStatusBadge";
 
 const HouseCard = ({ house }) => {
     const modalId = `editHouse-${house.houseId}`;
@@ -13,17 +14,6 @@ const HouseCard = ({ house }) => {
     // ฟังก์ชันจัดรูปแบบตัวเลขให้มีคอมม่า
     const formatPrice = (price) => {
         return new Intl.NumberFormat('th-TH').format(price);
-    };
-    // console.log(house.images)
-    // กำหนดสีของ Badge ตามประเภทและสถานะ
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'Available': return 'bg-blue-500';
-            case 'Book': return 'bg-yellow-500';
-            case 'Sold': return 'bg-green-600';
-            case 'Building': return 'bg-gray-500';
-            default: return 'bg-gray-500';
-        }
     };
 
     const hdlDelete = async () => {
@@ -60,12 +50,12 @@ const HouseCard = ({ house }) => {
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role='button'>
                             <div className="avatar items-center cursor-pointer">
-                                <div className="w-10 h-10 rounded-full !flex justify-center items-center hover:bg-gray-200">
+                                <div className="w-10 h-10 rounded-full flex! justify-center items-center hover:bg-gray-200">
                                     <MoreHorizontal size={20} />
                                 </div>
                             </div>
                         </div>
-                        <ul tabIndex={0} className='dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow'>
+                        <ul tabIndex={0} className='dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow'>
                             <li onClick={hdlUpdate}><a>Edit</a></li>
                             <li onClick={() => swal01(hdlDelete)}><a>Delete</a></li>
                         </ul>
@@ -79,7 +69,7 @@ const HouseCard = ({ house }) => {
                 </div>
 
                 {/* Image Box (มี Badge ซ้อนอยู่ด้านใน) */}
-                <div className="relative w-full aspect-[4/3] bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                <div className="relative w-full aspect-4/3 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                     {house.images[0]?.imageUrl ? (
                         <img src={house.images[0]?.imageUrl} alt={house.houseCode} className="w-full h-full object-cover" />
                     ) : (
@@ -93,7 +83,7 @@ const HouseCard = ({ house }) => {
                     </span>}
 
                     {/* Badge: สถานะ (ขวาล่าง) */}
-                    <span className={`absolute bottom-2 right-2 text-white text-[10px] px-3 py-1 rounded-full font-medium shadow-sm ${getStatusColor(house.status)} opacity-90`}>
+                    <span className={`absolute bottom-2 right-2 text-white text-[10px] px-3 py-1 rounded-full font-medium shadow-sm ${getHouseStatusBadge(house.status)} opacity-90`}>
                         {house.status}
                     </span>
                 </div>

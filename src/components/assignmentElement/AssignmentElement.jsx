@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search,  ChevronDown, ArrowUpDown } from 'lucide-react';
+import { Search,  ChevronDown, ArrowUpDown, Loader2 } from 'lucide-react';
 import AssignmentRow from './AssignmentRow';
 import useDataStore from '../../stores/dataStore';
 import { ToastContainer } from 'react-toastify';
@@ -13,6 +13,7 @@ export default function AssignmentElement() {
   // สมมติว่าดึงมาจาก Store
   const getAssignmentData = useDataStore(state => state.getAssignmentData);
   const assignment = useDataStore(state => state.assignments);
+  const isLoading = useDataStore(state=>state.isLoading)
   
   
   useEffect(() => {
@@ -95,6 +96,16 @@ export default function AssignmentElement() {
     setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
   };
 
+      //loading
+     if (isLoading) {
+        return (
+            <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">
+                <Loader2 className="animate-spin text-[#f2b91c] mb-4" size={48} />
+                <p className="text-lg text-base-content/60 font-medium">กำลังโหลดข้อมูลพนักงาน...</p>
+            </div>
+        );
+    }
+
   return (
     <> 
     <div className="w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col relative">
@@ -168,7 +179,7 @@ export default function AssignmentElement() {
         </div>
 
         {/* รายการแถว (List of Rows) */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1  animate-fade-up">
           {currentItems.length > 0 ? (
             currentItems.map((task) => (
               <AssignmentRow key={task.assignmentId} assignment={task} />

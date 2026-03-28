@@ -14,19 +14,19 @@ function OurSupervisor() {
                     
                     {/* main Card */}
                     <div className="flex gap-10 pr-5">
+                        {/* <IntroCard />
                         <IntroCard />
                         <IntroCard />
-                        <IntroCard />
-                        <IntroCard />
+                        <IntroCard /> */}
                         
                     </div>
 
                     {/* for loop */}
                     <div className="flex gap-5 pr-5">
+                        {/* <IntroCard />
                         <IntroCard />
                         <IntroCard />
-                        <IntroCard />
-                        <IntroCard />
+                        <IntroCard /> */}
                     </div>
                     
                 </div>

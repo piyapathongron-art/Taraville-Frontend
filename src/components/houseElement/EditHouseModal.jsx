@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { UploadCloud, X, Home } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -247,6 +247,7 @@ function EditHouseModal(props) {
                                 accept="image/*"
                                 onChange={handleImageChange}
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                                disabled={isSubmitting}
                             />
                         </div>
                     </div>
