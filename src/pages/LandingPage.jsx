@@ -47,8 +47,8 @@ function LandingPage() {
                                 Taraville
                             </p>
                             <p className='font-primary text-shadow-md font-bold text-2xl'>ธาราวิล <span className='font-normal'>และ</span> บ้านคุณภาพ เพชรบูรณ์ </p>
-                            <p className='font-primary text-lg max-[1200px]:text-[16px]'>บริการครบวงจรตั้งแต่บ้านจัดสรร อาคารพาณิชย์ รับสร้างบ้านบนที่ดิน และรีโนเวทเปลี่ยนบ้านเก่าให้เป็นบ้านใหม่ ด้วยทีมงานที่เข้าใจคนเพชรบูรณ์อย่างแท้จริง</p>
-                            <h2 className='font-primary text-2xl font-bold'>สร้างความสุขที่ยั่งยืน บนมาตรฐานงานก่อสร้างระดับมืออาชีพ</h2>
+                            <p className='font-primary text-lg max-[1200px]:text-[16px] max-[1030px]:text-[12px] max-[481px]:text-center'>บริการครบวงจรตั้งแต่บ้านจัดสรร อาคารพาณิชย์ รับสร้างบ้านบนที่ดิน และรีโนเวทเปลี่ยนบ้านเก่าให้เป็นบ้านใหม่ ด้วยทีมงานที่เข้าใจคนเพชรบูรณ์อย่างแท้จริง</p>
+                            <h2 className='font-primary text-2xl font-bold max-[481px]:text-center'>สร้างความสุขที่ยั่งยืน บนมาตรฐานงานก่อสร้างระดับมืออาชีพ</h2>
                         </div>
                 
                     </div>

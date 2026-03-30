@@ -10,7 +10,7 @@ function Header() {
     
     const navigate = useNavigate()
     return (
-        <div className='w-full flex gap-4 justify-between px-5 h-15 bg-brand fixed top-0 z-10 shadow-lg'>
+        <div className='w-full flex gap-4 justify-between px-5 h-15 bg-brand fixed top-0 z-10 shadow-lg '>
 
             <Link to="/" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
                 <div className="flex-1 flex gap-2 items-center px-2">
@@ -21,13 +21,13 @@ function Header() {
 
             {/* Navigation */}
 
-            <div className="flex-1 flex gap-2 justify-center *:w-20 max-md:*:w-16 max-md:justify-start">
+            {/* <div className="flex-1 flex gap-2 justify-center *:w-20 max-md:*:w-16 max-md:justify-start">
 
-            </div>
+            </div> */}
 
             {/* Right dropdown menu */}
-            <div className="flex-1 flex gap-3 items-center justify-end">
-                <NavLink className="cursor-pointer" to={home}><p className='font-primary text-white text-lg'>หน้าแรก</p></NavLink>
+            <div className="flex-1 flex gap-3 items-center justify-end  ">
+                <NavLink className="cursor-pointer" to={home}><p className='font-primary text-white  text-lg'>หน้าแรก</p></NavLink>
                 <NavLink className="cursor-pointer" to="/projects"><p className='font-primary text-white text-lg'>โครงการ</p></NavLink>
                 <NavLink className="cursor-pointer" to="/about"><p className='font-primary text-white text-lg'>เกี่ยวกับ</p></NavLink>
                 <NavLink className="cursor-pointer" to="/contact"><p className='font-primary text-white text-lg'>ติดต่อเรา</p></NavLink>
