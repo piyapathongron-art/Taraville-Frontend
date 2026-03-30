@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import useDataStore from '../stores/dataStore'
 import { useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
+import GoogleStreetModal from '../components/GoogleStreetModal'
 
 
 function LandingPage() {

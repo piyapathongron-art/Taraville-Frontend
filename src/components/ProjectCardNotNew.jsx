@@ -3,7 +3,7 @@ import taraville2 from "../assets/taraville2.jpg";
 import { getHouseStatusBadge } from "./GetStatusBadge";
 
 function ProjectCardNotNew({ house }) {
-  console.log(house)
+  // console.log(house)
   return (
     <div className="card bg-base-100 w-78 shadow-sm">
       <figure className="h-60">

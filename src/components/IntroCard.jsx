@@ -1,10 +1,8 @@
-import React from 'react'
-import taraville2 from "../assets/taraville2.jpg"
 import { Link } from 'react-router'
 import { ImageIcon } from 'lucide-react'
 
 function IntroCard({house}) {
-    console.log(house)
+    // console.log(house)
     const {projectName,details,houseName,images} = house
     return (
         <div className="card bg-navy image-test  w-100 h-55 shadow-xl">

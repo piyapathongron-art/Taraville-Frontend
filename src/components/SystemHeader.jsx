@@ -10,7 +10,7 @@ function SystemHeader() {
     return (
         <div className='w-full flex gap-4 justify-between px-5 h-15 bg-brand fixed top-0 z-10 shadow-lg'>
 
-            <Link to="/" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
+            <Link to="/home" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
                 <div className="flex-1 flex gap-2 items-center px-2">
                     <div className="w-10"><HomeIcon /></div>
                     <h1 className='font-primary text-white text-2xl text-shadow-2xs'>Taraville System</h1>
