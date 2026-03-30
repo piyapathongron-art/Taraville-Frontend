@@ -28,6 +28,7 @@ export default function DashboardAI() {
         
         //seperate house status
         const countStatus = (statusName) => {
+
             const currentCount = houses.filter(h => {
                 //if null mark available
                 const currentStatus = h.status || 'Available'; 
@@ -43,21 +44,42 @@ export default function DashboardAI() {
             return { current: currentCount, previous: previousCount };
         };
 
+
+const countType = (statusName) => {
+            const currentCountType = houses.filter(h => {
+                const currentType = h.houseType || 'บ้านเดี่ยว';
+                return currentType === statusName && isThisMonth(h.createdAt);
+            }).length;
+
+                const previousCountType = houses.filter(h => {
+                    const currentType = h.houseType || 'บ้านเดี่ยว';
+                    return currentType === statusName && isLastMonth(h.createdAt);
+                }).length;
+            return { current: currentCountType, previous: previousCountType };
+            }
+
+
         //return prepared data for use with recharts
         return {
             //current = everyhouse , pervious = everyhouse - thismonth + lastmonth , unit for data
             total: { current: houses.length, previous: houses.length - totalThisMonth + totalLastMonth, unit: 'หลัง' },
             //name for dashboardCard , data , color for chart and easy to serperate
-            details: [
+            statusDetails: [
                 { name: 'ขายแล้ว', ...countStatus('Sold'), color: '#10B981' }, 
                 { name: 'จอง', ...countStatus('Book'), color: '#3B82F6' }, 
                 { name: 'ว่าง', ...countStatus('Available'), color: '#F59E0B' }, 
                 { name: 'กำลังสร้าง', ...countStatus('Building'), color: '#8B5CF6' }, 
                 { name: 'ซ่อมแซม', ...countStatus('Repair'), color: '#EF4444' }, 
+            ],
+            typeDetails: [
+                { name: 'บ้านเดี่ยว', ...countType('บ้านเดี่ยว'), color: '#EC4899' }, 
+                { name: 'ทาวน์โฮม', ...countType('ทาวน์โฮม'), color: '#8B5CF6' }, 
+                { name: 'บ้านแฝด', ...countType('บ้านแฝด'), color: '#3B82F6' }, 
             ]
         };
     }, [houses]);
-
+    
+console.log(houseData)
   const taskData = useMemo(() => {
         const totalThisMonth = assignments.filter(a => isThisMonth(a.createdAt)).length;
         const totalLastMonth = assignments.filter(a => isLastMonth(a.createdAt)).length;

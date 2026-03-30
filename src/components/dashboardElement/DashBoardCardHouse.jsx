@@ -52,7 +52,7 @@ const DashboardCardHouse = ({ icon: Icon, title, data, chartType }) => {
 
                 {/* ฝั่งตัวเลขรายละเอียด */}
                 <div className={`w-120 flex flex-wrap gap-5`}>
-                    {data.details.map((item, index) => (
+                    {data?.statusDetails.map((item, index) => (
                         <div key={index} className={`flex flex-col w-50 px-2 border-l-[3px] border-base-200`} style={{ borderLeftColor: item.color }}>
                             <span className="text-base-content/60 text-xl mb-0.5 line-clamp-1">{item.name}</span>
                             <span className="text-lg xl:text-xl font-bold text-base-content leading-none">{item.current}</span>
@@ -65,17 +65,16 @@ const DashboardCardHouse = ({ icon: Icon, title, data, chartType }) => {
                 <div className={`w-[60%] h-[90%] `}>
                     <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={150}>
                         
-                            <BarChart data={data.details} margin={{ top: 10, right: 20, left: -25, bottom: 0 }}>
+                            <BarChart data={data.typeDetails} margin={{ top: 10, right: 20, left: -25, bottom: 0 }}>
                                 <XAxis dataKey="name" tick={{ fontSize: 16, fill: '#888' }} axisLine={false} tickLine={false} />
                                 <YAxis tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
                                 <Tooltip cursor={{ fill: '#f3f4f6' }} contentStyle={{ borderRadius: '8px', border: 'none', fontSize: '12px' }} />
                                 <Bar dataKey="current" radius={[4, 4, 0, 0]} maxBarSize={50}>
-                                    {data.details.map((entry, index) => (
+                                    {data?.typeDetails.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}
                                 </Bar>
                             </BarChart>
-                        
                     </ResponsiveContainer>
                 </div>
             </div>
