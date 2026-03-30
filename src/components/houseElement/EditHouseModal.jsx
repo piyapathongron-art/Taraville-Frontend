@@ -66,6 +66,7 @@ function EditHouseModal(props) {
                 isNew: true 
             }));
             setImageList(prev => [...prev, ...newImages]);
+            console.log(newImages)
         }
     };
 

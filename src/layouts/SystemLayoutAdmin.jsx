@@ -9,7 +9,9 @@ function SystemLayoutAdmin() {
                 <div className="relative flex gap-4  pt-14 ">
                     <Outlet />
                 </div>
+                
             </div>
+        
         </>
     )
 }

@@ -7,6 +7,9 @@ import { deleteAssignmentApi, editAssignmentApi } from '../../api/CreateApi';
 import { toast, ToastContainer } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SearchableDropdown from '../SearchableDropdown';
+import { swal01 } from '../../utils/swalFire';
+import Swal from 'sweetalert2';
+
 
 
 export default function EditAssignmentModal(props) {
@@ -64,12 +67,19 @@ export default function EditAssignmentModal(props) {
   };
 
   const onDelete = async () => {
-    if (window.confirm("ยืนยันการลบงานนี้?")) {
+    
         try {
             // console.log("Deleting Assignment ID:", assignmentId);
             const resp = await deleteAssignmentApi(assignmentId);
-            console.log(resp)
-            toast.success("ลบงานสำเร็จ");
+            Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success",
+            
+                        });
+
+            // console.log(resp)
+            // toast.success("ลบงานสำเร็จ");
             getAssignmentData();
             document.getElementById(modalId).close()
 
@@ -77,7 +87,7 @@ export default function EditAssignmentModal(props) {
             console.dir(error);
             toast.error("เกิดข้อผิดพลาดในการลบงาน", { containerId: modalId });
         }
-    }
+    
   };
 
   const onSubmit = async (data) => {
@@ -198,7 +208,7 @@ export default function EditAssignmentModal(props) {
 
           {/* ปุ่ม Action */}
           <div className="flex gap-4 w-full">
-            <button className='btn bg-red-500 hover:bg-red-600 text-white flex-1' onClick={onDelete} disabled={isSubmitting} type='button'>
+            <button className='btn bg-red-500 hover:bg-red-600 text-white flex-1' onClick={()=>swal01(onDelete,modalId)} disabled={isSubmitting} type='button'>
               <Trash2 size={20} /> ลบงานนี้
             </button>
             <button className='btn bg-[#D98A2C] hover:bg-[#c27a26] text-white flex-1' disabled={isSubmitting} type="submit">

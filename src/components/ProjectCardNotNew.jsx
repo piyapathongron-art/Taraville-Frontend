@@ -1,11 +1,11 @@
 import { ImageIcon } from "lucide-react";
-import taraville2 from "../assets/taraville2.jpg";
-import { getHouseStatusBadge } from "./GetStatusBadge";
+import GetHouseStatusBadge from "./GetStatusBadge";
+
 
 function ProjectCardNotNew({ house }) {
   // console.log(house)
   return (
-    <div className="card bg-base-100 w-78 shadow-sm">
+    <div className="card bg-base-100 w-78 shadow-main">
       <figure className="h-60">
         {house.images[0]?.imageUrl ? (
           <img src={house.images[0]?.imageUrl} alt={house.houseCode} className="w-full h-full object-cover" />
@@ -15,7 +15,7 @@ function ProjectCardNotNew({ house }) {
         )}
       </figure>
       {/* Badge: ประเภทบ้าน (ขวาบน) */}
-      {house.houseType && <span className="absolute top-2 right-2 bg-[#4A7A9A] text-white text-[10px] px-2.5 py-1 rounded-full font-medium shadow-sm">
+      {house.houseType && <span className="absolute top-2 right-2 bg-[#4A7A9A] text-white text-[10px] px-2.5 py-1 rounded-full font-medium shadow-main">
         {house.houseType}
       </span>}
 
@@ -25,7 +25,7 @@ function ProjectCardNotNew({ house }) {
           <span className="font-light">{house.houseName} </span>
           {house.projectName}
         </h2>
-      <span className={`absolute bottom-46 right-2 text-white text-[16px] px-3 py-1 rounded-full font-medium shadow-sm ${getHouseStatusBadge(house.status)} `}>
+      <span className={`absolute bottom-46 right-2 text-white text-[16px] px-3 py-1 rounded-full font-medium shadow-sm ${GetHouseStatusBadge(house.status)} `}>
         {house.status}
       </span>
         <p className="overflow-scroll">{house.details}</p>

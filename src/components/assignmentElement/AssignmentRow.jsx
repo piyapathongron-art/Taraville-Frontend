@@ -2,7 +2,9 @@ import { Edit } from "lucide-react";
 import EditAssignmentModal from "./EditAssignmentModal";
 import formattedDate from "../../utils/dayjs";
 import AssignmentInfo from "./AssignmentInfo";
-import getAssignmentStatusBadge from "../GetStatusBadge";
+import GetAssignmentStatusBadge from "../GetAssignmentStatusBadge";
+
+
 
 
 const AssignmentRow = (props) => {
@@ -33,7 +35,7 @@ const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
 
             {/* สถานะ */}
             <div className="w-[40%] text-center flex flex-col justify-center items-center">
-                {getAssignmentStatusBadge(assignment.status)}
+                {GetAssignmentStatusBadge(assignment.status)}
                 <p>{formattedDate(assignment?.assignedDate)}</p>
             </div>
 

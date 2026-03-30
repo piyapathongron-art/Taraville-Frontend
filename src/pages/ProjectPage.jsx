@@ -1,5 +1,4 @@
 import { SerchIcon2 } from '../icon'
-import ProjectCard from '../components/ProjectCard'
 import Footer from '../components/Footer'
 import ProjectCardNotNew from '../components/ProjectCardNotNew'
 import useDataStore from '../stores/dataStore'

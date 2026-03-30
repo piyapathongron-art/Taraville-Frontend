@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 import useDataStore from "../../stores/dataStore";
 import Swal from "sweetalert2";
 import { swal01 } from "../../utils/swalFire";
-import { getHouseStatusBadge } from "../GetStatusBadge";
+import GetHouseStatusBadge from "../GetStatusBadge";
+
+
 
 const HouseCard = ({ house }) => {
     const modalId = `editHouse-${house.houseId}`;
@@ -57,7 +59,7 @@ const HouseCard = ({ house }) => {
                         </div>
                         <ul tabIndex={0} className='dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow'>
                             <li onClick={hdlUpdate}><a>Edit</a></li>
-                            <li onClick={() => swal01(hdlDelete)}><a>Delete</a></li>
+                            <li onClick={() => swal01(hdlDelete,modalId)}><a>Delete</a></li>
                         </ul>
                     </div>
 
@@ -83,7 +85,7 @@ const HouseCard = ({ house }) => {
                     </span>}
 
                     {/* Badge: สถานะ (ขวาล่าง) */}
-                    <span className={`absolute bottom-2 right-2 text-white text-[10px] px-3 py-1 rounded-full font-medium shadow-sm ${getHouseStatusBadge(house.status)} opacity-90`}>
+                    <span className={`absolute bottom-2 right-2 text-white text-[10px] px-3 py-1 rounded-full font-medium shadow-sm ${GetHouseStatusBadge(house.status)} `}>
                         {house.status}
                     </span>
                 </div>

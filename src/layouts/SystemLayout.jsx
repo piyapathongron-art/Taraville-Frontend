@@ -8,8 +8,10 @@ function SystemLayout() {
                 <SystemHeader />
                 <div className="relative flex gap-4  border pt-14">
                     <Outlet />
+                    
                 </div>
             </div>
+            
         </>
     )
 }
