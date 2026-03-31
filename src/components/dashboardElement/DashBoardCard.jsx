@@ -6,21 +6,21 @@ const TrendIndicator = ({ current, previous, unit }) => {
 
     if (diff > 0) {
         return (
-            <div className="flex items-center text-emerald-500 text-xl  font-medium ">
+            <div className="flex items-center text-emerald-500 text-md font-medium ">
                 <TrendingUp size={12} className="mr-1" />
                 เพิ่ม {diff} {unit}
             </div>
         );
     } else if (diff < 0) {
         return (
-            <div className="flex items-center text-rose-500 text-xl  font-medium ">
+            <div className="flex items-center text-rose-500 text-md  font-medium ">
                 <TrendingDown size={12} className="mr-1" />
                 ลด {Math.abs(diff)} {unit}
             </div>
         );
     } else {
         return (
-            <div className="flex items-center text-base-content/40 text-xl  ">
+            <div className="flex items-center text-base-content/40 text-md  ">
                 <Minus size={12} className="mr-1" />
                 คงที่
             </div>
@@ -43,7 +43,7 @@ const DashboardCard = ({ icon: Icon, title, data, chartType}) => {
                 <div className="z-10">
                     <h3 className="text-xl font-medium text-shadow-2xs">{title}</h3>
                     <p className="text-3xl xl:text-5xl font-bold mt-1 tracking-tight">{data.total.current}</p>
-                    <div className="text-white/90 bg-white px-2 py-0.5 rounded-full w-max mt-2 text-xl flex items-center">
+                    <div className="text-white/90 bg-white px-2 py-0.5 rounded-full w-max mt-2 text-sm flex items-center">
                         <TrendIndicator current={data?.total.current} previous={data.total.previous} unit={data.total.unit} />
                     </div>
                 </div>
@@ -57,7 +57,7 @@ const DashboardCard = ({ icon: Icon, title, data, chartType}) => {
                     {data.details.map((item, index) => (
                         <div key={index} className={`flex flex-col px-2 border-l-[3px] border-base-200`} style={{ borderLeftColor: item.color }}>
                             <span className="text-base-content/60 text-lg mb-1">{item.name}</span>
-                            <span className="text-2xl font-bold text-base-content leading-none">{item.current}</span>
+                            <span className="text-xl font-bold text-base-content leading-none">{item.current}</span>
                             <TrendIndicator current={data?.total.current} previous={data.total.previous} unit={data.total.unit} />
                         </div>
                     ))}

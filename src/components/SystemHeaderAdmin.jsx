@@ -13,7 +13,7 @@ function SystemHeaderAdmin() {
             <Link to="/dashboard" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
                 <div className="flex-1 flex gap-2 items-center px-2">
                     <div className="w-10"><HomeIcon /></div>
-                    <h1 className='font-primary text-white text-2xl text-shadow-2xs'>Taraville System</h1>
+                    <h1 className='font-light text-white text-2xl text-shadow-2xs max-[1025px]:text-lg max-[1025px]:text-center max-[1025px]:mr-5'>Taraville System</h1>
                 </div>
             </Link>
 

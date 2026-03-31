@@ -48,12 +48,12 @@ const DashboardCardHouse = ({ icon: Icon, title, data, chartType }) => {
             </div>
 
             {/* Container Box*/}
-            <div className={`p-4 flex flex-1 min-w-0 flex-row items-center gap-4`}>
+            <div className={`p-4 flex  flex-1 min-w-0 flex-row items-center `}>
 
                 {/* ฝั่งตัวเลขรายละเอียด */}
-                <div className={`w-120 flex flex-wrap gap-5`}>
+                <div className={`w-fit max-[1025px]:w-70 flex flex-wrap gap-5`}>
                     {data?.statusDetails.map((item, index) => (
-                        <div key={index} className={`flex flex-col w-50 px-2 border-l-[3px] border-base-200`} style={{ borderLeftColor: item.color }}>
+                        <div key={index} className={`flex flex-col w-50 px-2 border-l-[3px] border-base-200 max-[1025px]:w-40`} style={{ borderLeftColor: item.color }}>
                             <span className="text-base-content/60 text-xl mb-0.5 line-clamp-1">{item.name}</span>
                             <span className="text-lg xl:text-xl font-bold text-base-content leading-none">{item.current}</span>
                             <TrendIndicator current={item.current} previous={item.previous} unit={data.total.unit} />
@@ -62,14 +62,14 @@ const DashboardCardHouse = ({ icon: Icon, title, data, chartType }) => {
                 </div>
 
                 {/* ฝั่งกราฟ */}
-                <div className={`w-[60%] h-[90%] `}>
+                <div className={`w-[70%] h-[90%] `}>
                     <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={150}>
                         
-                            <BarChart data={data.typeDetails} margin={{ top: 10, right: 20, left: -25, bottom: 0 }}>
+                            <BarChart data={data.typeDetails} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
                                 <XAxis dataKey="name" tick={{ fontSize: 16, fill: '#888' }} axisLine={false} tickLine={false} />
-                                <YAxis tick={{ fontSize: 10, fill: '#888' }} axisLine={false} tickLine={false} />
-                                <Tooltip cursor={{ fill: '#f3f4f6' }} contentStyle={{ borderRadius: '8px', border: 'none', fontSize: '12px' }} />
-                                <Bar dataKey="current" radius={[4, 4, 0, 0]} maxBarSize={50}>
+                                <YAxis tick={{ fontSize: 15, fill: '#888' }} axisLine={false} tickLine={false} />
+                                <Tooltip cursor={{ fill: '#f3f4f6' }} contentStyle={{ borderRadius: '8px', border: '1px solid black', fontSize: '12px' }} />
+                                <Bar dataKey="current" radius={[4, 4, 0, 0]} maxBarSize={30}>
                                     {data?.typeDetails.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}

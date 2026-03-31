@@ -78,7 +78,7 @@ const countType = (statusName) => {
             ]
         };
     }, [houses]);
-    
+
 console.log(houseData)
   const taskData = useMemo(() => {
         const totalThisMonth = assignments.filter(a => isThisMonth(a.createdAt)).length;
@@ -150,7 +150,7 @@ console.log(houseData)
                     />
                 </div>
 
-                <div className="flex-1 min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
+                <div className=" min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
                 {/* Task */}
                 <div className="flex-1 shadow-main rounded-4xl ">
                     <DashboardCard 
