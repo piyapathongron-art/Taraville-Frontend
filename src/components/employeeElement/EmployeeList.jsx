@@ -8,7 +8,7 @@ const EmployeeList = (props) => {
   
   return (
     <>
-      <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] px-4 py-3 mb-3 transition-all hover:shadow-md">
+      <div className="flex h-20 items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] px-4 py-3 mb-3 transition-all hover:shadow-md ">
         {/* คอลัมน์ 1: ID */}
         <div className="w-[20%] text-center flex flex-col justify-center">
           <span className="text-xl font-bold text-gray-800">{employee.employeeId}</span>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, Loader2, Home, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, ChevronDown, Loader2} from 'lucide-react';
 import HouseCard from './HouseCard';
 import CreateHouseModal from './CreateHouseModal';
 import { getPaginateApi } from '../../api/paginateApi';
