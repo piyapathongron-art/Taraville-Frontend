@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import useCustomerStore from '../stores/customerStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createCustomerSchema } from '../validations/schema'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { useEffect } from 'react'
 
@@ -46,11 +46,12 @@ function FormCustomer() {
              console.log(resp)
             toast.success('บันทึกข้อมูลเรียบร้อย')
             navigate("/contact")
-          
+            
         } catch (error) {
             console.dir(error)
             const errMsg = error.response?.data.error || error.message
-            toast.error(errMsg)
+            toast.error(errMsg,{containerId: "mainToast"})
+            navigate("/contact")
         }
     }
  

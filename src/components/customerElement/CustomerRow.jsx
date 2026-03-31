@@ -6,7 +6,7 @@ import EditSurveyModal from "./EditSurveyModal";
 const CustomerRow = ({ customer }) => {
   const editCustomerModalId = `editCustomer-${customer.customerId}`;
   const editSurveyModalId = `editSurvey-${customer.projectSurveys?.surveyId || 'new'}-${customer.customerId}`;
-
+console.log(customer)
   return (
     <>
       {/* โครงสร้างแถว */}
@@ -14,12 +14,12 @@ const CustomerRow = ({ customer }) => {
         
         {/* surveyID (ดึงจาก projectSurveys) */}
         <div className="text-center font-bold text-lg">
-          {customer.projectSurveys?.surveyId ? String(customer.projectSurveys.surveyId).padStart(2, '0') : '-'}
+          {customer.customerId ? String(customer.customerId).padStart(2, '0') : '-'}
         </div>
 
         {/* type */}
         <div className="text-center font-medium">
-          {customer.projectSurveys?.surveyType || '-'}
+          {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer?.projectSurveys?.surveyType || '-'}
         </div>
 
         {/* ชื่อ */}
@@ -29,12 +29,12 @@ const CustomerRow = ({ customer }) => {
 
         {/* บ้านที่สนใจ */}
         <div className="text-center truncate px-2">
-          {customer.projectSurveys?.interestedPropertyType || '-'}
+          {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer.projectSurveys?.interestedPropertyType || '-'}
         </div>
 
         {/* งบที่มี */}
         <div className="text-center text-sm truncate px-2">
-           {customer.projectSurveys?.expectedBudget ? Number(customer.projectSurveys.expectedBudget).toLocaleString() : '-'}
+           {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer?.projectSurveys?.expectedBudget ? Number(customer.projectSurveys.expectedBudget).toLocaleString() : '-'}
         </div>
 
         {/* เบอร์ติดต่อ */}

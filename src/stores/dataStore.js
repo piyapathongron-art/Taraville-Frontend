@@ -97,6 +97,8 @@ const useDataStore = create((set, get) => ({
                 surveys: surveysResp.data.result || [],
             });
 
+            console.log(customersResp)
+
             set({ isLoading: false });
 
         } catch (error) {

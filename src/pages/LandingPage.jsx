@@ -8,6 +8,7 @@ import useDataStore from '../stores/dataStore'
 import { useEffect } from 'react'
 import { Loader2 } from 'lucide-react'
 import GoogleStreetModal from '../components/GoogleStreetModal'
+import { ToastContainer } from 'react-toastify'
 
 
 function LandingPage() {
@@ -32,6 +33,7 @@ function LandingPage() {
             <div className='min-w-full  animate-fade-up'>
 
                 <div className="w-full h-100">
+        
 
                     <div
                         className="flex flex-col items-center h-full justify-center bg-cover bg-position-[50%_80%] bg-no-repeat relative"

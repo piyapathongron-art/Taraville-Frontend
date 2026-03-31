@@ -14,6 +14,7 @@ export default function CustomerBody() {
     getSurveyData();
   }, []);
 
+  console.log(customers)
   
   // States สำหรับค้นหาและตัวกรอง
   const [searchTerm, setSearchTerm] = useState('');
@@ -195,18 +196,7 @@ export default function CustomerBody() {
         )}
       </div>
 
-      {/* Modal เพิ่มลูกค้า */}
-      {/* <dialog id="createCustomerModal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">เพิ่มข้อมูลลูกค้า</h3>
-          <p className="py-4">ฟอร์มสำหรับเพิ่มลูกค้า...</p>
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">ปิด</button>
-            </form>
-          </div>
-        </div>
-      </dialog> */}
+  
 
     </div>
   );

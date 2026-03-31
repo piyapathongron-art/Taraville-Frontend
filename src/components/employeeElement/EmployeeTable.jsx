@@ -38,7 +38,7 @@ export default function EmployeeTable() {
           department: departmentFilter, 
           page: currentPage, 
           limit: itemsPerPage});
-          console.log("Employee data fetched:", resp.data);
+          // console.log("Employee data fetched:", resp.data);
         setTotalEmployees(resp.data.totalEmployee); 
         setEmployees(resp.data.employees)
       }catch (error) {
@@ -203,7 +203,7 @@ export default function EmployeeTable() {
 
           {/* Pagination */}
           {totalPages > 0 && (
-                <div className="w-full bg-white border mt-5 border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+                <div className="w-full bg-white border mt-5 border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)] animate-fade-up">
                     <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
                         <span className="text-sm text-gray-500">
                             รวมทั้งหมด <strong className="text-gray-800">{totalEmployees}</strong> รายการ

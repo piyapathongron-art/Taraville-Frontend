@@ -14,7 +14,8 @@ function EditSurveyModal(props) {
 
   const survey = customer?.projectSurveys;
   const surveyId = survey?.surveyId;
-  
+  const isDeleted = survey?.deletedAt;
+  console.log(isDeleted)
   const getSurveyData = useDataStore(state => state.getSurveyData);
 
   const { register, reset, formState, handleSubmit } = useForm({
@@ -24,7 +25,11 @@ function EditSurveyModal(props) {
   const { errors, isSubmitting } = formState;
 
   useEffect(() => {
-    if (survey) {
+    
+
+    if (isDeleted) {
+      return reset() 
+    } else  {
       reset({
         customerId: String(customerId),
         userId: survey.userId ? String(survey.userId) : "",
@@ -42,11 +47,10 @@ function EditSurveyModal(props) {
         surveyType: survey.surveyType || "Online", 
       });
     }
-  }, [survey, customerId, reset]);
+  }, []);
 
   const Xbtn = () => {
     document.getElementById(modalId).close();
-    reset();
   };
 
   const onDeleteSurvey = async () => {
