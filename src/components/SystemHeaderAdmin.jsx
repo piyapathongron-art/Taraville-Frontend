@@ -37,10 +37,7 @@ function SystemHeaderAdmin() {
             
             toast.success(resp.data?.message || "แก้ไขข้อมูลสำเร็จ", { containerId: "editProfileModalId" });
             
-            // หากระบบคุณมีฟังก์ชัน fetch ข้อมูล user ใหม่ ให้เรียกใช้ตรงนี้
-            // if (updateUser) updateUser(); 
 
-            // ดีเลย์นิดหน่อยก่อนปิด Modal ให้ผู้ใช้เห็นข้อความ Success
             setTimeout(() => {
                 document.getElementById("editProfileModalId").close();
             }, 1000);
@@ -57,8 +54,6 @@ function SystemHeaderAdmin() {
         reset(); // รีเซ็ตฟอร์มกลับไปเป็นค่าเดิมหากกดปิด
     };
 
-    
-    // ถ้า isActive เป็น true จะใช้สไตล์นึง (เช่น สีทอง และมีเส้นใต้) ถ้า false ก็จะเป็นสีขาวปกติ
     const navLinkClass = ({ isActive }) => 
         isActive 
             ? "text-brand text-2xl font-medium bg-white p-1 rounded-full px-3 transition-all max-md:text-lg" 
@@ -92,7 +87,7 @@ function SystemHeaderAdmin() {
                             <UserIcon className="w-10" />
                         </div>
                     
-                    <div tabIndex={0} className=" menu dropdown-content bg-base-100 rounded-box z-1 w-100 p-2 mt-4 shadow-sm">
+                    <div tabIndex={0} className=" menu dropdown-content bg-base-100 rounded-box z-300 w-100 p-2 mt-4 shadow-sm">
                         <div className="flex flex-col gap-2  mt-1 ml-1">
                             <h2 className='text-xl '>{`${user.firstName} ${user.lastName}`}</h2>
                             <div className="flex gap-5">

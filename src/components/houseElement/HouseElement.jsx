@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
-import { Search, ChevronDown, Loader2} from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, ChevronDown, Loader2, Home, MapPin } from 'lucide-react';
 import HouseCard from './HouseCard';
 import CreateHouseModal from './CreateHouseModal';
 import { getPaginateApi } from '../../api/paginateApi';
-
-
 
 function HouseElement() {
     const [houses, setHouses] = useState([]);
@@ -31,13 +29,11 @@ function HouseElement() {
         return () => clearTimeout(timer);
     }, [searchTerm]);
 
-    
-  // ฟังก์ชันดึงข้อมูลจาก Backend
+    // ฟังก์ชันดึงข้อมูลจาก Backend
     useEffect(() => {
         const fetchHouses = async () => {
             setIsLoading(true);
             try {
-
                 const resp = await getPaginateApi({
                     search: debouncedSearch,
                     type: typeFilter,
@@ -49,7 +45,6 @@ function HouseElement() {
                 setHouses(resp.data.houses.result); 
                 setTotalItems(resp.data.houses.total); 
                 setTotalHouses(resp.data.totalHouse);
-                // console.log("Fetched houses:", resp);
             } catch (error) {
                 console.error("Error fetching houses:", error);
                 
@@ -92,10 +87,11 @@ function HouseElement() {
 
     return (
         <>
-        <div className="w-full h-screen bg-gray-50 flex flex-col relative overflow-hidden">
+        {/* ใช้ h-screen และ flex-col ควบคุมโครงสร้างโดยรวมทั้งหมด */}
+        <div className="w-full h-[calc(100vh-3.5rem)] bg-gray-50 flex flex-col relative overflow-hidden">
 
-            {/* Toolbar สีเทาด้านบน */}
-            <div className="bg-[#94A3B8] w-full py-4 px-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed z-10">
+            {/* Toolbar สีเทาด้านบน (Fixed เสมอ) */}
+            <div className="bg-[#94A3B8] w-full py-4 px-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed top-15 z-2">
 
                 {/* ช่องค้นหา */}
                 <div className="relative w-full sm:w-80 sm:ml-10">
@@ -161,8 +157,8 @@ function HouseElement() {
                 </div>
             </div>
 
-            {/* พื้นที่หลักสำหรับแสดง Card บ้าน */}
-            <div className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8 mt-32 sm:mt-20 overflow-y-auto flex flex-col">
+            {/* พื้นที่หลักสำหรับแสดง Card บ้าน (พื้นที่นี้อนุญาตให้ Scroll ได้) */}
+            <div className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8 mt-32 sm:mt-20 overflow-y-auto flex flex-col pb-6">
                 
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center flex-1">
@@ -185,9 +181,12 @@ function HouseElement() {
                     </div>
                 )}
 
-                {/* UI ปุ่มเปลี่ยนหน้า (Pagination) */}
-                {!isLoading && totalPages > 0 && (
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 pt-6 border-t border-gray-200 w-full">
+            </div>
+
+            {/* UI ปุ่มเปลี่ยนหน้า (Pagination) แยกออกมาอยู่นอกพื้นที่ Scroll ทำให้ติดขอบล่างเสมอ */}
+            {!isLoading && totalPages > 0 && (
+                <div className="w-full bg-white border-t border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+                    <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
                         <span className="text-sm text-gray-500">
                             รวมทั้งหมด <strong className="text-gray-800">{totalHouses}</strong> รายการ
                         </span>
@@ -227,9 +226,9 @@ function HouseElement() {
                             </button>
                         </div>
                     </div>
-                )}
+                </div>
+            )}
 
-            </div>
         </div>
 
         <dialog id="createHouse" className="modal">
