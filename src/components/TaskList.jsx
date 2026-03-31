@@ -1,5 +1,6 @@
 import formattedDate from '../utils/dayjs'
-import getStatusBadge from './GetStatusBadge'
+import GetAssignmentStatusBadge from './GetAssignmentStatusBadge'
+
 
 function TaskList(props) {
     // console.log(props)
@@ -12,7 +13,7 @@ function TaskList(props) {
         <td>{taskTitle}</td>
         <td>{`${house.projectName} ${house.houseCode}`}</td>
         <td>{formattedDate(assignedDate)}</td>
-        <td>{getStatusBadge(status)}</td>
+        <td>{GetAssignmentStatusBadge(status)}</td>
         <td>{house.ownerPhone}</td>
       </tr>
     </tbody>

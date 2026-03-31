@@ -10,15 +10,24 @@ function AssignmentPage() {
       getAssignment()
     },[])
 
-
   return (
-    <div  className='min-w-full h-screen flex flex-col justify-between'>
-      <h1 className='text-5xl font-medium text-navy mt-15 mx-10'>งานที่ได้รับมอบหมาย</h1>
-        <div className="w-full  flex justify-center ">
+    // เปลี่ยนจาก h-screen เป็น min-h-screen เพื่อรองรับกรณีที่เนื้อหายาวกว่าหน้าจอ
+    <div className='min-w-full min-h-screen flex flex-col'>
+      
+      {/* ส่วนหัว */}
+      <div className="w-full py-8 px-10">
+        <h1 className='text-5xl font-medium text-navy mt-10'>งานที่ได้รับมอบหมาย</h1>
+      </div>
+
+      {/* ส่วนเนื้อหา (ใส่ flex-1 เพื่อให้กินพื้นที่ว่างตรงกลางทั้งหมด)
+        และใส่ items-center เพื่อให้เนื้อหา (Table) อยู่กึ่งกลางหน้าจอ
+      */}
+      <div className="flex-1 w-full flex flex-col items-center justify-start pb-10">
           <AssignmentTable/>
-        </div>
+      </div>
         
-        <Footer/>
+      {/* Footer จะถูกดันไปอยู่ล่างสุดเสมอ */}
+      <Footer/>
     </div>
   )
 }

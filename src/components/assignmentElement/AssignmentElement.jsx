@@ -175,7 +175,7 @@ export default function AssignmentElement() {
             กำหนดการ 
             <ArrowUpDown size={16} className={`transition-transform ${sortOrder === 'asc' ? 'rotate-180 text-[#D98A2C]' : 'text-gray-400'}`} />
           </div>
-          <div className="w-[10%]"></div> {/* พื้นที่ว่างสำหรับปุ่มแก้ไข */}
+          <div className="w-[10%]"></div> 
         </div>
 
         {/* รายการแถว (List of Rows) */}

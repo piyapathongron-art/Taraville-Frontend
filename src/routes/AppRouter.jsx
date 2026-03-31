@@ -83,7 +83,7 @@ const userRouter = createBrowserRouter([
         path: "/",
         Component: MainLayout,
         children: [
-            { index: true, element: <Navigate to="/login" /> },
+            { index: true, element: <Navigate to="/assignment" /> },
             ...publicPages
         ]
     },
@@ -91,17 +91,16 @@ const userRouter = createBrowserRouter([
         path: "/",
         Component: SystemLayout,
         children: [
-            { path: "/login", Component: LoginPage },
             { path: "/assignment", Component: AssignmentPage }
         ]
     },
     //check random url
-    { path: "*", element: <Navigate to="/login" /> }
+    { path: "*", element: <Navigate to="/assignment" /> }
 ]);
 
 function AppRouter() {
     const user = useUserStore(state => state.user);
-    const finalRouter = user?.role === "User" ? userRouter : user?.role === "Admin" ? adminRouter :guestRouter ;
+    const finalRouter = user?.role === "User" || user?.role === "Staff" ? userRouter : user?.role === "Admin" ? adminRouter :guestRouter ;
 // console.log(user)
     return (
         <Suspense fallback={<div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">

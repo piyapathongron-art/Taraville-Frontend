@@ -79,7 +79,7 @@ const countType = (statusName) => {
         };
     }, [houses]);
 
-console.log(houseData)
+// console.log(houseData)
   const taskData = useMemo(() => {
         const totalThisMonth = assignments.filter(a => isThisMonth(a.createdAt)).length;
         const totalLastMonth = assignments.filter(a => isLastMonth(a.createdAt)).length;
