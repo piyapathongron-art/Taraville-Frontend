@@ -6,6 +6,7 @@ import { useEffect, useMemo } from 'react';
 import useDataStore from '../stores/dataStore';
 import { isLastMonth, isThisMonth } from '../utils/dateConverter';
 import FooterSystem from '../components/FooterSystem';
+import { Link } from 'react-router';
 
 
 // dashboard
@@ -141,34 +142,41 @@ const countType = (statusName) => {
             <div className="flex-1 w-full max-w-full mx-auto p-4 gap-5 justify-center flex flex-wrap     ">
                 
                 {/* Houses */}
+                
                 <div className="flex-1 shadow-main rounded-4xl animate-fade-up ">
+                    <Link to="/house">
                     <DashboardCardHouse 
                         icon={Home}
                         title="ภาพรวมบ้านทั้งหมด"
                         data={houseData}
                         chartType="bar"
                     />
+                    </Link>
                 </div>
 
                 <div className=" min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
                 {/* Task */}
                 <div className="flex-1 shadow-main rounded-4xl ">
+                    <Link to="/allAssignment">
                     <DashboardCard 
                         icon={Archive}
                         title="งานที่รับผิดชอบ"
                         data={taskData}
                         chartType="pie"
                     />
+                    </Link>
                 </div>
 
                 {/* Customer / Survey */}
                 <div className="flex-1 shadow-main rounded-4xl animate-fade-up">
+                    <Link to="/customer">
                     <DashboardCard 
                         icon={User}
                         title="ข้อมูลลูกค้า"
                         data={customerData}
                         chartType="pie"
                     />
+                    </Link>
                 </div>
                 </div>
 

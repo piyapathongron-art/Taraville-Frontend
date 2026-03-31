@@ -49,6 +49,10 @@ export async function apiLogin(body) {
     return await mainApi.post("/auth/login", body)
 }
 
+export async function editUserInfo(body, id) {
+    return await mainApi.put(`/employees/editByUser/${id}`, body)
+}
+
 //Landing Page Main Customer Submit
 export async function apiSubmitCustomer(body) {
     return await mainApi.post("/customers", body)
