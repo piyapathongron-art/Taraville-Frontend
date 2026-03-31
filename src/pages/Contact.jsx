@@ -1,4 +1,4 @@
-import React from 'react'
+import ProjectLocation from '../components/ProjectLocation'
 import FullFormCustomer from '../components/FullFormCustomer'
 import { FacebookIcon, LocationIcon, MailIcon, MessageIcon, PhoneIcon } from '../icon'
 import LineIcon from "../assets/line.png"
@@ -66,7 +66,7 @@ function Contact() {
 
         </div>
 
-      <FooterContact/>
+      <ProjectLocation/>
       </div>
 
     </div>

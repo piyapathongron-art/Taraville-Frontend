@@ -15,7 +15,7 @@ function ProjectPage() {
     },[])
 
     const [searchTerm,setSearchTerm] = useState("");
-    const [statusFilter,setStatusFilter] = useState("");
+    const [statusFilter,setStatusFilter] = useState("Available");
     const [typeFilter,setTypeFilter] = useState("")
 
     

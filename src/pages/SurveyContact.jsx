@@ -1,6 +1,7 @@
 import { FacebookIcon, LocationIcon, MailIcon, MessageIcon, PhoneIcon } from '../icon'
 import FooterContact from '../components/FooterContact'
 import SurveyForm from '../components/SurveyForm'
+import ProjectLocation from '../components/ProjectLocation'
 
 function SurveyContact() {
   return (
@@ -64,7 +65,7 @@ function SurveyContact() {
 
         </div>
 
-      <FooterContact/>
+      <ProjectLocation/>
       </div>
 
     </div>

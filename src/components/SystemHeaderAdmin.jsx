@@ -16,7 +16,7 @@ function SystemHeaderAdmin() {
         <>
         <div className='w-full flex gap-4 justify-between px-5 h-16 bg-brand fixed top-0 z-10 shadow-lg items-center'>
 
-            <Link to="/dashboard" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
+            <Link to="/home" className="flex-1 flex gap-2 items-center px-2 cursor-pointer">
                 <div className="flex-1 flex gap-2 items-center px-2">
                     <div className="w-10 flex items-center justify-center"><HomeIcon /></div>
                     <h1 className='font-light text-white text-2xl drop-shadow-md max-[1025px]:text-lg max-[1025px]:text-center max-[1025px]:mr-5'>Taraville System</h1>

@@ -15,7 +15,7 @@ function ProjectCardNotNew({ house }) {
         )}
       </figure>
       {/* Badge: ประเภทบ้าน (ขวาบน) */}
-      {house.houseType && <span className="absolute top-2 right-2 bg-[#4A7A9A] text-white text-[10px] px-2.5 py-1 rounded-full font-medium shadow-main">
+      {house.houseType && <span className="absolute top-2 right-2 bg-[#4A7A9A] text-white text-[14px] px-2.5 py-1 rounded-full font-medium shadow-main">
         {house.houseType}
       </span>}
 
@@ -25,7 +25,7 @@ function ProjectCardNotNew({ house }) {
           <span className="font-light">{house.houseName} </span>
           {house.projectName}
         </h2>
-      <span className={`absolute bottom-46 right-2 text-white text-[16px] px-3 py-1 rounded-full font-medium shadow-sm ${GetHouseStatusBadge(house.status)} `}>
+      <span className={`absolute top-2 left-2 text-white text-[16px] px-3 py-1 rounded-full font-medium shadow-sm ${GetHouseStatusBadge(house.status)} `}>
         {house.status}
       </span>
         <p className="overflow-scroll">{house.details}</p>
