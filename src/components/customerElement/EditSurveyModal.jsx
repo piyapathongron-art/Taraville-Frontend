@@ -15,7 +15,7 @@ function EditSurveyModal(props) {
   const survey = customer?.projectSurveys;
   const surveyId = survey?.surveyId;
   const isDeleted = survey?.deletedAt;
-  console.log(isDeleted)
+  // console.log(isDeleted)
   const getSurveyData = useDataStore(state => state.getSurveyData);
 
   const { register, reset, formState, handleSubmit } = useForm({
@@ -28,23 +28,38 @@ function EditSurveyModal(props) {
     
 
     if (isDeleted) {
-      return reset() 
+      return reset({
+        customerId: String(customerId),
+        userId: "",
+        visitDate: "",
+        interestedPropertyType: "",
+        preferredBedroom: "",
+        preferredBathroom: "",
+        decisionFactors: [],
+        familySize: "",
+        expectedBudget:  "",
+        informationSource: "",
+        installmentCapacity: "",
+        otherNewsChannel:  "",
+        remark:  "",
+        surveyType: "Online", 
+      }) 
     } else  {
       reset({
         customerId: String(customerId),
-        userId: survey.userId ? String(survey.userId) : "",
-        visitDate: survey.visitDate ? survey.visitDate.split('T')[0] : "",
-        interestedPropertyType: survey.interestedPropertyType || "",
-        preferredBedroom: survey.preferredBedroom ? String(survey.preferredBedroom) : "",
-        preferredBathroom: survey.preferredBathroom ? String(survey.preferredBathroom) : "",
-        decisionFactors: survey.decisionFactors?.map(df => df.decisionFactor) || [],
-        familySize: survey.familySize ? String(survey.familySize) : "",
-        expectedBudget: survey.expectedBudget || "",
-        informationSource: survey.informationSource || "",
-        installmentCapacity: survey.installmentCapacity || "",
-        otherNewsChannel: survey.otherNewsChannel || "",
-        remark: survey.remark || "",
-        surveyType: survey.surveyType || "Online", 
+        userId: survey?.userId ? String(survey?.userId) : "",
+        visitDate: survey?.visitDate ? survey?.visitDate.split('T')[0] : "",
+        interestedPropertyType: survey?.interestedPropertyType || "",
+        preferredBedroom: survey?.preferredBedroom ? String(survey?.preferredBedroom) : "",
+        preferredBathroom: survey?.preferredBathroom ? String(survey?.preferredBathroom) : "",
+        decisionFactors: survey?.decisionFactors?.map(df => df.decisionFactor) || [],
+        familySize: survey?.familySize ? String(survey?.familySize) : "",
+        expectedBudget: survey?.expectedBudget || "",
+        informationSource: survey?.informationSource || "",
+        installmentCapacity: survey?.installmentCapacity || "",
+        otherNewsChannel: survey?.otherNewsChannel || "",
+        remark: survey?.remark || "",
+        surveyType: survey?.surveyType || "Online", 
       });
     }
   }, []);

@@ -53,7 +53,7 @@ export default function EmployeeTable() {
 
   // คำนวณ Pagination
   const totalPages = Math.ceil(totalEmployees / itemsPerPage);
-  console.log(totalPages)
+  // console.log(totalPages)
 
   // ฟังก์ชันสร้างเลขหน้าแบบมีจุดไข่ปลา 
   const getPageNumbers = () => {

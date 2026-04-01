@@ -11,6 +11,7 @@ const useDataStore = create((set, get) => ({
     surveys: [],
     employee: [],
     isLoading: false,
+    setIsLoaing: (value)=> set({isLoading: value}),
     getAllData: async () => {
         set({ isLoading: true });
         try {

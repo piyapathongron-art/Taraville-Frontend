@@ -15,7 +15,7 @@ const modalIdinfo = `infoAssignment-${assignment.assignmentId}`
 
     return (
         <>
-        <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-2 mb-3 transition-all hover:shadow-md"
+        <div className="flex h-20 items-center justify-between bg-white rounded-xl border border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-2 mb-3 transition-all hover:shadow-md"
         onClick={() => document.getElementById(modalIdinfo).showModal()}>
             {/* รหัสงาน */}
             <div className="w-[15%] text-center flex flex-col justify-center">

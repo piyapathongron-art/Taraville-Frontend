@@ -14,7 +14,7 @@ export default function CustomerBody() {
     getSurveyData();
   }, []);
 
-  console.log(customers)
+  // console.log(customers)
   
   // States สำหรับค้นหาและตัวกรอง
   const [searchTerm, setSearchTerm] = useState('');

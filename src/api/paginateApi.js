@@ -8,6 +8,7 @@ export async function getPaginateApi({search, type , status,page, limit}) {
         page: page || 1,
         limit: limit || 5
     }).toString();
+    // console.log(quueryParams)
     return await mainApi.get(`/houses/search?${quueryParams}`)
 }
 
@@ -19,4 +20,15 @@ export async function getPaginateEmployeeApi({search, department , page, limit})
         limit: limit || 5
     }).toString();
     return await mainApi.get(`/employees/search?${quueryParams}`)
+}
+
+export async function getPaginateAssignmentApi({search, status , sortAssignedDate,page, limit}) {
+    const quueryParams = new URLSearchParams({
+        search: search || '',
+        status: status || '',
+        sortAssignedDate: sortAssignedDate || 'desc',
+        page: page || 1,
+        limit: limit || 5
+    }).toString();
+    return await mainApi.get(`/assignments/search?${quueryParams}`)
 }

@@ -6,7 +6,7 @@ import EditSurveyModal from "./EditSurveyModal";
 const CustomerRow = ({ customer }) => {
   const editCustomerModalId = `editCustomer-${customer.customerId}`;
   const editSurveyModalId = `editSurvey-${customer.projectSurveys?.surveyId || 'new'}-${customer.customerId}`;
-console.log(customer)
+// console.log(customer)
   return (
     <>
       {/* โครงสร้างแถว */}
@@ -19,7 +19,7 @@ console.log(customer)
 
         {/* type */}
         <div className="text-center font-medium">
-          {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer?.projectSurveys?.surveyType || '-'}
+          {customer?.projectSurveys?.deletedAt ? '-' : customer?.projectSurveys?.surveyType || '-'}
         </div>
 
         {/* ชื่อ */}
@@ -29,12 +29,12 @@ console.log(customer)
 
         {/* บ้านที่สนใจ */}
         <div className="text-center truncate px-2">
-          {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer.projectSurveys?.interestedPropertyType || '-'}
+          {customer?.projectSurveys?.deletedAt ? '-' : customer.projectSurveys?.interestedPropertyType || '-'}
         </div>
 
         {/* งบที่มี */}
         <div className="text-center text-sm truncate px-2">
-           {customer?.projectSurveys?.deletedAt ? 'ไม่มี' : customer?.projectSurveys?.expectedBudget ? Number(customer.projectSurveys.expectedBudget).toLocaleString() : '-'}
+           {customer?.projectSurveys?.deletedAt ? '-' : customer?.projectSurveys?.expectedBudget ? Number(customer.projectSurveys.expectedBudget).toLocaleString() : '-'}
         </div>
 
         {/* เบอร์ติดต่อ */}
