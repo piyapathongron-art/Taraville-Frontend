@@ -111,7 +111,7 @@ function ProjectPage() {
           </div>
           </div>
 
-           <div className="flex-1 w-full p-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 animate-fade-up">
+           <div class="flex-1 w-full p-10 grid grid-cols-4 max-[1400px]:grid-cols-3 max-[1100px]:grid-cols-2 gap-10 justify-items-center animate-fade-up">
                 {filterHouseData.length > 0 ? (
                     filterHouseData.map(house => (
                         <ProjectCardNotNew key={house.houseCode || house.houseId} house={house}/>

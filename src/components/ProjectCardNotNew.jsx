@@ -5,7 +5,7 @@ import GetHouseStatusBadge from "./GetStatusBadge";
 function ProjectCardNotNew({ house }) {
   // console.log(house)
   return (
-    <div className="card bg-base-100 w-78 shadow-main">
+    <div className="card bg-base-100 w-78 shadow-main relative">
       <figure className="h-60">
         {house.images[0]?.imageUrl ? (
           <img src={house.images[0]?.imageUrl} alt={house.houseCode} className="w-full h-full object-cover" />
