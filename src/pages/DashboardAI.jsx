@@ -1,70 +1,41 @@
-import { Home, Archive, User,Loader2} from 'lucide-react'; 
-
+import { Home, Archive, User, Loader2 } from 'lucide-react'; 
 import DashboardCard from '../components/dashboardElement/DashBoardCard';
 import DashboardCardHouse from '../components/dashboardElement/DashBoardCardHouse';
 import { useEffect, useMemo } from 'react';
 import useDataStore from '../stores/dataStore';
-import { isLastMonth, isThisMonth } from '../utils/dateConverter';
+import { isBeforeThisMonth } from '../utils/dateConverter'; 
 import FooterSystem from '../components/FooterSystem';
 import { Link } from 'react-router';
 
-
-// dashboard
 export default function DashboardAI() {
-
-    //state from useDataStore
     const { houses, assignments, customers, surveys, isLoading, getAllData } = useDataStore();
     
-    //fetch data from db
     useEffect(()=>{
-        getAllData()
-    },[getAllData])
+        getAllData();
+    }, [getAllData]);
 
-    
-// seperate all house data
     const houseData = useMemo(() => {
-        //seperate this month and last month by use date converter
-        const totalThisMonth = houses.filter(h => isThisMonth(h.createdAt)).length;
-        const totalLastMonth = houses.filter(h => isLastMonth(h.createdAt)).length;
+        // ยอดรวมสะสมของเดือนที่แล้วลงไป
+        const totalBeforeThisMonth = houses.filter(h => isBeforeThisMonth(h.createdAt)).length;
         
-        //seperate house status
         const countStatus = (statusName) => {
-
-            const currentCount = houses.filter(h => {
-                //if null mark available
-                const currentStatus = h.status || 'Available'; 
-                //if status = (status) & isThisMonth true count
-                return currentStatus === statusName && isThisMonth(h.createdAt);
-            }).length;
-
-            const previousCount = houses.filter(h => {
-                const currentStatus = h.status || 'Available'; 
-                return currentStatus === statusName && isLastMonth(h.createdAt);
-            }).length;
-            //if status = (status) & isThisMonth true count
+            // ทั้งหมดที่มีอยู่ตอนนี้ (Total Now)
+            const currentCount = houses.filter(h => (h.status || 'Available') === statusName).length;
+            // เฉพาะอันที่เกิดขึ้น ก่อนเดือนนี้ 
+            const previousCount = houses.filter(h => (h.status || 'Available') === statusName && isBeforeThisMonth(h.createdAt)).length;
+            
             return { current: currentCount, previous: previousCount };
         };
 
+        const countType = (typeName) => {
+            const currentCount = houses.filter(h => (h.houseType || 'บ้านเดี่ยว') === typeName).length;
+            const previousCount = houses.filter(h => (h.houseType || 'บ้านเดี่ยว') === typeName && isBeforeThisMonth(h.createdAt)).length;
+            
+            return { current: currentCount, previous: previousCount };
+        }
 
-const countType = (statusName) => {
-            const currentCountType = houses.filter(h => {
-                const currentType = h.houseType || 'บ้านเดี่ยว';
-                return currentType === statusName && isThisMonth(h.createdAt);
-            }).length;
-
-                const previousCountType = houses.filter(h => {
-                    const currentType = h.houseType || 'บ้านเดี่ยว';
-                    return currentType === statusName && isLastMonth(h.createdAt);
-                }).length;
-            return { current: currentCountType, previous: previousCountType };
-            }
-
-
-        //return prepared data for use with recharts
         return {
-            //current = everyhouse , pervious = everyhouse - thismonth + lastmonth , unit for data
-            total: { current: houses.length, previous: houses.length - totalThisMonth + totalLastMonth, unit: 'หลัง' },
-            //name for dashboardCard , data , color for chart and easy to serperate
+            total: { current: houses.length, previous: totalBeforeThisMonth, unit: 'หลัง' },
             statusDetails: [
                 { name: 'ขายแล้ว', ...countStatus('Sold'), color: '#10B981' }, 
                 { name: 'จอง', ...countStatus('Book'), color: '#3B82F6' }, 
@@ -80,27 +51,17 @@ const countType = (statusName) => {
         };
     }, [houses]);
 
-// console.log(houseData)
-  const taskData = useMemo(() => {
-        const totalThisMonth = assignments.filter(a => isThisMonth(a.createdAt)).length;
-        const totalLastMonth = assignments.filter(a => isLastMonth(a.createdAt)).length;
+    const taskData = useMemo(() => {
+        const totalBeforeThisMonth = assignments.filter(a => isBeforeThisMonth(a.createdAt)).length;
         
         const countStatus = (statusName) => {
-            const currentCount = assignments.filter(a => {
-                const currentStatus = a.status || 'Pending'; 
-                return currentStatus === statusName && isThisMonth(a.createdAt);
-            }).length;
-
-            const previousCount = assignments.filter(a => {
-                const currentStatus = a.status || 'Pending';
-                return currentStatus === statusName && isLastMonth(a.createdAt);
-            }).length;
-
+            const currentCount = assignments.filter(a => (a.status || 'Pending') === statusName).length;
+            const previousCount = assignments.filter(a => (a.status || 'Pending') === statusName && isBeforeThisMonth(a.createdAt)).length;
             return { current: currentCount, previous: previousCount };
         };
 
         return {
-            total: { current: assignments.length, previous: assignments.length - totalThisMonth + totalLastMonth, unit: 'งาน' },
+            total: { current: assignments.length, previous: totalBeforeThisMonth, unit: 'งาน' },
             details: [
                 { name: 'สำเร็จ', ...countStatus('Completed'), color: '#10B981' },
                 { name: 'กำลังดำเนินการ', ...countStatus('Pending'), color: '#3B82F6' },
@@ -109,15 +70,18 @@ const countType = (statusName) => {
         };
     }, [assignments]);
 
-     const customerData = useMemo(() => {
+    const customerData = useMemo(() => {
+        
+        const totalBeforeThisMonth = customers.filter(c => isBeforeThisMonth(c.createdAt)).length;
+
         const countSurveyType = (typeName) => {
-            const currentCount = surveys.filter(s => s.surveyType === typeName && isThisMonth(s.createdAt)).length;
-            const previousCount = surveys.filter(s => s.surveyType === typeName && isLastMonth(s.createdAt)).length;
+            const currentCount = surveys.filter(s => s.surveyType === typeName).length;
+            const previousCount = surveys.filter(s => s.surveyType === typeName && isBeforeThisMonth(s.createdAt)).length;
             return { current: currentCount, previous: previousCount };
         };
 
         return {
-            total: { current: customers.length, previous: customers.length, unit: 'คน' },
+            total: { current: customers.length, previous: totalBeforeThisMonth, unit: 'คน' },
             details: [
                 { name: 'ออนไลน์', ...countSurveyType('Online'), color: '#8B5CF6' },
                 { name: 'วอล์คอิน', ...countSurveyType('Walkin'), color: '#EC4899' },
@@ -134,50 +98,46 @@ const countType = (statusName) => {
         );
     }
     
-    // console.log(houseData)
-
     return (
-        
-        <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col bg-base-200/40  ">
-            <div className="flex-1 w-full max-w-full mx-auto p-4 gap-5 justify-center flex flex-wrap     ">
+        <div className="w-full h-[calc(100vh-3.5rem)] flex flex-col bg-base-200/40">
+            <div className="flex-1 w-full max-w-full mx-auto p-4 gap-5 justify-center flex flex-wrap">
                 
                 {/* Houses */}
-                
-                <div className="flex-1 shadow-main rounded-4xl animate-fade-up ">
-                    <Link to="/house">
-                    <DashboardCardHouse 
-                        icon={Home}
-                        title="ภาพรวมบ้านทั้งหมด"
-                        data={houseData}
-                        chartType="bar"
-                    />
-                    </Link>
-                </div>
-
-                <div className=" min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
-                {/* Task */}
-                <div className="flex-1 shadow-main rounded-4xl ">
-                    <Link to="/allAssignment">
-                    <DashboardCard 
-                        icon={Archive}
-                        title="งานที่รับผิดชอบ"
-                        data={taskData}
-                        chartType="pie"
-                    />
-                    </Link>
-                </div>
-
-                {/* Customer / Survey */}
                 <div className="flex-1 shadow-main rounded-4xl animate-fade-up">
-                    <Link to="/customer">
-                    <DashboardCard 
-                        icon={User}
-                        title="ข้อมูลลูกค้า"
-                        data={customerData}
-                        chartType="pie"
-                    />
+                    <Link to="/house">
+                        <DashboardCardHouse 
+                            icon={Home}
+                            title="ภาพรวมบ้านทั้งหมด"
+                            data={houseData}
+                            chartType="bar"
+                        />
                     </Link>
                 </div>
+
+                <div className="min-h-0 w-full flex flex-col lg:flex-row gap-4 md:gap-6 animate-fade-up">
+                    {/* Task */}
+                    <div className="flex-1 shadow-main rounded-4xl">
+                        <Link to="/allAssignment">
+                            <DashboardCard 
+                                icon={Archive}
+                                title="งานที่รับผิดชอบ"
+                                data={taskData}
+                                chartType="pie"
+                            />
+                        </Link>
+                    </div>
+
+                    {/* Customer / Survey */}
+                    <div className="flex-1 shadow-main rounded-4xl animate-fade-up">
+                        <Link to="/customer">
+                            <DashboardCard 
+                                icon={User}
+                                title="ข้อมูลลูกค้า"
+                                data={customerData}
+                                chartType="pie"
+                            />
+                        </Link>
+                    </div>
                 </div>
 
             </div>

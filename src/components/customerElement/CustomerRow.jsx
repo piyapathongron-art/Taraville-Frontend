@@ -10,7 +10,7 @@ const CustomerRow = ({ customer }) => {
   return (
     <>
       {/* โครงสร้างแถว */}
-      <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 items-center bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-3 transition-all hover:shadow-md text-gray-700">
+      <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 h-20 items-center bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-3 transition-all hover:shadow-md text-gray-700">
         
         {/* surveyID (ดึงจาก projectSurveys) */}
         <div className="text-center font-bold text-lg">

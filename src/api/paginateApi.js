@@ -32,3 +32,15 @@ export async function getPaginateAssignmentApi({search, status , sortAssignedDat
     }).toString();
     return await mainApi.get(`/assignments/search?${quueryParams}`)
 }
+
+export async function getPaginateCustomerApi({search, type,house,budget ,page, limit}) {
+    const quueryParams = new URLSearchParams({
+        search: search || '',
+        type: type || '',
+        house: house || '',
+        budget: budget || '',
+        page: page || 1,
+        limit: limit || 5
+    }).toString();
+    return await mainApi.get(`/customers/search?${quueryParams}`)
+}

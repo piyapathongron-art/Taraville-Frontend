@@ -17,8 +17,8 @@ export default function AssignmentElement() {
   const setIsLoading = useDataStore(state => state.setIsLoaing)
 
   
-  const getAssignmentData = useDataStore(state => state.getAssignmentData);
-  const assignment = useDataStore(state => state.assignments);
+  // const getAssignmentData = useDataStore(state => state.getAssignmentData);
+  // const assignment = useDataStore(state => state.assignments);
 
   // State สำหรับค้นหาและกรอง
   const [searchTerm, setSearchTerm] = useState('');
