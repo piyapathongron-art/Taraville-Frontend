@@ -2,36 +2,54 @@ import { SerchIcon2 } from '../icon'
 import Footer from '../components/Footer'
 import ProjectCardNotNew from '../components/ProjectCardNotNew'
 import useDataStore from '../stores/dataStore'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
+import { getPaginateApi } from '../api/paginateApi'
 
 function ProjectPage() {
-    const getHouseData = useDataStore(state=>state.getHouseData)
-    const houses = useDataStore(state=>state.houses)
+    const [houseData, setHouseData] = useState([])
     const isLoading = useDataStore(state=>state.isLoading)
+    const setIsLoaing = useDataStore(state=>state.setIsLoaing)
 
-    useEffect(()=>{
-        getHouseData()
-    },[])
+    // const getHouseData = useDataStore(state=>state.getHouseData)
+    // const houses = useDataStore(state=>state.houses)
 
     const [searchTerm,setSearchTerm] = useState("");
+    const [debounceSearchTerm,setDebounceSearchTerm] = useState(searchTerm);
     const [statusFilter,setStatusFilter] = useState("Available");
     const [typeFilter,setTypeFilter] = useState("")
 
+    useEffect(()=>{
+        const timer = setTimeout(()=>{
+            setDebounceSearchTerm(searchTerm)
+        }, 500)
+        return () => clearTimeout(timer)    
+    },[searchTerm])
+
+    useEffect(()=>{
+        const fetchHouse = async ()=>{
+            setIsLoaing(true);
+            try {
+                const resp = await getPaginateApi({
+                    search: debounceSearchTerm,
+                    status: statusFilter,
+                    type: typeFilter,
+                    page: 1,
+                    limit: 100
+                })
+                // console.log(resp)
+                setHouseData(resp.data.houses.result || [])
+            } catch (error) {
+                console.error("Error fetching house data:", error);
+                setHouseData([]);
+            } finally {
+                setIsLoaing(false);
+            }
+        }
+        fetchHouse()
+    },[debounceSearchTerm,statusFilter,typeFilter])
     
-    const filterHouseData = useMemo(() => {
-        if (!houses) return [];
-
-        return houses.filter(house => {
-            const houseTitle = house.houseName || "";
-            const matchTitle = houseTitle.toLowerCase().includes(searchTerm.toLowerCase());
-
-            const matchStatus = statusFilter === "" || house.status === statusFilter;
-            const matchType = typeFilter === "" || house.houseType === typeFilter;
-            
-            return matchTitle && matchStatus && matchType;
-        });
-    }, [houses, searchTerm, statusFilter, typeFilter]);
+    
 
     const handleSelect = (func,status) => {
         func(status)
@@ -111,9 +129,9 @@ function ProjectPage() {
           </div>
           </div>
 
-           <div class="flex-1 w-full p-10 grid grid-cols-4 max-[1400px]:grid-cols-3 max-[1100px]:grid-cols-2 gap-10 justify-items-center animate-fade-up">
-                {filterHouseData.length > 0 ? (
-                    filterHouseData.map(house => (
+           <div className="flex-1 w-full p-10 grid grid-cols-4 max-[1400px]:grid-cols-3 max-[1100px]:grid-cols-2 gap-10 justify-items-center animate-fade-up">
+                {houseData.length > 0 ? (
+                    houseData.map(house => (
                         <ProjectCardNotNew key={house.houseCode || house.houseId} house={house}/>
                     ))
                 ) : (

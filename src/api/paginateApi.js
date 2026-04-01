@@ -5,8 +5,8 @@ export async function getPaginateApi({search, type , status,page, limit}) {
         search: search || '',
         type: type || '',
         status: status || '',
-        page: page || 1,
-        limit: limit || 5
+        page: page ,
+        limit: limit 
     }).toString();
     // console.log(quueryParams)
     return await mainApi.get(`/houses/search?${quueryParams}`)

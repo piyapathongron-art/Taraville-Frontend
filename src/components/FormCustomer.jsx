@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import useCustomerStore from '../stores/customerStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createCustomerSchema } from '../validations/schema'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import { useEffect } from 'react'
 
@@ -19,9 +19,9 @@ function FormCustomer() {
     })
 
     useEffect(() => {
-        
+
         if (customerInfo) {
-            
+
             reset({
                 firstName: customerInfo.firstName || "",
                 lastName: customerInfo.lastName || "",
@@ -40,21 +40,21 @@ function FormCustomer() {
     const onSubmit = async (body) => {
         try {
             // console.log(body)
-            await new Promise(resolve => setTimeout(resolve,2000))
+            await new Promise(resolve => setTimeout(resolve, 2000))
             const resp = await submitMainCustomer(body)
-            
-             console.log(resp)
-            toast.success('บันทึกข้อมูลเรียบร้อย')
+
+            console.log(resp)
+            toast.success('บันทึกข้อมูลเรียบร้อย',{ containerId: "mainToast" })
             navigate("/contact")
-            
+
         } catch (error) {
             console.dir(error)
             const errMsg = error.response?.data.error || error.message
-            toast.error(errMsg,{containerId: "mainToast"})
+            toast.error(errMsg, { containerId: "mainToast" })
             navigate("/contact")
         }
     }
- 
+
     return (
         <div className='w-full py-10 overflow-hidden bg-white h-fit' >
 
@@ -115,7 +115,7 @@ function FormCustomer() {
                                     {/* Income Range */}
                                     <fieldset className="fieldset">
                                         <legend className="fieldset-legend text-lg font-medium">รายได้เฉลี่ยต่อเดือน</legend>
-                                        <input type="text" className="input" placeholder="20,000"
+                                        <input type="text" className="input" placeholder="รายได้เฉลี่ยต่อเดือน"
                                             {...register("incomeRange")} />
                                         {/* error */}
                                     </fieldset>

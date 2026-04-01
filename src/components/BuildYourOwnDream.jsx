@@ -1,4 +1,3 @@
-import React from 'react'
 import { HomeIcon2, InboxIcon, SerchIcon } from '../icon'
 import { Link } from 'react-router'
 

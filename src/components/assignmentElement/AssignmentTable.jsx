@@ -9,7 +9,6 @@ function AssignmentTable() {
     const assignment = useUserStore(state => state.assignment) || []; 
 
     return (
-        // เอา margin-top มหาศาลออก เพื่อให้หน้า AssignmentPage หลักสามารถควบคุมตำแหน่งกึ่งกลางได้ง่ายขึ้น
         <div className="w-full max-w-7xl mx-auto p-4 md:p-6 animate-fade-up">
             
             {/* Header ของตาราง */}
