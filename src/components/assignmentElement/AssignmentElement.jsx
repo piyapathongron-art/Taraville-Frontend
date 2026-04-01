@@ -102,7 +102,7 @@ export default function AssignmentElement() {
 
   return (
     <>
-      <div className="w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col relative">
+      <div className="w-full h-[calc(100vh-3.5rem)] bg-gray-50 flex flex-col relative">
         <ToastContainer containerId="assignmentPage" />
 
         {/* Toolbar*/}

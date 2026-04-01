@@ -16,11 +16,11 @@ function IntroCard({house}) {
 
             </figure>
             <div className="card-body relative ">
-                <div className=" flex flex-col justify-start  ">
+                <div className=" flex flex-col justify-start flex-1 ">
                     <h2 className="card-title">{projectName} <span className='font-light'>{houseName}</span> </h2>
                     <p className=' text-[12px] font-light '>{details}</p>
                 </div>
-                <div className="card-actions justify-end mt-10">
+                <div className="card-actions justify-end mt-auto">
                     <Link to="/projects">
                     <button className="btn bg-brand text-white border-none">ดูข้อมูล</button>
                     </Link>

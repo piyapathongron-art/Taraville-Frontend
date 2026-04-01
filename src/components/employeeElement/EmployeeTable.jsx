@@ -94,7 +94,7 @@ export default function EmployeeTable() {
 
   return (
     <>
-      <div className=" w-full h-[calc(92vh-3.5rem)] bg-gray-50 flex flex-col relative">
+      <div className=" w-full h-[calc(100vh-3.5rem)] bg-gray-50 flex flex-col relative">
 
         {/* Toolbar สีเทาด้านบน */}
         <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed z-3">

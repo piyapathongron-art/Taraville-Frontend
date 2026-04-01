@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useEffect, use } from 'react';
-import { Search, ChevronDown, Edit, Plus, Loader2 } from 'lucide-react';
+import { useState, useEffect} from 'react';
+import { Search ,Loader2 } from 'lucide-react';
 import CustomerRow from './CustomerRow';
 import useDataStore from '../../stores/dataStore';
 import { ToastContainer } from 'react-toastify';
-import { set } from 'zod';
 import { getPaginateCustomerApi } from '../../api/paginateApi';
 
 
@@ -79,7 +78,7 @@ export default function CustomerBody() {
   };
 
   return (
-    <div className="w-full h-[calc(92vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative">
+    <div className="w-full h-[calc(100vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative">
       <ToastContainer containerId="CustomerBody" />
       {/* 1. Toolbar */}
       <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed">
