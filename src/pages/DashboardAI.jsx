@@ -15,22 +15,37 @@ export default function DashboardAI() {
     }, [getAllData]);
 
     const houseData = useMemo(() => {
-        // ยอดรวมสะสมของเดือนที่แล้วลงไป
+        //logic เช็คเดือนก่อนกับเดือนนี้
         const totalBeforeThisMonth = houses.filter(h => isBeforeThisMonth(h.createdAt)).length;
-        
+        //นับสถานะบ้าน
         const countStatus = (statusName) => {
-            // ทั้งหมดที่มีอยู่ตอนนี้ (Total Now)
             const currentCount = houses.filter(h => (h.status || 'Available') === statusName).length;
-            // เฉพาะอันที่เกิดขึ้น ก่อนเดือนนี้ 
             const previousCount = houses.filter(h => (h.status || 'Available') === statusName && isBeforeThisMonth(h.createdAt)).length;
-            
             return { current: currentCount, previous: previousCount };
         };
 
+        // type ที่จะทำเป็น barchart
+        const knownTypes = ['บ้านเดี่ยว', 'ทาวน์โฮม', 'บ้านแฝด'];
+        // นับประเภทบ้านที่กำหนดใน knownType
         const countType = (typeName) => {
             const currentCount = houses.filter(h => (h.houseType || 'บ้านเดี่ยว') === typeName).length;
             const previousCount = houses.filter(h => (h.houseType || 'บ้านเดี่ยว') === typeName && isBeforeThisMonth(h.createdAt)).length;
-            
+            return { current: currentCount, previous: previousCount };
+        }
+
+        // นับบ้านเผื่อว่าในอนาคตมีบ้านประเภทอื่น
+        const countOtherTypes = () => {
+            const currentCount = houses.filter(h => {
+                const type = h.houseType || 'บ้านเดี่ยว';
+                //ถ้ามไ่อยู่ใน knownTypes แสดงว่าเป็นประเภทอื่นแล้วมา.lenght
+                return !knownTypes.includes(type);
+            }).length;
+
+            const previousCount = houses.filter(h => {
+                const type = h.houseType || 'บ้านเดี่ยว';
+                return !knownTypes.includes(type) && isBeforeThisMonth(h.createdAt);
+            }).length;
+
             return { current: currentCount, previous: previousCount };
         }
 
@@ -46,7 +61,8 @@ export default function DashboardAI() {
             typeDetails: [
                 { name: 'บ้านเดี่ยว', ...countType('บ้านเดี่ยว'), color: '#EC4899' }, 
                 { name: 'ทาวน์โฮม', ...countType('ทาวน์โฮม'), color: '#8B5CF6' }, 
-                { name: 'บ้านแฝด', ...countType('บ้านแฝด'), color: '#3B82F6' }, 
+                { name: 'บ้านแฝด', ...countType('บ้านแฝด'), color: '#3B82F6' },
+                { name: 'อื่นๆ', ...countOtherTypes(), color: '#9CA3AF' }, 
             ]
         };
     }, [houses]);
@@ -71,7 +87,6 @@ export default function DashboardAI() {
     }, [assignments]);
 
     const customerData = useMemo(() => {
-        
         const totalBeforeThisMonth = customers.filter(c => isBeforeThisMonth(c.createdAt)).length;
 
         const countSurveyType = (typeName) => {
@@ -109,7 +124,7 @@ export default function DashboardAI() {
                             icon={Home}
                             title="ภาพรวมบ้านทั้งหมด"
                             data={houseData}
-                            chartType="bar"
+                            chartType="pie"
                         />
                     </Link>
                 </div>
