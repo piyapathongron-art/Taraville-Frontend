@@ -75,7 +75,7 @@ function CreateEmployeeModal() {
             </div>
           </div>
 
-          {/* แถว 2  */}
+          
           <div className="w-full flex gap-10 ">
             {/* อีเมล */}
             <div className="flex flex-col">

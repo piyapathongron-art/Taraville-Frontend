@@ -10,7 +10,6 @@ function IntroCard({house}) {
                 {house.images[0]?.imageUrl ? (
                         <img src={house.images[0]?.imageUrl} alt={house.houseCode} className="w-full h-full object-cover" />
                     ) : (
-                        // รูป Placeholder กรณีไม่มีรูป
                         <ImageIcon size={48} className="text-gray-300 opacity-50 " />
                     )}
 

@@ -3,7 +3,7 @@ import useUserStore from "../stores/userStore";
 import { toast } from "react-toastify";
 
 export const mainApi = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: "/api",
     headers: {
         "Content-Type": "application/json"
     }

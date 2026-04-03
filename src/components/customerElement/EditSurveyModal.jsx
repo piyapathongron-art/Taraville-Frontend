@@ -23,9 +23,9 @@ function EditSurveyModal(props) {
     mode: "onSubmit",
   });
   const { errors, isSubmitting } = formState;
-
+  
+  
   useEffect(() => {
-    
 
     if (isDeleted) {
       return reset({
@@ -47,11 +47,11 @@ function EditSurveyModal(props) {
     } else  {
       reset({
         customerId: String(customerId),
-        userId: survey?.userId ? String(survey?.userId) : "",
+        userId: survey?.userId ? survey?.userId : "",
         visitDate: survey?.visitDate ? survey?.visitDate.split('T')[0] : "",
         interestedPropertyType: survey?.interestedPropertyType || "",
-        preferredBedroom: survey?.preferredBedroom ? String(survey?.preferredBedroom) : "",
-        preferredBathroom: survey?.preferredBathroom ? String(survey?.preferredBathroom) : "",
+        preferredBedroom: survey?.preferredBedroom ? survey?.preferredBedroom: "",
+        preferredBathroom: survey?.preferredBathroom ? survey?.preferredBathroom : "",
         decisionFactors: survey?.decisionFactors?.map(df => df.decisionFactor) || [],
         familySize: survey?.familySize ? String(survey?.familySize) : "",
         expectedBudget: survey?.expectedBudget || "",
@@ -69,8 +69,8 @@ function EditSurveyModal(props) {
   };
 
   const onDeleteSurvey = async () => {
-    if (!survey?.surveyId) {
-      toast.error("ไม่พบข้อมูลแบบสอบถามให้ลบ", { containerId: modalId });
+    if (!survey) {
+      toast.error("ไม่พบข้อมูลแบบสอบถามให้ลบ", { containerId: "modalId" });
       return;
     }
     try {
@@ -84,12 +84,12 @@ function EditSurveyModal(props) {
             
       toast.success(resp.data?.message || "ลบแบบสอบถามสำเร็จ", { containerId: "CustomerBody" });
 
-      if (getSurveyData) getSurveyData();
+      
       document.getElementById(modalId).close();
     } catch (error) {
       console.dir(error);
       const errMsg = error.response?.data?.error || error.message;
-      toast.error(errMsg, { containerId: modalId });
+      toast.error(errMsg, { containerId: "customerPage" });
     }
   };
 
@@ -128,12 +128,12 @@ function EditSurveyModal(props) {
       <div className="divider opacity-60 my-2"></div>
 
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        {/* ส่ง customerId ไปด้วยแบบซ่อนตาม Schema ที่ required ไว้ */}
+        
         <input type="hidden" {...register('customerId')} />
 
         <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
-          {/* แถว 1: ประเภทติดต่อ - วันที่เข้าชม - พนักงานที่ดูแล */}
+          {/* ประเภทติดต่อ วันที่เข้าชม  พนักงานที่ดูแล */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">ประเภทการติดต่อ</span></label>
@@ -155,7 +155,7 @@ function EditSurveyModal(props) {
             </div>
           </div>
 
-          {/* แถว 2: ประเภทบ้าน - งบประมาณ */}
+          {/* ประเภทบ้าน  งบประมาณ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">ประเภทบ้านที่สนใจ</span></label>
@@ -169,7 +169,7 @@ function EditSurveyModal(props) {
             </div>
           </div>
 
-          {/* แถว 3: ห้องนอน - ห้องน้ำ */}
+          {/* ห้องนอน  ห้องน้ำ */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">ห้องนอน (ห้อง)</span></label>
@@ -187,7 +187,7 @@ function EditSurveyModal(props) {
 
           <div className="divider my-0 opacity-50">ปัจจัยและแหล่งข้อมูล</div>
 
-          {/* แถว 4: ปัจจัยในการตัดสินใจ (Checkbox array) */}
+          {/*ปัจจัยในการตัดสินใจ  */}
           <div className="form-control w-full">
             <label className='label'><span className="label-text font-medium">ปัจจัยในการตัดสินใจเลือกซื้อ (Decision Factors)</span></label>
             <div className="flex flex-wrap gap-4 mt-1">
@@ -210,7 +210,7 @@ function EditSurveyModal(props) {
             </div>
           </div>
 
-          {/* แถว 5: แหล่งข้อมูล - สื่ออื่นๆ */}
+          {/* แหล่งข้อมูล  สื่ออื่นๆ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">รู้จักโครงการจากสื่อใด</span></label>
@@ -222,13 +222,13 @@ function EditSurveyModal(props) {
             </div>
           </div>
 
-          {/* แถว 6: ความสามารถในการผ่อน */}
+          {/* ความสามารถในการผ่อน */}
           <div className="form-control w-full">
             <label className='label'><span className="label-text font-medium">ความสามารถในการผ่อนชำระ (บาท/เดือน)</span></label>
             <input type="text" placeholder='เช่น 10000-15000' className={`input input-bordered w-full ${errors.installmentCapacity ? 'input-error' : ''}`} {...register('installmentCapacity')} />
           </div>
 
-          {/* แถว 7: หมายเหตุ */}
+          {/*  หมายเหตุ */}
           <div className="form-control w-full">
             <label className='label'><span className="label-text font-medium">หมายเหตุเพิ่มเติม (Remark)</span></label>
             <textarea placeholder='ระบุหมายเหตุ' className={`textarea textarea-bordered h-24 ${errors.remark ? 'textarea-error' : ''}`} {...register('remark')}></textarea>
@@ -236,14 +236,14 @@ function EditSurveyModal(props) {
 
           {/* ปุ่มบันทึก และ ปุ่มลบ */}
           <div className="flex gap-4 mt-4">
-            <button
+            {!isDeleted && <button
               className='btn bg-red-500 hover:bg-red-600 text-white flex-1'
               onClick={() => swal01(onDeleteSurvey, modalId)}
               disabled={isSubmitting || !surveyId}
               type='button'
             >
               <Trash2 size={20} /> ลบแบบสอบถาม
-            </button>
+            </button>}
             <button
               className='btn bg-blue-600 hover:bg-blue-700 text-white flex-1'
               disabled={isSubmitting}

@@ -124,7 +124,6 @@ export default function DashboardAI() {
                             icon={Home}
                             title="ภาพรวมบ้านทั้งหมด"
                             data={houseData}
-                            chartType="pie"
                         />
                     </Link>
                 </div>
@@ -137,7 +136,6 @@ export default function DashboardAI() {
                                 icon={Archive}
                                 title="งานที่รับผิดชอบ"
                                 data={taskData}
-                                chartType="pie"
                             />
                         </Link>
                     </div>
@@ -149,7 +147,6 @@ export default function DashboardAI() {
                                 icon={User}
                                 title="ข้อมูลลูกค้า"
                                 data={customerData}
-                                chartType="pie"
                             />
                         </Link>
                     </div>

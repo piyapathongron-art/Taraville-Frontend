@@ -8,19 +8,18 @@ function HouseElement() {
     const [houses, setHouses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     
-    // State สำหรับตัวกรองต่างๆ
+    // StateForกรอง
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState(''); 
     const [statusFilter, setStatusFilter] = useState('');
-    const [typeFilter, setTypeFilter] = useState(''); // เพิ่ม State สำหรับรูปแบบบ้าน
+    const [typeFilter, setTypeFilter] = useState(''); 
     
-    // State สำหรับ Pagination
+    // StatePagination
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalItems, setTotalItems] = useState(0);
     const [totalHouses, setTotalHouses] = useState(0); 
     const limit = 8; 
 
-    // ระบบ Debounce ป้องกันการยิง API ถี่เกินไป
+    
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedSearch(searchTerm);
@@ -29,7 +28,7 @@ function HouseElement() {
         return () => clearTimeout(timer);
     }, [searchTerm]);
 
-    // ฟังก์ชันดึงข้อมูลจาก Backend
+    
     useEffect(() => {
         const fetchHouses = async () => {
             setIsLoading(true);
@@ -43,7 +42,6 @@ function HouseElement() {
                 });
                 
                 setHouses(resp.data.houses.result); 
-                setTotalItems(resp.data.houses.total); 
                 setTotalHouses(resp.data.totalHouse);
             } catch (error) {
                 console.error("Error fetching houses:", error);
@@ -58,16 +56,16 @@ function HouseElement() {
         fetchHouses();
     }, [debouncedSearch, statusFilter, typeFilter, currentPage]);
 
-    // ฟังก์ชันจัดการตอนเลือก Dropdown 
+    
     const handleSelectFilter = (setter, value) => {
         setter(value);
-        setCurrentPage(1); // เปลี่ยนตัวกรอง ต้องกลับไปหน้า 1
+        setCurrentPage(1);
         if (document.activeElement) {
             document.activeElement.blur();
         }
     };
 
-    // คำนวณตัวเลขสำหรับปุ่ม Pagination
+    // Pagination
     const totalPages = Math.ceil(totalHouses / limit);
     const getPageNumbers = () => {
         const pages = [];
@@ -87,10 +85,10 @@ function HouseElement() {
 
     return (
         <>
-        {/* ใช้ h-screen และ flex-col ควบคุมโครงสร้างโดยรวมทั้งหมด */}
+        
         <div className="w-full h-[calc(100vh-3.5rem)] bg-gray-50 flex flex-col relative overflow-hidden">
 
-            {/* Toolbar สีเทาด้านบน (Fixed เสมอ) */}
+            {/* Toolbar  */}
             <div className="bg-[#94A3B8] w-full py-4 px-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed top-15 z-2">
 
                 {/* ช่องค้นหา */}
@@ -107,7 +105,7 @@ function HouseElement() {
 
                 <div className="flex flex-wrap w-full sm:w-auto gap-3 items-center">
 
-                    {/* Dropdown 1: ตัวกรองรูปแบบบ้าน */}
+                    {/* ตัวกรองรูปแบบบ้าน */}
                     <div className="dropdown dropdown-bottom sm:dropdown-end flex-1 sm:flex-none sm:w-36">
                         <div
                             tabIndex={0}
@@ -128,7 +126,7 @@ function HouseElement() {
                         </ul>
                     </div>
 
-                    {/* Dropdown 2: ตัวกรองสถานะ */}
+                    {/* ตัวกรองสถานะ */}
                     <div className="dropdown dropdown-bottom sm:dropdown-end flex-1 sm:flex-none sm:w-36">
                         <div
                             tabIndex={0}
@@ -157,7 +155,7 @@ function HouseElement() {
                 </div>
             </div>
 
-            {/* พื้นที่หลักสำหรับแสดง Card บ้าน (พื้นที่นี้อนุญาตให้ Scroll ได้) */}
+            
             <div className="flex-1 w-full max-w-7xl mx-auto p-6 md:p-8 mt-32 sm:mt-20 overflow-y-auto flex flex-col pb-6">
                 
                 {isLoading ? (
@@ -183,7 +181,7 @@ function HouseElement() {
 
             </div>
 
-            {/* UI ปุ่มเปลี่ยนหน้า (Pagination) แยกออกมาอยู่นอกพื้นที่ Scroll ทำให้ติดขอบล่างเสมอ */}
+            {/* Pagination */}
             {!isLoading && totalPages > 0 && (
                 <div className="w-full bg-white border-t border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
                     <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 w-full">

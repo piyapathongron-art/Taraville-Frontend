@@ -6,7 +6,6 @@ const SearchableDropdown = ({ options, value, onChange, placeholder }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef(null);
 
-  // ปิด Dropdown เมื่อคลิกพื้นที่อื่น
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -16,12 +15,11 @@ const SearchableDropdown = ({ options, value, onChange, placeholder }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
   const selectedOption = options?.find(opt => opt.value === value);
   const filteredOptions = options?.filter(opt => 
     opt.label.toLowerCase().includes(searchTerm.toLowerCase())
   ) || [];
-
+  
   return (
     <div className="relative w-full" ref={dropdownRef}>
       <div 
@@ -44,7 +42,7 @@ const SearchableDropdown = ({ options, value, onChange, placeholder }) => {
                 placeholder="พิมพ์เพื่อค้นหา..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onClick={(e) => e.stopPropagation()} // ป้องกันการปิดเมื่อคลิกช่องค้นหา
+                onClick={(e) => e.stopPropagation()} 
               />
               <Search size={14} className="absolute left-2.5 top-2.5 text-gray-400" />
             </div>

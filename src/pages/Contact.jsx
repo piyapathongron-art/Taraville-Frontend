@@ -1,8 +1,7 @@
 import ProjectLocation from '../components/ProjectLocation'
 import FullFormCustomer from '../components/FullFormCustomer'
 import { FacebookIcon, LocationIcon, MailIcon, MessageIcon, PhoneIcon } from '../icon'
-import LineIcon from "../assets/line.png"
-import FooterContact from '../components/FooterContact'
+
 
 function Contact() {
   return (

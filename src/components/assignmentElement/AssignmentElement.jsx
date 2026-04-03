@@ -20,7 +20,7 @@ export default function AssignmentElement() {
   // const getAssignmentData = useDataStore(state => state.getAssignmentData);
   // const assignment = useDataStore(state => state.assignments);
 
-  // State สำหรับค้นหาและกรอง
+  // State for search
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [statusFilter, setStatusFilter] = useState('');
@@ -39,6 +39,7 @@ export default function AssignmentElement() {
 
   useEffect(() => {
     const fetchAssignments = async () => {
+    
       setIsLoading(true);
       try {
         const resp = await getPaginateAssignmentApi({
@@ -50,6 +51,7 @@ export default function AssignmentElement() {
         });
         setAssignments(resp?.data.result || []);
         setTotalAssignments(resp?.data.total || 0);
+        
         // console.log(resp)
       } catch (error) {
         console.error("Error fetching assignments:", error);
@@ -66,7 +68,7 @@ export default function AssignmentElement() {
   
 
 
-  // ฟังก์ชันสร้างเลขหน้าแบบมีจุดไข่ปลา (...)
+  
   const totalPages = Math.ceil(totalAssignments / itemsPerPage);
   const getPageNumbers = () => {
     const pages = [];
@@ -153,10 +155,10 @@ export default function AssignmentElement() {
           </div>
         </div>
 
-        {/* ส่วนของรายการงาน */}
+        {/* core */}
         <div className="flex-1 w-full max-w-6xl mx-auto p-6 flex flex-col">
 
-          {/* Header ของตาราง */}
+          {/* Header  */}
           <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-3 mb-6 mt-20">
             <div className="w-[15%] text-center font-bold text-gray-800 text-lg">รหัสงาน</div>
             <div className="w-[35%] text-left pl-4 font-bold text-gray-800 text-lg">หัวข้องาน</div>
@@ -172,7 +174,7 @@ export default function AssignmentElement() {
             <div className="w-[10%]"></div>
           </div>
 
-          {/* รายการแถว (List of Rows) */}
+          {/* list body*/}
           {isLoading ? (
             <div className="flex flex-col items-center justify-center flex-1 py-20">
               <Loader2 className="animate-spin text-[#D98A2C] mb-4" size={48} />
@@ -192,7 +194,7 @@ export default function AssignmentElement() {
             </div>
           )}
 
-          {/* UI ปุ่มเปลี่ยนหน้า (Pagination) แยกออกมาอยู่นอกพื้นที่ Scroll ทำให้ติดขอบล่างเสมอ */}
+          {/* pagination */}
           {!isLoading && totalPages > 0 && (
             <div className="w-full bg-white border mt-5 border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)] animate-fade-up">
               <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 w-full">

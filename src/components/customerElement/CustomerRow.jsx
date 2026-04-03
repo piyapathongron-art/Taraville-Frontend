@@ -9,12 +9,12 @@ const CustomerRow = ({ customer }) => {
 // console.log(customer)
   return (
     <>
-      {/* โครงสร้างแถว */}
+      {/* body */}
       <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 h-20 items-center bg-white rounded-xl border border-gray-200 shadow-sm p-4 mb-3 transition-all hover:shadow-md text-gray-700">
         
-        {/* surveyID (ดึงจาก projectSurveys) */}
+        {/* surveyId */}
         <div className="text-center font-bold text-lg">
-          {customer.customerId ? String(customer.customerId).padStart(2, '0') : '-'}
+          {customer.customerId || '-'}
         </div>
 
         {/* type */}
@@ -34,7 +34,7 @@ const CustomerRow = ({ customer }) => {
 
         {/* งบที่มี */}
         <div className="text-center text-sm truncate px-2">
-           {customer?.projectSurveys?.deletedAt ? '-' : customer?.projectSurveys?.expectedBudget ? Number(customer.projectSurveys.expectedBudget).toLocaleString() : '-'}
+           {customer?.projectSurveys?.deletedAt ? '-' : customer?.projectSurveys?.expectedBudget ? customer.projectSurveys.expectedBudget : '-'}
         </div>
 
         {/* เบอร์ติดต่อ */}
@@ -44,7 +44,7 @@ const CustomerRow = ({ customer }) => {
 
         {/* ปุ่มแก้ไข 2 ปุ่ม */}
         <div className="flex justify-center gap-2 pr-2">
-          {/* ปุ่มแก้ข้อมูล Survey */}
+          {/* Survey */}
           <button 
             className="p-2 hover:bg-blue-50 text-blue-600 rounded-lg transition-colors tooltip tooltip-top"
             data-tip="แก้ไขแบบสอบถาม"
@@ -54,7 +54,7 @@ const CustomerRow = ({ customer }) => {
             <FileText size={20} />
           </button>
           
-          {/* ปุ่มแก้ข้อมูล Customer */}
+          {/* Customer */}
           <button 
             className="p-2 hover:bg-orange-50 text-[#D98A2C] rounded-lg transition-colors tooltip tooltip-top"
             data-tip="แก้ไขข้อมูลลูกค้า"

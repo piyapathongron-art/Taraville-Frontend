@@ -10,16 +10,15 @@ function ProjectCardNotNew({ house }) {
         {house.images[0]?.imageUrl ? (
           <img src={house.images[0]?.imageUrl} alt={house.houseCode} className="w-full h-full object-cover" />
         ) : (
-          // รูป Placeholder กรณีไม่มีรูป
           <ImageIcon size={48} className="text-gray-500 opacity-50" />
         )}
       </figure>
-      {/* Badge: ประเภทบ้าน (ขวาบน) */}
+      {/* Badgeบ้าน */}
       {house.houseType && <span className="absolute top-2 right-2 bg-[#4A7A9A] text-white text-[14px] px-2.5 py-1 rounded-full font-medium shadow-main">
         {house.houseType}
       </span>}
 
-      {/* Badge: สถานะ (ขวาล่าง) */}
+      {/* Badgeสถานะ */}
       <div className="card-body w-[312px] h-[236px]">
         <h2 className="card-title">
           <span className="font-light">{house.houseName} </span>

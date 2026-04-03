@@ -1,4 +1,3 @@
-// ฟังก์ชันเดิม (เก็บไว้เผื่อได้ใช้ในจุดอื่น)
 export function isThisMonth(dateString) {
     if (!dateString) return false;
     const date = new Date(dateString);
@@ -31,9 +30,7 @@ export function isBeforeThisMonth(dateString) {
     const date = new Date(dateString);
     const today = new Date();
     
-    // หาวันแรกของเดือนนี้ (เช่น 1 เมษายน 2026 เวลา 00:00:00)
     const firstDayOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     
-    // ถ้าน้อยกว่าวันแรกของเดือนนี้ แปลว่าเป็นของเดือนที่แล้วลงไปทั้งหมด
     return date < firstDayOfThisMonth;
 }

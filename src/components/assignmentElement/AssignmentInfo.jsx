@@ -51,7 +51,7 @@ export default function AssignmentInfo(props) {
       <form >
         <fieldset disabled={true} className='flex flex-col gap-4 p-2'>
 
-          {/* แถว 1: ชื่องาน */}
+          {/* ชื่องาน */}
           <div className="w-full">
             <label className='text-sm font-medium text-gray-700 ml-1'>หัวข้องาน (Task Title)</label>
             <input type="text"
@@ -62,7 +62,7 @@ export default function AssignmentInfo(props) {
             <p className="text-sm text-error">{errors.taskTitle?.message}</p>
           </div>
 
-          {/* แถว 2: บ้าน / พนักงาน (Searchable Dropdown) */}
+          {/*  houseId empId*/}
           <div className="w-full flex gap-4">
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>บ้าน (House)</label>
@@ -83,7 +83,7 @@ export default function AssignmentInfo(props) {
             </div>
           </div>
 
-          {/* แถว 3: วันที่มอบหมาย / สถานะ */}
+          {/* วันที่มอบหมาย / สถานะ */}
           <div className="w-full flex gap-4">
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>วันที่มอบหมาย</label>
@@ -105,7 +105,7 @@ export default function AssignmentInfo(props) {
             </div>
           </div>
 
-          {/* แถว 4: บทบาท (Duty Role) */}
+          {/* บทบาท  */}
           <div className="w-full flex flex-col">
             <label className='text-sm font-medium text-gray-700 ml-1'>บทบาทหน้าที่ (Duty Role)</label>
             <input type="text"
@@ -116,7 +116,7 @@ export default function AssignmentInfo(props) {
             <p className="text-sm text-error">{errors.dutyRole?.message}</p>
           </div>
 
-          {/* แถว 5: รายละเอียดงาน (Task Description) */}
+          {/* รายละเอียดงาน */}
           <div className="w-full flex flex-col">
             <label className='text-sm font-medium text-gray-700 ml-1'>รายละเอียดงาน</label>
             <textarea

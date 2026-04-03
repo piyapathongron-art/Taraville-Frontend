@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import useUserStore from '../stores/userStore';
@@ -98,9 +98,12 @@ const userRouter = createBrowserRouter([
     { path: "*", element: <Navigate to="/assignment" /> }
 ]);
 
+
+
 function AppRouter() {
     const user = useUserStore(state => state.user);
     const finalRouter = user?.role === "User" || user?.role === "Staff" ? userRouter : user?.role === "Admin" ? adminRouter :guestRouter ;
+    console.log("Current user:", user);
 // console.log(user)
     return (
         <Suspense fallback={<div className="w-full h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center bg-base-200/40">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import useCustomerStore from '../stores/customerStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -211,7 +211,7 @@ function FullFormCustomer() {
 
                             {/* footer */}
                             <div className="w-full flex justify-end">
-                                <button className='btn bg-brand text-white w-35 h-12 font-medium mt-10 '>ลงทะเบียนเลย!</button>
+                                <button className='btn bg-brand text-white w-35 h-12 font-medium mt-10 '>หน้าต่อไป</button>
                             </div>
 
                         </form>

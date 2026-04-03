@@ -1,12 +1,10 @@
-import React from 'react'
 import { OrangeHomeIcon } from '../icon'
 import Footer from '../components/Footer'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema } from '../validations/schema'
 import useUserStore from '../stores/userStore'
-import { useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import RegisterModal from '../components/RegisterModal'
 
 function LoginPage() {
@@ -16,11 +14,11 @@ function LoginPage() {
         defaultValues: { empId: "", password: "" }
     })
 
-    const { errors, isSubmitting, isValid } = formState
+    const { errors, isSubmitting ,isValid} = formState
 
     const login = useUserStore(state => state.login)
-    const user = useUserStore(state => state.user)
-    const navigate = useNavigate()
+    // const user = useUserStore(state => state.user)
+    // const navigate = useNavigate()
 
     const onSubmit = async (body) => {
         try {
@@ -35,14 +33,14 @@ function LoginPage() {
             console.dir(error)
             const errMsg = error.response?.data.error || error.message
 
-            toast.error(errMsg)
+            toast.error(errMsg, {containerId: "login-page"})
         }
     }
 
     return (
         <>
             <div className='min-w-full'>
-
+        <ToastContainer containerId={"login-page"}/>
                 {/* text & logo */}
                 <div className="w-full h-[95vh] flex justify-center items-center">
                     <div className="w-[80%] h-120 bg-white flex justify-evenly items-center">
@@ -58,11 +56,11 @@ function LoginPage() {
                         <div className="flex justify-center self-center">
 
                             {/* loading spinner */}
-                            {isSubmitting && <span className="loading loading-spinner loading-xl absolute z-5 text-brand brightness-100 w-25 bottom-160"></span>}
+                            {isSubmitting && <span className="loading loading-spinner loading-xl i absolute z-5 self-center text-brand brightness-100 w-25 "></span>}
 
                             {/* login form */}
                             <form onSubmit={handleSubmit(onSubmit)} className={!isSubmitting ? "fieldset bg-base-200  rounded-box w-xs border border-brand p-5 shadow-main" : "brightness-50 fieldset bg-base-200  rounded-box w-xs border border-brand p-5 shadow-main"}>
-                                <fieldset disabled={isSubmitting}>
+                                <fieldset disabled={isSubmitting }>
 
                                     <p className="font-medium mb-2 text-2xl px-1">เข้าสู่ระบบ</p>
 
@@ -80,7 +78,7 @@ function LoginPage() {
 
                                     <div className='flex flex-col'>
                                         {/* button */}
-                                        <button className="btn  bg-navy  hover:bg-brand  text-white transition-all ease-in-out duration-500  mt-2">ล็อคอิน</button>
+                                        <button className="btn  bg-navy  hover:bg-brand  text-white transition-all ease-in-out duration-500  mt-2" disabled={!isValid || isSubmitting}>ล็อคอิน</button>
                                         <button className="btn bg-white border hover:brightness-80 transition-all ease-in-out duration-500 border-navy mt-2" type='button' onClick={() => document.getElementById("register-form").showModal()}>สร้างบัญชี</button>
                                     </div>
 
@@ -97,12 +95,6 @@ function LoginPage() {
                 <div className="modal-box">
 
                     <RegisterModal />
-                </div>
-            </dialog>
-
-            <dialog id="loading-login" className="modal">
-                <div className=" justify-center flex">
-                    <span className="loading loading-spinner loading-xl size-50"></span>
                 </div>
             </dialog>
 

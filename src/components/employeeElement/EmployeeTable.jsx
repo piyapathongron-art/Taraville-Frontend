@@ -18,9 +18,9 @@ export default function EmployeeTable() {
   // State สำหรับ Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalEmployees, setTotalEmployees] = useState(0);
-  const itemsPerPage = 5; // จำนวนรายการต่อหน้า
+  const itemsPerPage = 5; 
 
- // ระบบ Debounce ป้องกันการยิง API ถี่เกินไป
+ // ระบบ Debounce 
      useEffect(() => {
          const timer = setTimeout(() => {
              setDebouncedSearch(searchTerm);
@@ -29,9 +29,10 @@ export default function EmployeeTable() {
          return () => clearTimeout(timer);
      }, [searchTerm]);
 
-  //fecth data from backend
-  useEffect(() => {
-    const fetchEmployee  = async () => {
+
+
+
+     const fetchEmployee  = async () => {
       try {
         const resp = await getPaginateEmployeeApi({
           search: debouncedSearch, 
@@ -46,6 +47,10 @@ export default function EmployeeTable() {
       };
       
     };
+
+  //fecth data from backend
+  useEffect(() => {
+    
     fetchEmployee();
   }, [debouncedSearch, departmentFilter, currentPage]);
 
@@ -72,7 +77,7 @@ export default function EmployeeTable() {
     return pages;
   };
 
-  // ฟังก์ชันจัดการตอนเลือก Dropdown แผนก
+  // Dropdown แผนก
   const handleSelectDepartment = (dept) => {
     setDepartmentFilter(dept);
     setCurrentPage(1);
@@ -96,7 +101,7 @@ export default function EmployeeTable() {
     <>
       <div className=" w-full h-[calc(100vh-3.5rem)] bg-gray-50 flex flex-col relative">
 
-        {/* Toolbar สีเทาด้านบน */}
+        {/* Toolbar */}
         <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed z-3">
 
           {/* ช่องค้นหา */}
@@ -108,7 +113,7 @@ export default function EmployeeTable() {
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
-                setCurrentPage(1); // ค้นหาใหม่ ให้กลับไปหน้า 1 เสมอ
+                setCurrentPage(1); 
               }}
             />
             <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
@@ -173,10 +178,10 @@ export default function EmployeeTable() {
           </div>
         </div>
 
-        {/* ส่วนของรายการพนักงาน */}
+        
         <div className="flex-1 w-full max-w-6xl mx-auto p-6 flex flex-col mt-20">
 
-          {/* Header ของตาราง */}
+          {/* Header*/}
           <div className="flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-2 mb-6">
             <div className="w-[20%] text-center leading-tight">
               <span className="font-bold text-gray-800 text-lg">รหัสพนักงาน</span><br />
@@ -185,14 +190,14 @@ export default function EmployeeTable() {
             <div className="w-[30%] text-center font-bold text-gray-800 text-lg">ชื่อ นามสกุล</div>
             <div className="w-[20%] text-center font-bold text-gray-800 text-lg">แผนก</div>
             <div className="w-[20%] text-center font-bold text-gray-800 text-lg">เบอร์ติดต่อ</div>
-            <div className="w-[10%]"></div> {/* พื้นที่ว่างสำหรับปุ่มแก้ไข */}
+            <div className="w-[10%]"></div>
           </div>
 
-          {/* รายการแถว (List of Rows) */}
+          {/* employee row */}
           <div className="flex flex-col gap-1 animate-fade-up z-0">
             {employees.length > 0 ? (
               employees.map((emp, index) => (
-                <EmployeeList key={emp.employeeId} employee={emp} />
+                <EmployeeList key={emp.employeeId} employee={emp} fetchEmployee={fetchEmployee} />
               ))
             ) : (
               <div className="text-center py-10 text-gray-500 bg-white rounded-xl border border-gray-200">
@@ -254,7 +259,7 @@ export default function EmployeeTable() {
       <dialog id="createEmployee" className="modal">
         <div className="modal-box">
 
-          <CreateEmployeeModal />
+          <CreateEmployeeModal fetchEmployee={fetchEmployee} />
         </div>
       </dialog>
 

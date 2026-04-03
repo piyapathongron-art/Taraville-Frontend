@@ -1,6 +1,6 @@
 import { useEffect, useState} from 'react';
 import { Trash2 } from 'lucide-react';
-import { useForm } from 'react-hook-form'; 
+import { get, useForm } from 'react-hook-form'; 
 import useDataStore from '../../stores/dataStore';
 import { updateAssignmentSchema } from '../../validations/schema';
 import { deleteAssignmentApi, editAssignmentApi } from '../../api/CreateApi';
@@ -26,13 +26,11 @@ export default function EditAssignmentModal(props) {
     label: `${h.houseId} - ${h.houseCode}`
   })) || [];
 
-
   const employeeOptions = employee?.map(emp => ({
     value: emp.employeeId,
     label: `${emp.firstName} ${emp.lastName}`
   })) || [];
 
-  // เพิ่ม setValue มาใช้กับ dropdownสร้างเอง
   const { register, reset, formState, handleSubmit,setValue } = useForm({
     resolver: zodResolver(updateAssignmentSchema),
     mode: "onSubmit",
@@ -41,6 +39,8 @@ export default function EditAssignmentModal(props) {
 
  const [selectedHouseId, setSelectedHouseId] = useState("");
   const [selectedEmpId, setSelectedEmpId] = useState("");
+
+
 
   useEffect(() => {
     if (assignment) {
@@ -54,7 +54,7 @@ export default function EditAssignmentModal(props) {
           status: assignment.status || "Pending",
       });
     }
-    //setvalue ไว้ใช้ใน searchable dropdown
+                        
     setSelectedHouseId(assignment.houseId || "");
     setSelectedEmpId(assignment.empId || "");
   }, [assignment, reset]);
@@ -121,7 +121,7 @@ export default function EditAssignmentModal(props) {
       <form onSubmit={handleSubmit(onSubmit)} >
         <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
-          {/* แถว 1: ชื่องาน */}
+          {/* ชื่องาน */}
           <div className="w-full">
             <label className='text-sm font-medium text-gray-700 ml-1'>หัวข้องาน (Task Title)</label>
             <input type="text"
@@ -132,7 +132,7 @@ export default function EditAssignmentModal(props) {
             <p className="text-sm text-error">{errors.taskTitle?.message}</p>
           </div>
 
-          {/* แถว 2: บ้าน / พนักงาน (Searchable Dropdown) */}
+          {/* Searchable Dropdown */}
          <div className="w-full flex gap-4">
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>บ้าน (House)</label>
@@ -160,7 +160,7 @@ export default function EditAssignmentModal(props) {
             </div>
           </div>
 
-          {/* แถว 3: วันที่มอบหมาย / สถานะ */}
+          {/* วันที่มอบหมาย / สถานะ */}
           <div className="w-full flex gap-4">
             <div className="flex flex-col w-1/2">
               <label className='text-sm font-medium text-gray-700 ml-1'>วันที่มอบหมาย</label>
@@ -182,7 +182,7 @@ export default function EditAssignmentModal(props) {
             </div>
           </div>
 
-          {/* แถว 4: บทบาท (Duty Role) */}
+          {/* บทบาท */}
           <div className="w-full flex flex-col">
             <label className='text-sm font-medium text-gray-700 ml-1'>บทบาทหน้าที่ (Duty Role)</label>
             <input type="text"
@@ -193,7 +193,7 @@ export default function EditAssignmentModal(props) {
             <p className="text-sm text-error">{errors.dutyRole?.message}</p>
           </div>
 
-          {/* แถว 5: รายละเอียดงาน (Task Description) */}
+          {/*   รายละเอียดงาน */}
           <div className="w-full flex flex-col">
             <label className='text-sm font-medium text-gray-700 ml-1'>รายละเอียดงาน</label>
             <textarea
@@ -206,7 +206,7 @@ export default function EditAssignmentModal(props) {
 
           <div className="divider my-1"></div>
 
-          {/* ปุ่ม Action */}
+          
           <div className="flex gap-4 w-full">
             <button className='btn bg-red-500 hover:bg-red-600 text-white flex-1' onClick={()=>swal01(onDelete,modalId)} disabled={isSubmitting} type='button'>
               <Trash2 size={20} /> ลบงานนี้

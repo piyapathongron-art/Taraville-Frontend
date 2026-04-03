@@ -79,7 +79,7 @@ function EditCustomerModal(props) {
       const resp = await editCustomerApi(data, customerId);
       toast.success(resp.data?.message || "อัปเดตข้อมูลสำเร็จ", { containerId: "CustomerBody" });
 
-      // อัปเดตข้อมูลตาราง
+      
       getSurveyData()
       document.getElementById(modalId).close();
 
@@ -94,12 +94,12 @@ function EditCustomerModal(props) {
     <>
       <ToastContainer containerId={modalId} />
 
-      {/* ปุ่มปิด X ด้านขวาบน */}
+      
       <form method="dialog">
         <button type='button' onClick={Xbtn} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
       </form>
 
-      {/* Header ของ Modal */}
+      {/* Header */}
       <div className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2 mb-2">
         {isSubmitting && <span className="loading loading-spinner loading-md"></span>}
         <User className="text-[#D98A2C]" size={28} />
@@ -107,11 +107,11 @@ function EditCustomerModal(props) {
       </div>
       <div className="divider opacity-60 my-2"></div>
 
-      {/* Form เนื้อหาหลัก */}
+      {/* Form */}
       <form onSubmit={handleSubmit(onSubmitCustomer)}>
         <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
-          {/* แถว 1: ชื่อ - นามสกุล */}
+          {/*ชื่อ นามสกุล */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">ชื่อ <span className="text-red-500">*</span></span></label>
@@ -125,7 +125,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* แถว 2: เบอร์โทร - Line ID */}
+          {/* เบอร์โทร  Line ID */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">เบอร์โทรศัพท์</span></label>
@@ -139,7 +139,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* แถว 3: อีเมล - เพศ */}
+          {/* อีเมล เพศ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">อีเมล</span></label>
@@ -157,7 +157,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* แถว 4: อาชีพ - รายได้ */}
+          {/* อาชีพ รายได้ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">อาชีพ</span></label>
@@ -173,7 +173,7 @@ function EditCustomerModal(props) {
 
           <div className="divider my-0 opacity-50">ที่อยู่</div>
 
-          {/* แถว 5: บ้านเลขที่ - ซอย/ถนน */}
+          {/* บ้านเลขที่ ซอย/ถนน */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">บ้านเลขที่ / หมู่</span></label>
@@ -187,7 +187,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* แถว 6: แขวง/ตำบล - เขต/อำเภอ */}
+          {/* แขวง/ตำบล เขต/อำเภอ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">ตำบล / แขวง</span></label>
@@ -201,7 +201,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* แถว 7: จังหวัด - รหัสไปรษณีย์ */}
+          {/* จังหวัด รหัสไปรษณีย์ */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="form-control w-full">
               <label className='label'><span className="label-text font-medium">จังหวัด</span></label>
@@ -215,7 +215,7 @@ function EditCustomerModal(props) {
             </div>
           </div>
 
-          {/* ปุ่มบันทึก และ ปุ่มลบ */}
+          {/* ปุ่มบันทึก ปุ่มลบ */}
           <div className="flex gap-4 mt-4">
             <button
               className='btn bg-red-500 hover:bg-red-600 text-white flex-1'

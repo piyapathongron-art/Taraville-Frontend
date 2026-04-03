@@ -7,6 +7,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { editHouseApi, uploadHouseImageApi } from '../../api/CreateApi';
 import useDataStore from '../../stores/dataStore';
+import uploadCloudinary from '../../utils/uploadcloud';
 
 
 function EditHouseModal(props) {
@@ -36,20 +37,18 @@ function EditHouseModal(props) {
                 details: house.details || ""
             });
             
-            // existing image
             const dbImages = house.images || []; 
             const existingImages = dbImages.map(img => ({
                 file: null,
                 url: img.imageUrl, 
                 isNew: false 
             }));
-            //เอาimage ที่มาอยู่ใส่ไปในState
             setImageList(existingImages);
         }
     }, [house, reset]);
 
 
-    //ปุ่มปิด
+    
     const Xbtn = () => {
         document.getElementById(modalId).close();
         reset();
@@ -62,7 +61,6 @@ function EditHouseModal(props) {
             const newImages = files.map(file => ({
                 file: file,
                 url: URL.createObjectURL(file), 
-                //ตั้งisNew เพื่อ map ตอน ส่งcloudinary
                 isNew: true 
             }));
             setImageList(prev => [...prev, ...newImages]);
@@ -70,30 +68,17 @@ function EditHouseModal(props) {
         }
     };
 
-    //ลบรูปกดแล้วส่งindex
+
     const removeImage = (indexToRemove) => {
         setImageList(prev => prev.filter((_, index) => index !== indexToRemove));
     };
 
-    const uploadCloud = async (file) => {
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('upload_preset', 'cc22-upload');
-            const resp = await axios.post('https://api.cloudinary.com/v1_1/dc8ywsgsf/image/upload', formData);
-            return resp.data.secure_url;
-        } catch (err) {
-            console.error('Upload Cloudinary Error:', err);
-            toast.error("Upload Image Error",{containerId:modalId})
-            throw err;
-        }
-    };
 
     const onSubmit = async (data) => {
         try {
             // เอารูปภาพใหม่ อัปโหลดขึ้น Cloudinary
             const newFilesToUpload = imageList.filter(img => img.isNew).map(img => img.file);
-            const uploadPromises = newFilesToUpload.map(file => uploadCloud(file));
+            const uploadPromises = newFilesToUpload.map(file => uploadCloudinary(file));
             //เพราะมีหลายรูปรอ promise all ให้หมดก่อน
             const uploadedUrls = await Promise.all(uploadPromises);
 
@@ -110,10 +95,10 @@ function EditHouseModal(props) {
             
             // ImageAPI ส่งเป็น Array
             const respHI = await uploadHouseImageApi({ images: finalImageUrls }, houseId);
-            console.log(respHI)
+            // console.log(respHI)
             toast.success("อัปเดตข้อมูลและรูปภาพสำเร็จ!",{containerId:"housePage"});
 
-            // fetchใหม่
+        
             getHouseData();
 
             document.getElementById(modalId).close();
@@ -142,7 +127,7 @@ function EditHouseModal(props) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset disabled={isSubmitting} className='flex flex-col gap-4 p-2'>
 
-                    {/* --- แถวที่ 1: โค้ดบ้าน / ชื่อโครงการ --- */}
+                    {/*  โค้ดบ้าน / ชื่อโครงการ  */}
                     <div className="w-full flex gap-4">
                         <div className="flex flex-col w-1/2">
                             <label className='text-sm font-medium text-gray-700 mb-1 ml-1'>รหัสบ้าน (Code)</label>
@@ -155,7 +140,7 @@ function EditHouseModal(props) {
                         </div>
                     </div>
 
-                    {/* --- แถวที่ 2: ชื่อบ้าน / ประเภทบ้าน --- */}
+                    {/*  ชื่อบ้าน / ประเภทบ้าน  */}
                     <div className="w-full flex gap-4">
                         <div className="flex flex-col w-1/2">
                             <label className='text-sm font-medium text-gray-700 mb-1 ml-1'>ชื่อแบบบ้าน</label>
@@ -172,7 +157,7 @@ function EditHouseModal(props) {
                         </div>
                     </div>
 
-                    {/* --- แถวที่ 3: ราคา / สถานะ --- */}
+                    {/*  ราคา / สถานะ  */}
                     <div className="w-full flex gap-4">
                         <div className="flex flex-col w-1/2">
                             <label className='text-sm font-medium text-gray-700 mb-1 ml-1'>ราคา (บาท)</label>
@@ -191,14 +176,14 @@ function EditHouseModal(props) {
                         </div>
                     </div>
 
-                    {/* --- แถวที่ 4: เบอร์ติดต่อ --- */}
+                    {/*  เบอร์ติดต่อ  */}
                     <div className="w-full flex flex-col">
                         <label className='text-sm font-medium text-gray-700 mb-1 ml-1'>เบอร์ติดต่อเจ้าของ</label>
                         <input type="text" placeholder='เบอร์โทรศัพท์' className='input input-bordered w-full' {...register('ownerPhone')} />
                         {errors?.ownerPhone && <p className="text-xs text-error mt-1">{errors.ownerPhone?.message}</p>}
                     </div>
 
-                    {/* --- แถวที่ 5: รายละเอียดเพิ่มเติม --- */}
+                    {/*  รายละเอียดเพิ่มเติม  */}
                     <div className="w-full flex flex-col">
                         <label className='text-sm font-medium text-gray-700 mb-1 ml-1'>รายละเอียดเพิ่มเติม</label>
                         <textarea className="textarea textarea-bordered w-full h-20" placeholder="รายละเอียดอื่นๆ..." {...register('details')}></textarea>
@@ -206,14 +191,14 @@ function EditHouseModal(props) {
 
                     <div className="divider my-1"></div>
 
-                    {/* --- ระบบจัดการรูปภาพ (Image Upload & Preview) --- */}
+                    {/*  image  */}
                     <div className="w-full flex flex-col mb-2">
                         <div className="flex justify-between items-center mb-2">
                             <label className='text-sm font-medium text-gray-700 ml-1'>รูปภาพประกอบ</label>
                             <span className="text-xs text-gray-400">{imageList.length} รูปภาพ</span>
                         </div>
                         
-                        {/* แกลเลอรีรูปภาพ (Preview Grid) */}
+                        {/* Preview */}
                         {imageList.length > 0 && (
                             <div className="grid grid-cols-4 gap-3 mb-4">
                                 {imageList.map((imgObj, index) => (
@@ -236,7 +221,7 @@ function EditHouseModal(props) {
                             </div>
                         )}
 
-                        {/* กล่องอัปโหลดไฟล์ (Upload Zone) */}
+                        {/* Upload */}
                         <div className="relative w-full border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center hover:bg-gray-50 hover:border-[#D98A2C] transition-colors cursor-pointer group">
                             <UploadCloud className="text-gray-400 group-hover:text-[#D98A2C] mb-2" size={32} />
                             <p className="text-sm text-gray-500 font-medium">คลิกเพื่อเลือกไฟล์รูปภาพ</p>

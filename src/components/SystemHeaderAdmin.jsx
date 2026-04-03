@@ -5,7 +5,9 @@ import HeaderEditModal from './HeaderEditModal';
 
 function SystemHeaderAdmin() {
     const user = useUserStore(state => state.user);
+    const role = useUserStore(state => state.role);
     const logout = useUserStore(state => state.logout);
+    console.log(user)
 
     const navLinkClass = ({ isActive }) => 
         isActive 

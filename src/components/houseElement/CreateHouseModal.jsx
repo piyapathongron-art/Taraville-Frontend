@@ -36,14 +36,13 @@ function CreateHouseModal() {
             const newImages = files.map(file => ({
                 file: file,
                 url: URL.createObjectURL(file), 
-                //ตั้งisNew เพื่อ map ตอน ส่งcloudinary
                 isNew: true 
             }));
             setImageList(prev => [...prev, ...newImages]);
         }
     };
 
-    //ลบรูปกดแล้วส่งindex
+    
     const removeImage = (indexToRemove) => {
         setImageList(prev => prev.filter((_, index) => index !== indexToRemove));
     };

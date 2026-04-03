@@ -3,10 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { updateEmployeeSchema } from '../validations/schema';
 import { useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import ModalExitButton from './ModalExitButton';
+import useUserStore from '../stores/userStore';
 
 function HeaderEditModal({ user }) {
+    const editUserInfo = useUserStore((state) => state.editUserInfo);
+    // console.log(user)
     const {register, handleSubmit,reset,formState} = useForm({
             resolver: zodResolver(updateEmployeeSchema),
             mode: "onSubmit",
@@ -16,7 +19,7 @@ function HeaderEditModal({ user }) {
         
           const closeModal = () => {
         document.getElementById("editProfileModalId").close();
-        reset(); // รีเซ็ตฟอร์มกลับไปเป็นค่าเดิมหากกดปิด
+        reset(); 
     };
     
         useEffect(() => {
@@ -34,10 +37,11 @@ function HeaderEditModal({ user }) {
         const onSubmit = async (data) => {
             try {
                 const resp = await editUserInfo(data, user.employeeId);
+                console.log(resp);
                 
                 toast.success(resp.data?.message || "แก้ไขข้อมูลสำเร็จ", { containerId: "editProfileModalId" });
                 
-    
+                
                 setTimeout(() => {
                     document.getElementById("editProfileModalId").close();
                 }, 1000);
@@ -94,7 +98,7 @@ function HeaderEditModal({ user }) {
                             </div>
                         </div>
 
-                        {/* แถว 3: ที่อยู่ */}
+                        {/* ที่อยู่ */}
                         <div className="form-control w-full">
                             <label className="label"><span className="label-text font-medium text-gray-700">ที่อยู่</span></label>
                             <textarea 

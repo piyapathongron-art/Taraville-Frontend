@@ -14,14 +14,14 @@ export default function CustomerBody() {
   // const customers = useDataStore(state => state.customers);
   // const getSurveyData = useDataStore(state => state.getSurveyData);
 
-  // States สำหรับค้นหาและตัวกรอง
+  // States for search
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [typeFilter, setTypeFilter] = useState('');
   const [houseFilter, setHouseFilter] = useState('');
   const [budgetFilter, setBudgetFilter] = useState('');
 
-  // States สำหรับ Pagination
+  // States for Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -80,7 +80,7 @@ export default function CustomerBody() {
   return (
     <div className="w-full h-[calc(100vh-3.5rem)] bg-[#F8F9FA] flex flex-col relative">
       <ToastContainer containerId="CustomerBody" />
-      {/* 1. Toolbar */}
+      {/* Toolbar */}
       <div className="bg-[#94A3B8] w-full py-4 px-6  flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm fixed">
 
         {/* ช่องค้นหา */}
@@ -101,7 +101,7 @@ export default function CustomerBody() {
         {/* Dropdowns & Button Group */}
         <div className="flex flex-wrap w-full md:w-auto gap-3 justify-center items-center">
 
-          {/* Dropdown 1: Type */}
+          {/* Type */}
           <select
             className="select select-bordered px-5 w-[140px] bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={typeFilter}
@@ -112,7 +112,7 @@ export default function CustomerBody() {
             <option value="Walkin">Walk-in</option>
           </select>
 
-          {/* Dropdown 2: บ้านที่สนใจ */}
+          {/* บ้านที่สนใจ */}
           <select
             className="select select-bordered w-[160px] px-5 bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={houseFilter}
@@ -124,8 +124,8 @@ export default function CustomerBody() {
             <option value="ทาวน์โฮม">ทาวน์โฮม</option>
           </select>
 
-          {/* Dropdown 3: งบ */}
-          <select
+          {/* งบ */}
+          {/* <select
             className="select select-bordered w-[160px] px-5 bg-white rounded-full border-none focus:outline-none focus:ring-2 focus:ring-[#D98A2C] min-h-0 h-11 shadow-sm text-gray-700 font-normal"
             value={budgetFilter}
             onChange={(e) => { setBudgetFilter(e.target.value); setCurrentPage(1); }}
@@ -135,7 +135,7 @@ export default function CustomerBody() {
             <option value="1,000,000-2,000,000">1,000,000-2,000,000</option>
             <option value="2,000,000-3,000,000">2,000,000-3,000,000</option>
             <option value="3,000,000+">3,000,000+</option>
-          </select>
+          </select> */}
 
           {/* ปุ่มเพิ่ม (สีส้ม)
           <button 
@@ -148,10 +148,10 @@ export default function CustomerBody() {
         </div>
       </div>
 
-      {/* 2. พื้นที่แสดงข้อมูลตาราง */}
+      {/* body*/}
       <div className="flex-1 w-full max-w-7xl mx-auto p-6 flex flex-col mt-20">
 
-        {/* Header ของตาราง (อ้างอิง Grid จาก Row) */}
+        {/* Header */}
         <div className="grid grid-cols-[1fr_1fr_2fr_2fr_2fr_2fr_auto] gap-4 items-center bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 mb-4 text-gray-800 font-bold text-base md:text-lg">
           <div className="text-center">ID</div>
           <div className="text-center">type</div>
@@ -182,7 +182,7 @@ export default function CustomerBody() {
         </div>
         )}
 
-        {/* 3. Pagination  */}
+        {/* Pagination  */}
        {!isLoading && totalPages > 0 && (
             <div className="w-full bg-white border mt-5 border-gray-200 z-10 px-6 py-4 shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.03)] animate-fade-up">
               <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 w-full">

@@ -13,7 +13,7 @@ function ProjectLocation() {
     { id: 2, name: 'บริษัทบ้านคุณภาพ', lat: 16.4450, lng: 101.1520, price: '', detail: 'ติดต่อรับเหมาก่อสร้าง', googleMap: "GoogleStreetModal01" },
   ];
 
-  const centerPosition = [16.4390, 101.1480]; // จุดศูนย์กลางแผนที่
+  const centerPosition = [16.4390, 101.1480]; 
 
   return (
     <>

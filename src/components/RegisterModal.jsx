@@ -1,4 +1,3 @@
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { registerSchema } from '../validations/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -79,7 +78,7 @@ function RegisterModal() {
             <p className="text-sm text-error">{errors.confirmPassword?.message}</p>
           </div>
 
-          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>Sign up</button>
+          <button className='btn bg-brand text-xl text-white' disabled={ isSubmitting}>Sign up</button>
 
         </fieldset>
 

@@ -1,12 +1,12 @@
 import useCustomerStore from '../stores/customerStore';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { createSurveySchema } from '../validations/schema';
 import { toast } from 'react-toastify';
 
 function SurveyForm() {
-    const customerInfo = useCustomerStore(state => state.customerInfo)
+    // const customerInfo = useCustomerStore(state => state.customerInfo)
     const submitSurvey = useCustomerStore(state => state.submitSurvey)
     const customerId = useCustomerStore(state => state.customerId) || null
 
@@ -181,7 +181,10 @@ const customerIdString = customerId?.toString() || null
 
                             </div>
 
-                            <div className="w-full flex justify-end">
+                            <div className="w-full flex justify-end gap-5">
+                                <Link to="/contact">
+                                <button className='btn border-brand text-brand w-35 h-12 font-medium mt-10' type='button'>ย้อนกลับ</button>
+                                </Link>
                                 <button className='btn bg-brand text-white w-35 h-12 font-medium mt-10' type='submit'>ลงทะเบียนเลย!</button>
                             </div>
 

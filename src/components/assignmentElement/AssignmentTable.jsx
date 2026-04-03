@@ -11,7 +11,7 @@ function AssignmentTable() {
     return (
         <div className="w-full max-w-7xl mx-auto p-4 md:p-6 animate-fade-up">
             
-            {/* Header ของตาราง */}
+            {/* Header */}
             <div className="hidden md:flex items-center justify-between bg-white rounded-xl border border-gray-200 shadow-sm px-4 py-4 mb-4 text-gray-800 font-bold text-lg">
                 <div className="w-[10%] text-center">รหัสงาน</div>
                 <div className="w-[30%] text-left pl-4">หัวข้องาน</div>
@@ -20,7 +20,7 @@ function AssignmentTable() {
                 <div className="w-[15%] text-center">เบอร์ติดต่อ</div>
             </div>
 
-            {/* ส่วนของรายการงาน (List of Rows) */}
+            {/* ส่วนของรายการงาน */}
             <div className="flex flex-col gap-3 w-full">
                 {assignment.length > 0 ? (
                     assignment.map((task, index) => {
@@ -53,7 +53,6 @@ function AssignmentTable() {
                                     </span>
                                     <span className="flex items-center gap-1.5">
                                         <User size={16} className="text-gray-400"/> 
-                                        {/* ใช้ houseName แทน หากไม่มีข้อมูล customer ผูกมา */}
                                         ชื่อบ้าน: <span className="text-gray-700">{task.house?.houseName || 'ไม่ระบุ'}</span>
                                     </span>
                                 </div>
@@ -71,7 +70,6 @@ function AssignmentTable() {
                                 <div className="w-full md:w-[15%] text-left md:text-center flex md:justify-center items-center">
                                     <span className="flex items-center gap-1.5 text-sm text-gray-700 font-medium bg-gray-50 px-3 py-1.5 md:bg-transparent md:px-0 md:py-0 rounded-lg">
                                         <Phone size={16} className="text-green-600"/> 
-                                        {/* ใช้ ownerPhone จาก house */}
                                         {task.house?.ownerPhone || '-'}
                                     </span>
                                 </div>
@@ -80,7 +78,6 @@ function AssignmentTable() {
                         );
                     })
                 ) : (
-                    // กรณีไม่มีข้อมูล
                     <div className="text-center py-16 text-gray-500 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col items-center justify-center gap-2">
                         <AlertCircle size={40} className="text-gray-300 mb-2" />
                         <p className="text-lg font-medium text-gray-600">ยังไม่มีงานที่ได้รับมอบหมาย</p>

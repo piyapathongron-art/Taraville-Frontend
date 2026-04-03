@@ -7,10 +7,10 @@ import { deleteEmployeeApi, editEmployeeApi } from '../../api/CreateApi'
 import useDataStore from '../../stores/dataStore'
 import { useEffect } from 'react'
 import Swal from 'sweetalert2'
-import { swal01 } from '../../utils/swalFire'
+import { swal01, swal02 } from '../../utils/swalFire'
 
 function EditEmployeeModal(props) {
-  const {employeeId,employee,modalId} = props
+  const {employeeId,employee,modalId,fetchEmployee} = props
   const getEmployeeData = useDataStore(state=>state.getEmployeeData)
   const { register, reset, formState, handleSubmit } = useForm({
     resolver: zodResolver(updateEmployeeSchema),
@@ -42,12 +42,12 @@ function EditEmployeeModal(props) {
     try {
       const resp = await deleteEmployeeApi(employeeId)
       Swal.fire({
-                      title: "Deleted!",
-                      text: "Your file has been deleted.",
+                      title: "Edited!",
+                      text: "Your file has been Edited.",
                       icon: "success",
       
                   });
-      getEmployeeData()
+      fetchEmployee()
     } catch (error) {
       console.dir(error)
       const errMsg = error.response?.data.error || error.message
@@ -57,13 +57,21 @@ function EditEmployeeModal(props) {
 
   const onSubmit = async (data) => {
     try {
-      confirm("ยืนยันการลบพนักงาน!");
+      
       // console.log(data)
       const resp = await editEmployeeApi(data,employeeId)
       // console.log(resp)
       toast.success(resp.data.message)
-      getEmployeeData()
       document.getElementById(modalId).close()
+      Swal.fire({
+                      title: "Edited!",
+                      text: "Your file has been Edited.",
+                      icon: "success",
+      
+                  });
+      // toast.success("แก้ไขข้อมูลสำเร็จ", { containerId: 'employeePage' })
+      
+    
 
     } catch (error) {
       console.dir(error)
@@ -112,7 +120,7 @@ function EditEmployeeModal(props) {
             </div>
           </div>
 
-          {/* แถว 2  */}
+          
           <div className="w-full flex gap-10 ">
             {/* อีเมล */}
             <div className="flex flex-col">
@@ -155,7 +163,8 @@ function EditEmployeeModal(props) {
             <p className="text-sm text-error">{errors.address?.message}</p>
           </div>
 
-          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting}>สร้างบัญชีพนักงาน</button>
+          <button className='btn bg-brand text-xl text-white' disabled={isSubmitting} onClick={()=>swal02()} type='submit'>แก้ไขข้อมูล</button>
+
           <button className='btn bg-red-500 text-xl text-white' onClick={()=>swal01(onDelete,modalId)} disabled={isSubmitting} type='button'>ลบพนักงาน</button>
 
         </fieldset>
